@@ -1,0 +1,49 @@
+@charset "UTF-8";
+
+/* 공통 CSS */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'helvetica', 'Malgun Gothic', 'Nanum Gothic', 'sans-serif'; outline: none; }
+body { overflow-y: scroll; }
+a { color: inherit; text-decoration: inherit; display: inline-block; }
+input[type=submit], input[type=reset], input[type=button] { cursor: pointer; }
+table { border-collapse: collapse; }
+ul { list-style-type: none; }
+section { min-height: 650px; padding: 50px 0; }
+.wrap { width: 1280px; height: 100%; margin: 0 auto; }
+.stretchBlock { display: flex; justify-content: space-between; align-items: center; }
+.stretchInline { display: inline-flex; justify-content: space-between; align-items: center; }
+.centerBlock { display: flex; justify-content: center; align-items: center; }
+.centerInline { display: inline-flex; justify-content: center; align-items: center; }
+.rightBtnDiv { display: flex; justify-content: flex-end; align-items: center; }
+.pageBtn{min-width: 30px; height: 30px; border: 1px solid #c3c3c3; margin: 5px; color: #444444;}
+.pageBtnStd{min-width: 30px; height: 30px; border: 1px solid #c3c3c3; background-color: #c3c3c3; margin: 5px; color: #ffffff;}
+.pageBtnStd:hover, .pageBtn:hover{border-color: #444444;}
+.pageArrow{margin: 5px; padding: 2px;}
+.pageArrow img{width: 26px; height: 26px;}
+
+/* Header.jsp CSS */
+header { height: 150px; }
+header .header_block { height: 150px; }
+header .header_block #logo_div { width: 280px; height: 100px; display: flex; flex-direction: column; justify-content: center; }
+header .header_block #logo_div #logoimg { width: 150px; height: 90px; cursor: pointer; }
+header .header_block #menu_div { width: 720px; } 
+header .header_block #menu_div .menu { width: 100%; height: 100px; font-size: 15px; }
+header .header_block #menu_div .menu .dd { height: 30px; padding: 8px 0; }
+header .header_block #menu_div .menu .dd:hover { border-bottom: 1px solid black; }
+header .header_block #buttondiv { width: 280px; height:100px; display: flex; align-items: center; justify-content: flex-end; }
+header .header_block #buttondiv a { text-decoration: none; font-size:13px; }
+header .header_block #buttondiv a [data-tooltip-text]:hover { position: relative; }
+header .header_block #buttondiv a [data-tooltip-text]:hover:after { content: attr(data-tooltip-text); position: absolute; width: 70px; top: 50px; left: 0; z-index: 9999; font-size: 11px; text-align: center; }
+header .header_block #buttondiv a #login, a #join, a #cart, a #admin_logout, a #admin, a #logout, a #mypagemenu { display: inline-block; width: 65px; text-align: center; }
+header .header_block #buttondiv #blankmenu { display: block; width: 65px; text-align: center; }
+header .header_block #buttondiv a #cart #fs { vertical-align: middle; }
+header .header_block #buttondiv a #login img, a #join img, a #cart img, a #admin_logout img, a #logout img, a #mypagemenu img { width: 28px; height: 25px; vertical-align: middle; }
+header .header_block #buttondiv a #admin img { width: 34px; height: 34px; vertical-align: middle; }
+
+/* Footer.jsp CSS */
+footer { height: 150px; background: #CBC2BA; }
+footer #left_div, #right_div { display: inline-block; vertical-align: middle; }
+footer #left_div { width: 280px; }
+footer #left_div #logoimg { width: 150px; height: 30px; }
+footer #right_div { margin: 10px auto; }
+footer #right_div p { padding: 5px; }
+footer #right_div p:nth-child(3), #right_div p:nth-child(4) { text-align: center; }

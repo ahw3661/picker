@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="join">
+	<insert id="insertMember">
+		INSERT INTO picker_member (m_id, m_password, m_email, m_name, m_phone, m_zipcode, m_roadaddr, m_detailaddr, m_date, m_type, m_point, m_terms, m_personal, session_key, session_limit) VALUES (#{m_id}, #{m_password}, #{m_email}, #{m_name}, #{m_phone}, #{m_zipcode}, #{m_roadaddr}, #{m_detailaddr}, sysdate, 1, 1000, #{m_terms}, #{m_personal}, default, '')
+	</insert>
+	<insert id="insertJoinPoint">
+		INSERT INTO picker_point (p_num, m_id, p_date, p_history, p_point, b_code) VALUES ((SELECT NVL(MAX(p_num)+1, 1) FROM picker_point), #{m_id}, sysdate, #{p_history}, #{p_point}, null)
+	</insert>
+</mapper>

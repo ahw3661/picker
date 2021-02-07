@@ -1,0 +1,26 @@
+@charset "UTF-8";
+.wrap h2{ margin:10px 0px 10px 200px; }
+#list_div{ margin:0 auto; }
+#list_div table{ margin:0 auto;border-collapse: collapse; text-align: center; width:900px; box-sizing: border-box; }
+#list_div tr:nth-of-type(1){ height: 50px; font-size: 17px; border-bottom: 1px solid lightgray; }
+#list_div table tr td { height: 90px; border-bottom: 1px solid lightgray; }
+.img_td{ width:80px;text-align: center; }
+.imgs{ width:70px; height:70px;vertical-align: middle; }
+.price_bottom{ text-align: right; padding:10px 30px; }
+.price_bottom span{ display: inline-block; width:100px; text-align: right; }
+.price_bottom label{ display:inline-block; width:100px; text-align: left; }
+#del_all_td{ text-align: left; }
+.del_one{ border: 2px solid gray; border-radius: 30px; width:90px; height: 35px; background:none; font-size: 12px; font-weight: bold; }
+.del_all{ border: 2px solid gray; border-radius: 30px; width:90px; height: 35px; font-size: 12px; font-weight: bold; }
+#list_div tr:nth-of-type(11){ height:60px; border-bottom: none; }
+.total_price{ text-align: right; padding-right: 30px; }
+.total_price label{ display:inline-block; width:80px; font-size: 18px; text-align: left; }
+tr#continue_bu_tr { border: none; }
+#continue_bu{ width:110px; height:45px; font-size: 15px; border-radius: 5px; background:white; border: 2px solid gray; margin-right: 10px; }
+#order_bu{ width:110px; height:45px; font-size: 15px;  border-radius: 5px; background:black; color:white; border: 2px solid gray; }
+.pm_Btn{ width:20px; height: 20px; }
+#c_cnt { border:none; width:25px; height: 45px; text-align: center; font-size: 14px; }
+#price, #point, #sum_price { border:none; width:100px; text-align: center; font-size: 14px;}
+#sum_totalfmt{display:inline-block; width:115px; font-size: 18px; }
+ 
+

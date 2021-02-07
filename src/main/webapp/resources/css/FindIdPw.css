@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+/* FindIdPw.jsp CSS */
+section .find_idpw_wrap { width: 1000px; height: 700px; margin: 0 auto; }
+section .find_idpw_wrap .find_all { width: 800px; display: flex; justify-content: space-between; align-items: center; margin: 0 auto; padding: 50px 0; }
+section .find_idpw_wrap .find_all .find_id, .find_pw { width: 395px; height: 300px; border: 1px solid lightgray; }
+section .find_idpw_wrap .find_all .find_id .title_div, .find_pw .title_div { width: 394px; height: 40px; text-align: center; margin: 0 auto; padding: 8px 0; border-bottom: 1px solid lightgray; }
+section .find_idpw_wrap .find_all .find_id p, .find_pw p { width: 395px; height: 30px; padding: 5px 0; text-align: center; font-size: 14px; }
+section .find_idpw_wrap .find_all .find_id .id_input_div, .find_pw .pw_input_div { width: 395px; height: 205px; margin: 0 auto; }
+section .find_idpw_wrap .find_all .find_id .id_input_div .id_div, .find_pw .pw_input_div .pw_div { width: 300px; margin: 0 auto; }
+section .find_idpw_wrap .find_all .find_id .id_input_div .id_div input[type=radio] { margin: 10px 0; }
+section .find_idpw_wrap .find_all .find_id .id_input_div .id_div input[type=text] { width: 300px; height: 35px; margin: 5px 0; }
+section .find_idpw_wrap .find_all .find_id .id_input_div .id_div .line { width: 300px; height: 0; border: 1px solid lightgray; text-align: center; margin: 10px 0; }
+section .find_idpw_wrap .find_all .find_id .id_input_div .id_div #phone_input { display: none; margin: 0; }
+section .find_idpw_wrap .find_all .find_id #id_btn { width: 300px; margin: 0 auto; text-align: center; }
+section .find_idpw_wrap .find_all .find_id #id_btn input { width: 150px; height: 35px; background: black; color: white; text-align: center; margin: 10px 0; }
+section .find_idpw_wrap .find_all .find_pw .pw_input_div .pw_div input[type=text] { width: 300px; height: 35px; margin: 38px 0; }
+section .find_idpw_wrap .find_all .find_pw #pw_btn { width: 300px; margin: 0 auto; text-align: center; }
+section .find_idpw_wrap .find_all .find_pw #pw_btn input { width: 150px; height: 35px; background: black; color: white; text-align: center; margin: 10px 0; }
+
+/* FindId.jsp CSS, FindPw.jsp CSS */
+section .find_wrap { width: 800px; height: 300px; margin: 0 auto; }
+section .find_wrap .find_info { width: 400px; height: 300px; margin: 0 auto; border: 1px solid lightgray; }
+section .find_wrap .find_info .title_div { width: 399px; height: 40px; text-align: center; margin: 0 auto; padding: 8px 0; border-bottom: 1px solid lightgray; }
+section .find_wrap .find_info p { width: 400px; height: 50px; padding: 15px 0; text-align: center; font-size: 14px; }
+section .find_wrap .find_info .msg_p { width: 400px; height: 200px; padding: 82px 0; text-align: center; font-size: 14px; }
+section .find_wrap .find_info .info { width: 300px; height: 153px; text-align: center; margin: 0 auto; padding: 68px 0; }
+section .find_wrap .find_info .login_btn { text-align: center; }
+section .find_wrap .find_info .login_btn input { width: 150px; height: 35px; background: black; color: white; text-align: center; margin: 10px 0; }

@@ -1,0 +1,47 @@
+@charset "UTF-8";
+section{background : #f3f3f3;}
+.buywrap { box-sizing:border-box; width:100%; height: 100%; }
+.buywrap h2 { height:50px; line-height: 50px; width:100%; margin:0 auto; text-align: center; margin-bottom: 20px; }
+.order_form { margin:10px auto; width:55%; display:flex; justify-content: center; }
+#order_wrap { width:520px; margin-right: 10px; }
+#order_item_info, #order_user_info,#order_delivery_info,#order_point_info{ background : white; padding:20px; width:520px; margin:10px 0; }
+#order_item_info { height: 451px; overflow-y: auto; }
+h4 { margin-bottom: 15px; }
+#t1{ border-collapse: collapse;  }
+#t1 tr{ width:470px; border-bottom: 1px solid lightgray;}
+#t1 tr:hover { opacity: 0.4; }
+#t1 td:nth-of-type(1) { width:70px; height:70px; }
+#t1 .tds { width: 400px; }
+#t1 #imgs{ width:60px; height:60px; vertical-align: middle; }
+#t1 input[type="text"]{ border: none; }
+#t1 .i_name { width: 100%; }
+#t1 .c_cnt { color:darkgray; font-size: 9px; }
+#t1 .i_price { font-weight: bold; }
+#t1 .trs * { cursor: pointer; }
+#order_user_info .user_info { border: none; margin:2px 0; height: 25px; padding: 0 2px; }
+#order_user_info .null_user { width:230px; height: 40px; margin:2px 1px; mpadding: 0 2px; outline:none; vertical-align: middle; border:none; border-bottom: 1px solid lightgray;  }
+#order_delivery_info input[type=text]{ margin:2px 1px; height: 40px; padding: 0 2px; outline:none; vertical-align: middle; border:none; border-bottom: 1px solid lightgray; }
+#order_delivery_info input[type=button] { margin-left: 1px; font-size: 13px; width:95px; height: 40px; vertical-align: middle; border:1px solid lightgray; }
+#order_delivery_info #delivery_chk { width:15px; height: 15px; vertical-align: middle; margin:5px 0; }
+#order_delivery_info .chk_span {font-size: 13px; vertical-align: middle;}
+#order_delivery_info #m_name { width: 230px; margin-right: 10px; }
+#order_delivery_info #m_phone { width : 230px; }
+#order_delivery_info #m_zipcode { width: 130px; }
+#order_delivery_info #m_roadaddr, #order_delivery_info #m_detailaddr { width: 470px;}
+#order_point_info #point { width:350px; height:40px; vertical-align: middle; margin-right: 5px; padding-left:2px; background:#d4d4d4; border:1px solid lightgray;}
+#order_point_info #point_btn { width:120px; height:40px; background: #808080; color:white; border: none; vertical-align: middle; border-radius: 5px; }
+#order_point_info #point_P { margin:5px 0;font-size: 13px; font-weight: bold; }
+#order_point_info #point_Pinfo { font-size: 13px; color:gray; }
+#fixed_wrap { width: 300px; }
+#pay_option,#agree_div{ background : white; padding:20px; width:300px; margin:10px 0; }
+#fixed_wrap #pay_wrap { background : white; padding:20px; width:300px; margin-top:10px; }
+#fixed_wrap .bg-gray { background : #e4e4e4; padding: 13px 20px; width:300px; height:44px; font-size: 13px; }
+#fixed_wrap #pay_wrap .pay_info{ display: flex; justify-content: space-between; margin:5px 0; }
+#itemPrice_span, #deiliveryPrice_span { color : gray; font-size: 14px;}
+#fixed_wrap #pay_wrap hr{ border:none; background: lightgray; height: 0.7px; margin:10px 0;}
+#fixed_wrap #pay_wrap #totalP { margin-top: 15px; display: flex; justify-content: space-between; font-weight: bold; }
+#fixed_wrap #pay_wrap #totalPrice_span { font-size: 14px;}
+#fixed_wrap #pay_wrap #totalPrice{ font-size: 15px; }
+#fixed_wrap #agree_div { margin:0; margin-top:10px; }
+#fixed_wrap #pay_btn { width:300px; background:black; font-size: 15px; font-weight:bold; text-align: center; color:white; }
+#fixed_wrap #pay_abtn { width:300px; height: 60px; line-height: 60px; }

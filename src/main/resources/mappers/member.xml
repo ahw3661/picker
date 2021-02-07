@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="member">
+	<!-- 내 정보 수정(비밀번호 제외) -->
+	<update id="updateMember">
+		UPDATE picker_member 
+		   SET m_email = #{m_email}
+		     , m_name = #{m_name}
+		     , m_phone = #{m_phone}
+		     , m_zipcode = #{m_zipcode}
+		     , m_roadaddr = #{m_roadaddr}
+		     , m_detailaddr = #{m_detailaddr} 
+		 WHERE m_id = #{m_id}
+	</update>
+	
+	<!-- 비밀번호 변경 -->
+	<update id="updatePassword">
+		UPDATE picker_member 
+		   SET m_password = #{m_newpassword} 
+		 WHERE m_id = #{m_id}
+	</update>
+	
+	<!-- 회원별 구매 목록 -->
+	<select id="buyList" resultType="bdto">
+		<!-- 부등호 사용을 위한 처리 -->
+		<![CDATA[
+			SELECT b.b_date, b.b_code, b.b_price, b.m_id
+			  FROM (SELECT rownum as rnum, a.b_date, a.b_code, a.b_price, a.m_id
+			          FROM (SELECT b_date, b_code, b_price, m_id 
+							  FROM picker_buy 
+							 WHERE m_id = #{m_id} 
+							 ORDER BY b_date DESC, b_code DESC
+			               ) a
+			         WHERE rownum <= #{endRow}
+			       ) b
+			 WHERE b.rnum >= #{startRow}
+		 ]]>
+	</select>
+	
+	<!-- 회원별 포인트 목록 -->
+	<select id="pointList" resultType="pdto">
+		<!-- 부등호 사용을 위한 처리 -->
+		<![CDATA[
+			SELECT b.p_date, b.p_history, b.p_point
+			  FROM (SELECT rownum as rnum, a.p_date, a.p_history, a.p_point
+			          FROM (SELECT p_date, p_history, p_point
+			                  FROM picker_point
+			                 WHERE m_id = #{m_id}
+			                 ORDER BY p_date DESC, p_num DESC
+			               ) a
+			         WHERE rownum <= #{endRow}
+			       ) b
+			 WHERE b.rnum >= #{startRow}
+		 ]]>
+	</select>
+	
+</mapper>

@@ -1,0 +1,8 @@
+@charset "UTF-8";
+.item_wrap { padding: 0 245px; margin-bottom: 20px; }
+.item_div { text-align: center; display:inline-block; margin: 10px 30px;}
+.item_div img { width: 200px; height: 200px; cursor: pointer; }
+.item_div p { margin: 5px; text-align: center; color: black; font-weight: bold; font-size: 12px; }
+#head_name { margin: 10px 30px; }
+#head_name #menuBtn{color: gray;}
+#head_name>hr { border:1px solid lightgray; }

@@ -1,0 +1,6 @@
+@charset "UTF-8";
+
+/* Section.jsp CSS */
+section { background: #FCF8ED; }
+section .img_div { width: 1200px; height: 1000px; text-align: center; }
+section .img_div img { width: 1000px; height: 950px; }

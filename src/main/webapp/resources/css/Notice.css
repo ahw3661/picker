@@ -1,0 +1,33 @@
+@charset "UTF-8";
+
+/* 공지목록 */
+#noticeCnt{color: #222222; font-size: 16px; line-height: 20px; font-weight: 500;}
+#noticeCnt span{display: inline-block; margin-left: 20px; color: #525252; font-size: 14px; line-height: 20px; font-weight: 700;}
+.noticeList form{width: 220px; height: 33px; border-bottom: 1px solid #c3c3c3; padding: 6px 0;}
+.noticeList input[type=text]{width: 190px; height: 20px; border: none; font-size: 14px; line-height: 20px;}
+.noticeList input[type=text]::placeholder{color: #c3c3c3;}
+.noticeList input[type=image]{width: 16px; height: 16px; margin: 0 6px;}
+.noticeList ul{display: flex; justify-content: flex-start; flex-wrap: wrap; align-content: flex-start; min-height: 450px; margin: 20px 0;}
+.noticeList ul>li{width: 290px; min-height: 230px; margin-right: 40px; margin-bottom: 30px;}
+.noticeList ul>li:nth-of-type(4n){margin-right: 0;}
+.noticeList .noticeImg{display: inline-flex; width: 290px; height: 165px; border: 1px solid #c3c3c3; align-items: center;}
+.noticeList .noticeImg img{width: 100%;}
+.noticeList li span{display: inline-block; margin: 8px 0; color: #222222; font-weight: 400; word-break: keep-all;}
+.noticeList li font{display: inline-block; margin-right: 15px; color: #525252; font-weight: 500;}
+.noticeList .btnBlack{width: 90px; height: 36px; border: none; border-radius: 3px; color: #ffffff; background-color: #222222; font-size: 14px;}
+
+/* 공지확인 */
+.noticeInfo>div{width: 900px; margin: 0 auto 100px;}
+/* .noticeTitle{margin: 50px auto;} */
+.noticeTitle{display: flex; flex-direction: column; justify-content: center; align-items: center; color: #222222;}
+.noticeTitle h4{font-size: 18px; font-weight: 400; margin: 20px 0;}
+.noticeTitle p{width: 20px; border-top: 1px solid #222222;}
+.noticeTitle h3{font-size: 24px; font-weight: 500; margin: 20px;}
+#noticeContent{min-height: 400px;}
+.noticeInfo>p{width: 900px; height: 45px; margin: 0 auto;}
+.readRef{display: inline-flex; justify-content: flex-start; align-items: center; width: 100%; height: 100%; border-top: 1px solid #c3c3c3;}
+.readRef>img{width: 16px; height: 16px; margin-left: 10px; margin-right: 30px;}
+.readBot{border-top: 1px solid #c3c3c3; padding-top: 15px;}
+.btnBlack{width: 90px; height: 36px; border: none; border-radius: 3px; color: #ffffff; background-color: #222222; font-size: 14px;}
+.btnWhite{width: 90px; height: 36px; border: 1px solid #222222; border-radius: 3px; 
+	color: #222222; background-color: transparent; font-size: 14px;}

@@ -1,0 +1,29 @@
+@charset "UTF-8";
+
+/* JoinAgree.jsp CSS */
+section .join_agree_wrap { width: 1000px; height: 800px; margin: 0 auto; }
+section .join_agree_wrap>div { width: 1000px; }
+section .join_agree_wrap .all_check { margin: 0 auto; }
+section .join_agree_wrap .agree_info { height: 680px; margin: 0 auto; }
+section .join_agree_wrap .agree_info div { width: 100%; margin: 10px auto; }
+section .join_agree_wrap .agree_info .terms, .personal { height: 300px; overflow-y: auto; border: 1px solid black; }
+section .join_agree_wrap .agree_info .terms p, .agree_info .personal p { margin: 10px 0 10px 5px; font-size: 13px; }
+section .join_agree_wrap .btns { margin: 20px auto; text-align: center; }
+section .join_agree_wrap .btns input { width: 100px; height: 40px; border: 1px solid black; }
+section .join_agree_wrap .btns input[type=button] { border: 1px solid lightgray; background: white; }
+section .join_agree_wrap .btns input[type=submit] { border: 1px solid black; color: white; background: black; }
+
+/* JoinWrite.jsp CSS */
+section .join_write_wrap { width: 1000px; height: 700px; margin: 0 auto; }
+section .join_write_wrap div { width: 400px; margin: 10px auto; }
+section .join_write_wrap div p { margin-bottom: 0; }
+section .join_write_wrap div p>span { font-size: 11px; vertical-align: top; color: red; }
+section .join_write_wrap div>span { display: block; height: 10px; font-size: 11px; }
+section .join_write_wrap .input_div input { width: 400px; height: 35px; }
+section .join_write_wrap .zipcode_div input { margin: 2px 0; }
+section .join_write_wrap .zipcode_div #zipCode { width: 195px; height: 35px; }
+section .join_write_wrap .zipcode_div .zipbtn { width: 200px; height: 35px; vertical-align: middle; border: 1px solid black; color: white; background: black; }
+section .join_write_wrap .zipcode_div #roadAddress, .zipcode_div #detailAddress { width: 400px; height: 35px; }
+section .join_write_wrap .join_btn { margin-top: 10px; }
+section .join_write_wrap .join_btn input { width: 400px; height: 40px; border: 1px solid black; color: white; background: black; }
+

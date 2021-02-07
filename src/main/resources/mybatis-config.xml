@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+	<settings>
+    	<setting name="jdbcTypeForNull" value="NULL"/>
+    </settings>
+   
+	<typeAliases>
+		<typeAlias type="com.project.picker.DTO.MemberDTO" alias="mdto"/>
+		<typeAlias type="com.project.picker.DTO.BuyDTO" alias="bdto"/>
+		<typeAlias type="com.project.picker.DTO.BuyitemDTO" alias="bidto"/>
+		<typeAlias type="com.project.picker.DTO.PointDTO" alias="pdto"/>
+	</typeAliases>
+
+</configuration>

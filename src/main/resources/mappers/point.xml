@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="point">
+	<!-- 전체 회원 포인트 내역 -->
+	<select id="allPointList" resultType="pdto">
+		<!-- SELECT a.m_id AS m_id, SUM(a.p_point) AS p_point
+		  FROM picker_point a INNER JOIN picker_member b
+		    ON a.m_id = b.m_id
+		 WHERE b.m_type = '1'
+		 GROUP BY a.m_id -->
+		 <![CDATA[
+			 SELECT b.m_id, b.p_point
+			   FROM (SELECT rownum as rnum, a.m_id, a.p_point
+			           FROM (SELECT a.m_id AS m_id, SUM(a.p_point) AS p_point
+			                   FROM picker_point a INNER JOIN picker_member b
+			                     ON a.m_id = b.m_id
+			                  WHERE b.m_type = '1'
+			                  GROUP BY a.m_id
+			                ) a
+			          WHERE rownum <= #{endRow}
+			        ) b
+			  WHERE b.rnum >= #{startRow}
+		  ]]>
+	</select>
+	
+	<!-- 회원별 포인트 목록 -->
+	<select id="onePointDetail" resultType="pdto">
+		<!-- 부등호 사용을 위한 처리 -->
+		<![CDATA[
+			SELECT b.p_date, b.p_history, b.p_point
+			  FROM (SELECT rownum as rnum, a.p_date, a.p_history, a.p_point
+			          FROM (SELECT p_date, p_history, p_point
+			                  FROM picker_point
+			                 WHERE m_id = #{m_id}
+			                 ORDER BY p_date DESC, p_num DESC
+			               ) a
+			         WHERE rownum <= #{endRow}
+			       ) b
+			 WHERE b.rnum >= #{startRow}
+		 ]]>
+	</select>
+	
+</mapper>

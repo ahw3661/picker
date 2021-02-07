@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="admin">
+	<!-- 전체 구매 목록 -->
+	<select id="allBuyList" resultType="bdto">
+		<!-- 부등호 사용을 위한 처리 -->
+		<![CDATA[
+			SELECT b.b_date, b.b_code, b.b_price, b.m_id
+			  FROM (SELECT rownum as rnum, a.b_date, a.b_code, a.b_price, a.m_id
+			          FROM (SELECT b_date, b_code, b_price, m_id 
+							  FROM picker_buy  
+							 ORDER BY b_date DESC, b_code DESC
+			               ) a
+			         WHERE rownum <= #{endRow}
+			       ) b
+			 WHERE b.rnum >= #{startRow}
+		 ]]>
+	</select>
+	
+	<!-- 전체 회원 목록 -->
+	<select id="memberList" resultType="mdto">
+		<!-- 부등호 사용을 위한 처리 -->
+		<![CDATA[
+			SELECT b.m_id, b.m_phone, b.m_email, b.m_date, b.m_type
+			  FROM (SELECT rownum as rnum, a.m_id, a.m_phone, a.m_email, a.m_date, a.m_type
+			          FROM (SELECT m_id, m_phone, m_email, m_date, m_type
+			                  FROM picker_member 
+			                 WHERE m_type IN (1, 2)
+			               ) a
+			         WHERE rownum <= #{endRow}
+			       ) b
+			 WHERE b.rnum >= #{startRow}
+		 ]]>
+	</select>
+	
+</mapper>

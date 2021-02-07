@@ -1,0 +1,158 @@
+@charset "UTF-8";
+
+/* AdminPage.jsp CSS */
+section { background: #F6F6F8; }
+section .admin_page_wrap { width: 1200px; height: 1050px; display: flex; margin: 0px auto; background: #F6F6F8; }
+section .admin_page_wrap .menu_list_left { width: 200px; }
+section .admin_page_wrap .menu_list_right { width: 1000px; }
+section .admin_page_wrap .menu_list_left ul { width: 100%; }
+section .admin_page_wrap .menu_list_left ul li { height: 40px; }
+section .admin_page_wrap .menu_list_left ul li a:hover { border-bottom: 1px solid black; }
+section .admin_page_wrap .menu_list_left ul li .admin_a.off { border-bottom: none; }
+section .admin_page_wrap .menu_list_left ul li .admin_a.on { border-bottom: 1px solid black; }
+section .admin_page_wrap .menu_list_right .right_top { width: 100%; height: 180px; display: flex; align-items: center; background: white; }
+section .admin_page_wrap .menu_list_right .right_top .user { width: 400px; height: 100px; padding: 30px 0; text-align: center; }
+section .admin_page_wrap .menu_list_right .right_top .user>p { width: 100%; height: 60px; padding: 15px 5px; font-size: 16px; }
+section .admin_page_wrap .menu_list_right .right_top .part_line { width: 0; height: 90px; border: 0.1px solid #E5E5E5; }
+section .admin_page_wrap .menu_list_right .right_top .user_count, .right_top .item_count { width: 300px; height: 100px; text-align: center; }
+section .admin_page_wrap .menu_list_right .right_top .user_count>p, .right_top .item_count>p { width: 100%; height: 50px; padding: 15px 5px; }
+section .admin_page_wrap .menu_list_right .right_top .user_count>div, .right_top .item_count>div { width: 100%; height: 50px; padding: 3px 5px; font-size: 40px; }
+section .admin_page_wrap .menu_list_right .right_bottom { width: 1000px; height: 820px; }
+
+/* AdminBuyList.jsp CSS */
+section .buy_list_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+section .buy_list_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+section .buy_list_wrap .buy_list_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
+section .buy_list_wrap .buy_list_table_wrap table { width: 100%; margin: 0 auto; }
+section .buy_list_wrap .buy_list_table_wrap table tr .buy_th { height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_list_wrap .buy_list_table_wrap table tr .buy_th, tr .date_td, tr .iprice_td, tr .cnt_td, tr .bprice_td { width: 130px; }
+section .buy_list_wrap .buy_list_table_wrap table tr .buy_th:nth-child(3), tr .item_td { width: 350px; }
+section .buy_list_wrap .buy_list_table_wrap table tr td { height: 55px; text-align: center; font-size: 14px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+section .buy_list_wrap .buy_list_table_wrap table tr .code_td { width: 130px; border-right: 1px solid #E5E5E5; }
+section .buy_list_wrap .buy_list_table_wrap table tr .code_td a:hover, tr .item_td a:hover { text-decoration: underline; }
+section .buy_list_wrap .buy_list_table_wrap table tr .item_td { text-align: left; padding: 0 8px; }
+section .buy_list_wrap .buy_list_table_wrap table tr .item_td img { width: 40px; height: 40px; text-align: left; vertical-align: middle; }
+section .buy_list_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
+section .buy_list_wrap .curr_div { font-weight: bold; color: red; }
+
+/* AdminBuyDetail.jsp CSS */
+section .buy_list_detail_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+section .buy_list_detail_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+section .buy_list_detail_wrap>h4, .item_info>h4, .take_info>h4 { width: 100%; height: 60px; padding-top: 30px; }
+section .buy_list_detail_wrap .buy_list { width: 100%; margin: 0 auto; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_list_detail_wrap .buy_list .buy_date, .buy_list .buy_num, .buy_list .buy_price { display: flex; align-items: center; }
+section .buy_list_detail_wrap .buy_list .buy_list_title { width: 200px; height: 40px; padding: 9px 10px; font-size: 15px; }
+section .buy_list_detail_wrap .buy_list .buy_list_detail { width: 800px; height: 40px; padding: 12px 10px; }
+section .buy_list_detail_wrap .item_info { width: 1000px; margin: 0 auto; }
+section .buy_list_detail_wrap .item_info .item_detail { width: 100%; height: auto; margin: 0 auto; }
+section .buy_list_detail_wrap .item_info .item_detail table { width: 1000px; margin: 0 auto; }
+section .buy_list_detail_wrap .item_info .item_detail table tr .item_th { height: 40px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_list_detail_wrap .item_info .item_detail table tr .item_th, tr .item_td { text-align: center; font-size: 14px; }
+section .buy_list_detail_wrap .item_info .item_detail table tr .item_th:nth-child(1) { width: 50px; }
+section .buy_list_detail_wrap .item_info .item_detail table tr .item_th:nth-child(2), tr .item_td:nth-child(2) { width: 350px; }
+section .buy_list_detail_wrap .item_info .item_detail table tr .item_th:nth-child(3), tr .item_td:nth-child(3) { width: 100px; }
+section .buy_list_detail_wrap .item_info .item_detail table tr .item_th:nth-child(4), tr .item_th:nth-child(5), tr .item_td:nth-child(4), tr .item_td:nth-child(5) { width: 150px; }
+section .buy_list_detail_wrap .item_info .item_detail table tr .item_td { height: 50px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+section .buy_list_detail_wrap .item_info .item_detail table tr .item_td:nth-child(1) { width: 50px; border-right: 1px solid lightgray; }
+section .buy_list_detail_wrap .take_info { width: 1000px; margin: 0 auto; }
+section .buy_list_detail_wrap .take_info .take_detail { display: flex; }
+section .buy_list_detail_wrap .take_info .take_detail .take_detail_left { width: 200px; height: 100px; text-align: center; font-size: 15px; padding: 39px 0; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_list_detail_wrap .take_info .take_detail .take_detail_right { width: 800px; height: 100px; padding: 20px 0 20px 10px; border: 1px solid gray; border-left: 0; border-right: 0; }
+section .buy_list_detail_wrap .list_btn { width: 1000px; margin: 30px auto; text-align: center; }
+section .buy_list_detail_wrap .list_btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
+
+/* AdminPointList.jsp CSS */
+section .point_list_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+section .point_list_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+section .point_list_wrap .point_list_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
+section .point_list_wrap .point_list_table_wrap table { width: 100%; margin: 0 auto; }
+section .point_list_wrap .point_list_table_wrap table tr .pointlist_th { height: 40px; text-align: center; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .point_list_wrap .point_list_table_wrap table tr .pointlist_th:nth-child(1), tr .pointlist_td:nth-child(1) { width: 300px; }
+section .point_list_wrap .point_list_table_wrap table tr .pointlist_th:nth-child(2), tr .pointlist_td:nth-child(2) { width: 400px; }
+section .point_list_wrap .point_list_table_wrap table tr .pointlist_th:nth-child(3), tr .pointlist_td:nth-child(3) { width: 300px; }
+section .point_list_wrap .point_list_table_wrap table tr .pointlist_td { height: 50px; text-align: center; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+section .point_list_wrap .point_list_table_wrap table tr .pointlist_td:nth-child(2) { text-align: right; }
+section .point_list_wrap .point_list_table_wrap table tr .pointlist_td input { width: 100px; height: 30px; border: 1px solid black; color: white; background: black; }
+section .point_list_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
+section .point_list_wrap .curr_div { font-weight: bold; color: red; }
+
+/* AdminPointDetail.jsp CSS */
+section .point_detail_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+section .point_detail_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+section .point_detail_wrap>p { width: 100%; height: 60px; text-align: center; padding: 15px 0;}
+section .point_detail_wrap>p span { border-bottom: 2px solid black; padding-bottom: 3px; }
+section .point_detail_wrap .point_detail_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
+section .point_detail_wrap .point_detail_table_wrap table { width: 100%; margin: 0 auto; }
+section .point_detail_wrap .point_detail_table_wrap table tr .pointdetail_th { height: 40px; text-align: center; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .point_detail_wrap .point_detail_table_wrap table tr .pointdetail_th:nth-child(1), tr .pointdetail_td:nth-child(1) { width: 200px; padding-left: 10px; }
+section .point_detail_wrap .point_detail_table_wrap table tr .pointdetail_th:nth-child(2), tr .pointdetail_td:nth-child(2) { width: 600px; }
+section .point_detail_wrap .point_detail_table_wrap table tr .pointdetail_th:nth-child(3), tr .pointdetail_td:nth-child(3) { width: 200px; padding-right: 10px; }
+section .point_detail_wrap .point_detail_table_wrap table tr .pointdetail_td { height: 50px; text-align: center; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+section .point_detail_wrap .point_detail_table_wrap table tr .pointdetail_td:nth-child(2) { text-align: left; }
+section .point_detail_wrap .point_detail_table_wrap table tr .pointdetail_td>span { color: #3CC42F; }
+section .point_detail_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
+section .point_detail_wrap .curr_div { font-weight: bold; color: red; }
+section .point_detail_wrap .list_btn { width: 1000px; margin: 15px auto; text-align: center; }
+section .point_detail_wrap .list_btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
+
+/* AdminItemList.jsp CSS */
+.AdminItemList_wrap { width: 1000px; height: 100%; margin: 0 auto;  }
+.AdminItemList_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+.AdminItemList_wrap .AdminItemList_div { width: 1000px; min-height: 600px; margin: 0 auto; }
+.AdminItemList_wrap .AdminItemList_div table { margin: 0 auto; width: 100%; }
+.AdminItemList_wrap .AdminItemList_div table #list_Title td { width: 250px; height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+.AdminItemList_wrap .AdminItemList_div table #list_Title td:nth-child(2) { width: 500px; }
+.AdminItemList_wrap .AdminItemList_div table td { height: 55px; text-align: center; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+.AdminItemList_wrap .AdminItemList_div table td a:hover { text-decoration: underline; }
+.AdminItemList_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
+.AdminItemList_wrap .curr_div { font-weight: bold; color: red; }
+
+/* AdminItemDetail.jsp CSS */
+.AdminItemDetail_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+.AdminItemDetail_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+.AdminItemDetail_wrap table { margin: 0 auto; border: 1px solid lightgray;  text-align: center; width: 600px; height: 350px;border: 1px solid gray;  }
+.AdminItemDetail_wrap table tr { border:1px solid lightgray; }
+.AdminItemDetail_wrap table tr th { width: 150px;  border: 1px solid lightgray; }
+.AdminItemDetail_wrap table tr td { width: 150px;  border: 1px solid lightgray; }
+.AdminItemDetail_wrap table tr td img  { width: 300px; height: 200px; text-align: center; vertical-align: middle; }
+.AdminItemDetail_wrap table .info_title { background: #F0EEEA; }
+.AdminItemDetail_wrap #List_btn { text-align: center; margin: 2px; }
+.AdminItemDetail_wrap #List_btn input { border: 2px solid gray; width: 130px; height: 50px; font-size: 20px; background: #F0EEEA; }
+
+/* AdminMemberList.jsp CSS */
+.AdminUserList_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+.AdminUserList_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+.AdminUserList_wrap .AdminUserList_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
+.AdminUserList_wrap .AdminUserList_table_wrap table { margin: 0 auto; border: 1px solid lightgray; text-align: center; width:800px; }
+.AdminUserList_wrap .AdminUserList_table_wrap table #info_title { height: 50px; background: #F0EEEA; }
+.AdminUserList_wrap .AdminUserList_table_wrap table #info_title td { border: 1px solid lightgray; }
+.AdminUserList_wrap .AdminUserList_table_wrap table #list_Info { height: 30px; }
+.AdminUserList_wrap .AdminUserList_table_wrap table #list_Info td { border: 1px solid lightgray; }
+.AdminUserList_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
+.AdminUserList_wrap .curr_div { font-weight: bold; color: red; }
+
+/* AdminOneUserInfo.jsp CSS */
+.AdminOneUserList_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+.AdminOneUserList_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+.AdminOneUserList_wrap table { width: 800px; margin: 0 auto; border: 1px solid lightgray; text-align: center; }
+.AdminOneUserList_wrap table .OneList_info { border: 1px solid lightgray; text-align: center; }
+.AdminOneUserList_wrap table .OneList_info th { border: 1px solid lightgray; background: #F0EEEA; width: 150px; height: 50px; }
+.AdminOneUserList_wrap table .OneList_info td { width: 400px; }
+.AdminOneUserList_wrap #List_btn { text-align: center; }
+.AdminOneUserList_wrap #List_btn input[type=button] { border: 2px solid gray; width: 150px; height: 50px; font-size: 20px; background: #F0EEEA; }
+
+/* AdminItemInsert.jsp CSS */
+.ItemInsert_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+.ItemInsert_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+.ItemInsert_wrap form table { margin: 0 auto; text-align: center; width: 600px; height: 250px; border: 1px solid gray; }
+.ItemInsert_wrap form table tr { border: 1px solid gray; } 
+.ItemInsert_wrap form table tr th { border: 1px solid gray;  background: #F0EEEA; }
+.ItemInsert_wrap form table tr td { border: 1px solid gray; }
+.ItemInsert_wrap form table tr td .Item_input { width: 500px; height: 30px; } 
+.ItemInsert_wrap form table tr td select { width: 500px; height: 30px; }
+.ItemInsert_wrap form table tr td input[type=file] { width: 500px; text-align: left; }
+.ItemInsert_wrap form #Insert_Btn { text-align: center; margin: 20px; }
+.ItemInsert_wrap form #Insert_Btn input[type=button] { border: 2px solid gray; width: 130px; height: 50px; font-size: 20px; background: #F0EEEA; }
+
+
+

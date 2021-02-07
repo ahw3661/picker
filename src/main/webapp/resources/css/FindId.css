@@ -1,0 +1,10 @@
+@charset "UTF-8";
+
+/* FindId.jsp CSS */
+section .find_id_wrap {background:pink; width: 800px; height: 300px; margin: 0 auto; }
+section .find_id_wrap .find_id_info {background:yellow; width: 400px; height: 300px; margin: 0 auto; border: 1px solid lightgray; }
+section .find_id_wrap .find_id_info .title_div { width: 399px; height: 40px; text-align: center; margin: 0 auto; padding: 8px 0; border-bottom: 1px solid lightgray; }
+section .find_id_wrap .find_id_info p { width: 400px; height: 50px; padding: 15px 0; text-align: center; font-size: 14px; }
+section .find_id_wrap .find_id_info .id_info {background:lightblue; width: 300px; height: 153px; text-align: center; margin: 0 auto; padding: 68px 0; }
+section .find_id_wrap .find_id_info .login_btn { text-align: center; }
+section .find_id_wrap .find_id_info .login_btn input { width: 150px; height: 35px; background: black; color: white; text-align: center; margin: 10px 0; }
