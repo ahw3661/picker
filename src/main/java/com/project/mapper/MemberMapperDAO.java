@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import org.apache.ibatis.annotations.Delete;
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
@@ -41,9 +42,9 @@ public interface MemberMapperDAO {
 	@Select("SELECT COUNT(*) FROM picker_member WHERE m_id = #{m_id} AND m_password = #{m_password}")
 	public int pwCheck(MemberDTO mdto);
 	
-	// 회원탈퇴
-	@Delete("DELETE FROM picker_member WHERE m_id = #{m_id}")
-	public void deleteMember(@Param("m_id") String m_id);
+	// 회원탈퇴 - 회원유형 변경
+	@Update("UPDATE picker_member SET m_point = 0, m_type = 2 WHERE m_id = #{m_id}")
+	public void updateMemberType(@Param("m_id") String m_id);
 	
 	// 회원탈퇴 - qna id 삭제
 	@Update("UPDATE picker_qna SET m_id = '' WHERE m_id = #{m_id}")
@@ -94,30 +95,73 @@ public interface MemberMapperDAO {
 	public ArrayList<BuyitemDTO> buyItem();
 
 	// 구매상세1
-	@Select("SELECT * FROM picker_buy WHERE m_id = #{m_id} AND b_code = #{b_code}")
-	public BuyDTO oneBuyInfo(@Param("m_id") String m_id, @Param("b_code") String b_code);
+	@Select("SELECT * FROM picker_buy WHERE m_id = #{m_id} AND b_code = #{b_code} AND b_chk = 0")
+	public BuyDTO oneBuyInfo(@Param("m_id") String m_id, @Param("b_code") int b_code);
 
 	// 구매상세2
 	@Select("SELECT * FROM picker_buyitem WHERE b_code = #{b_code}")
-	public ArrayList<BuyitemDTO> oneBuyItemInfo(@Param("b_code") String b_code);
+	public ArrayList<BuyitemDTO> oneBuyItemInfo(@Param("b_code") int b_code);
 	
 	// 상품구매 금액 합계
 	@Select("SELECT SUM(bi_cnt*i_price) FROM picker_buyitem WHERE b_code = #{b_code}")
-	public int sumBuyPrice(@Param("b_code") String b_code);
+	public int sumBuyPrice(@Param("b_code") int b_code);
 
 	// 비회원 구매내역 체크
-	@Select("SELECT * FROM picker_buy WHERE b_code = #{b_code} AND b_order_phone = #{b_order_phone}")
+	@Select("SELECT * FROM picker_buy WHERE b_code = #{b_code} AND b_order_phone = #{b_order_phone} AND b_chk = 0")
 	public BuyDTO buyCheck(BuyDTO bdto);
 	
 	// 비회원 구매상세1
-	@Select("SELECT * FROM picker_buy WHERE b_code = #{b_code} AND b_order_phone = #{b_order_phone}")
-	public BuyDTO noneOneBuyInfo(@Param("b_code") String b_code, @Param("b_order_phone") String b_order_phone);
+	@Select("SELECT * FROM picker_buy WHERE b_code = #{b_code} AND b_order_phone = #{b_order_phone} AND b_chk = 0")
+	public BuyDTO noneOneBuyInfo(@Param("b_code") int b_code, @Param("b_order_phone") String b_order_phone);
 
 	// 비회원 구매상세2
 	@Select("SELECT * FROM picker_buyitem WHERE b_code = #{b_code}")
-	public ArrayList<BuyitemDTO> noneOneBuyItemInfo(@Param("b_code") String b_code);
+	public ArrayList<BuyitemDTO> noneOneBuyItemInfo(@Param("b_code") int b_code);
 
 	// 회원별 주문취소 가능 구매 목록
-	@Select("SELECT * FROM picker_buy WHERE m_id = #{m_id} AND b_date >= to_char(sysdate - 1, 'yy/MM/dd') ORDER BY b_date DESC, b_code DESC")
-	public ArrayList<BuyDTO> buyCancelList(String m_id);
+	@Select("SELECT * FROM picker_buy WHERE m_id = #{m_id} AND b_date >= to_char(sysdate - 1, 'yy/MM/dd') AND b_chk = 0 ORDER BY b_date DESC, b_code DESC")
+	public ArrayList<BuyDTO> buyCancelList(@Param("m_id") String m_id);
+
+	// 구매시 사용한 포인트
+	@Select("SELECT p_point FROM picker_point WHERE b_code = #{b_code} AND p_point < 0")
+	public Integer usePoint(@Param("b_code") int b_code); // int는 null을 형변환할 수 없음. Integer로 받아야 함.
+	
+	// 구매취소 - 구매취소 여부, 취소일자
+	@Update("UPDATE picker_buy SET b_chk = 1, u_date = sysdate WHERE b_code = #{b_code} AND b_chk = 0")
+	public void buyState(@Param("b_code") int b_code);
+	
+	// 구매취소 - 구매 취소 후 총 포인트
+	@Select("SELECT SUM(p_point) AS p_point FROM picker_point WHERE m_id = #{m_id}")
+	public int sumPoint(@Param("m_id") String m_id);
+	
+	// 구매취소 - 총 포인트 변경 
+	@Insert("UPDATE picker_member SET m_point = #{m_point} WHERE m_id = #{m_id}")
+	public void updatePoint(@Param("m_id") String m_id, @Param("m_point") int m_point);
+	
+	// 회원별 주문취소완료 목록
+	@Select("SELECT * FROM picker_buy WHERE m_id = #{m_id} AND b_chk = 1 ORDER BY b_date DESC, b_code DESC")
+	public ArrayList<BuyDTO> buyCancelContent(@Param("m_id") String m_id);
+
+	// 회원별 주문취소완료 카운트
+	@Select("SELECT COUNT(*) FROM picker_buy WHERE m_id = #{m_id} AND b_chk = 1 ORDER BY b_date DESC, b_code DESC")
+	public int getBuyCancelCount(String m_id);
+	
+	// 구매취소완료 상세1
+	@Select("SELECT * FROM picker_buy WHERE m_id = #{m_id} AND b_code = #{b_code} AND b_chk = 1")
+	public BuyDTO oneBuyCancelInfo(@Param("m_id") String m_id, @Param("b_code") int b_code);
+
+	// 구매취소완료 상세2
+	@Select("SELECT * FROM picker_buyitem WHERE b_code = #{b_code}")
+	public ArrayList<BuyitemDTO> oneBuyCancelItemInfo(@Param("b_code") int b_code);
+	
+	// 구매취소 전 사용한 포인트
+	@Select("SELECT p_point FROM picker_point WHERE b_code = #{b_code} AND p_history LIKE '%사용%'")
+	public Integer preUsePoint(@Param("b_code") int b_code); // int는 null을 형변환할 수 없음. Integer로 받아야 함.
+	
+	// 구매취소일자
+	/*@Select("SELECT DISTINCT(p_date) FROM picker_point WHERE b_code = #{b_code} AND p_history LIKE '%취소%'")
+	public Date getCancelDate(@Param("b_code") int b_code);*/
+	@Select("SELECT DISTINCT(u_date) FROM picker_buy WHERE b_code = #{b_code} AND b_chk = 1")
+	public Date getCancelDate(@Param("b_code") int b_code);
+		
 }

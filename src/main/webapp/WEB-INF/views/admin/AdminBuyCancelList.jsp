@@ -9,23 +9,26 @@
 </head>
 <body>
 	<section>
-		<div class="buy_info_wrap">
-			<h3>주문내역</h3>
-			<div class="buy_info_table_wrap">
+		<div class="buy_cancel_list_wrap">
+			<h3>취소완료내역</h3>
+			<div class="buy_cancel_list_table_wrap">
 				<table>
 					<tr>
-						<th class="buy_th">주문일자</th>
-						<th class="buy_th">주문번호</th>
-						<th class="buy_th">주문 상품 정보</th>
-						<th class="buy_th">상품 금액</th>
-						<th class="buy_th">수량</th>
-						<th class="buy_th">배송비</th>
+						<th class="buyCancelList_th">주문일자</th>
+						<th class="buyCancelList_th">주문번호</th>
+						<th class="buyCancelList_th">주문 상품 정보</th>
+						<th class="buyCancelList_th">상품 금액</th>
+						<th class="buyCancelList_th">수량</th>
+						<th class="buyCancelList_th">배송비</th>
+						<th class="buyCancelList_th">상태</th>
 					</tr>
-					<c:if test="${empty buylist }">
-						<tr><td colspan="6" class="buy_td">주문내역이 없습니다.</td></tr>
+					<c:if test="${empty allBuyCancel }">
+						<tr>
+							<td colspan="7" class="buy_cancel_td">주문 취소 내역이 없습니다.</td>
+						</tr>
 					</c:if>
-					<c:if test="${not empty buylist }">
-						<c:forEach var="list" items="${buylist }">
+					<c:if test="${not empty allBuyCancel }">
+						<c:forEach var="list" items="${allBuyCancel }">
 							<c:forEach var="item" items="${buyitem }">
 								<c:if test="${list.b_code == item.b_code }">
 									<tr>
@@ -33,7 +36,7 @@
 											<fmt:parseDate var="bdate" value="${list.b_date }" pattern="yyyy-MM-dd HH:mm:ss" />
 											<fmt:formatDate var="b_date" value="${bdate }" pattern="yyyy-MM-dd" />${b_date }
 										</td>
-										<td class="code_td"><a href="javascript:buyInfoDetail('${item.b_code }', ${pgdto.pageNum });">${item.b_code }</a></td>
+										<td class="code_td"><a href="javascript:oneBuyCancel('${item.b_code }', ${pgdto.pageNum });">${item.b_code }</a></td>
 										<td class="item_td">
 											<img alt="img" src="resources/image/category_img/${item.i_img }">&nbsp;
 											<a href="goDetail?i_code=${item.i_code}">${item.i_name }</a>
@@ -48,6 +51,7 @@
 												<fmt:formatNumber var="b_price" value="${list.b_price }" pattern="#,###"/>${b_price }원
 											</c:if>
 										</td>
+										<td class="state_td">취소완료</td>
 									</tr>
 								</c:if>
 							</c:forEach>
@@ -57,18 +61,18 @@
 			</div>
 			<div class="centerBlock">
 	 			<c:if test="${pgdto.startPage > 1}">
-	 				<div class="prev_div"><a href="javascript:buyInfo(${pgdto.startPage - pgdto.pageSize});"><b>《</b></a></div>
+	 				<div class="prev_div"><a href="javascript:allBuyCancel(${pgdto.startPage - pgdto.pageSize});"><b>《</b></a></div>
 	 			</c:if>
 				<c:forEach var="page" begin="${pgdto.startPage}" end="${pgdto.endPage}">
 					<c:if test="${page != pgdto.pageNum}">
-						<div class="page_div"><a href="javascript:buyInfo(${page})">${page}</a></div>
+						<div class="page_div"><a href="javascript:allBuyCancel(${page})">${page}</a></div>
 					</c:if>
 					<c:if test="${page == pgdto.pageNum}">
-						<div class="curr_div"><a href="javascript:buyInfo(${page})">${page}</a></div>
+						<div class="curr_div"><a href="javascript:allBuyCancel(${page})">${page}</a></div>
 					</c:if>
 				</c:forEach>
 	 			<c:if test="${pgdto.endPage < pgdto.pageCount}">
-	 				<div class="next_div"><a href="javascript:buyInfo(${pgdto.startPage + pgdto.pageSize });"><b>》</b></a></div>
+	 				<div class="next_div"><a href="javascript:allBuyCancel(${pgdto.startPage + pgdto.pageSize });"><b>》</b></a></div>
 	 			</c:if>
 			</div>
 		</div>
@@ -90,20 +94,23 @@
 		$(".code_td").each(function() {
 			var code = $(".code_td:contains('" + $(this).text() + "')");
 			var price = code.siblings(".bprice"); // 같은 배송비 td 병합. 같은 tr 아래에 있는 td 중 지정.
+			var state = code.siblings(".state_td"); // 같은 상태 td 병합. 같은 tr 아래에 있는 td 중 지정.
 			
 			if(code.length > 1) {
 				code.eq(0).attr("rowspan", code.length);
 				code.not(":eq(0)").remove();
 				price.eq(0).attr("rowspan", code.length);
 				price.not(":eq(0)").remove();
+				state.eq(0).attr("rowspan", code.length);
+				state.not(":eq(0)").remove();
 			}
 		});
 	});
 	
 	// 주문조회상세
-	function buyInfoDetail(cd, pn) {
+	function oneBuyCancel(cd, pn) {
 		$.ajax({
-			url : "buyInfoDetail",
+			url : "oneBuyCancel",
 			type : "post",
 			data : { "b_code" : cd, "pageNum" : pn },
 			datatype : "html",
@@ -118,9 +125,9 @@
 	}
 	
 	// 페이징
-	function buyInfo(pn) {
+	function allBuyCancel(pn) {
 		$.ajax({
-			url : "buyInfo",
+			url : "allBuyCancel",
 			type : "post",
 			data : { "pageNum" : pn },
 			datatype : "html",

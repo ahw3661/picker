@@ -8,7 +8,25 @@
 			SELECT b.b_date, b.b_code, b.b_price, b.m_id
 			  FROM (SELECT rownum as rnum, a.b_date, a.b_code, a.b_price, a.m_id
 			          FROM (SELECT b_date, b_code, b_price, m_id 
-							  FROM picker_buy  
+							  FROM picker_buy 
+							 WHERE b_chk = 0
+							 ORDER BY b_date DESC, b_code DESC
+			               ) a
+			         WHERE rownum <= #{endRow}
+			       ) b
+			 WHERE b.rnum >= #{startRow}
+		 ]]>
+	</select>
+	
+	<!-- 전체 구매취소 목록 -->
+	<select id="allBuyCancel" resultType="bdto">
+		<!-- 부등호 사용을 위한 처리 -->
+		<![CDATA[
+			SELECT b.b_date, b.b_code, b.b_price, b.m_id
+			  FROM (SELECT rownum as rnum, a.b_date, a.b_code, a.b_price, a.m_id
+			          FROM (SELECT b_date, b_code, b_price, m_id 
+							  FROM picker_buy 
+							 WHERE b_chk = 1
 							 ORDER BY b_date DESC, b_code DESC
 			               ) a
 			         WHERE rownum <= #{endRow}

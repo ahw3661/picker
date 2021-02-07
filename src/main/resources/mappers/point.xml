@@ -3,11 +3,6 @@
 <mapper namespace="point">
 	<!-- 전체 회원 포인트 내역 -->
 	<select id="allPointList" resultType="pdto">
-		<!-- SELECT a.m_id AS m_id, SUM(a.p_point) AS p_point
-		  FROM picker_point a INNER JOIN picker_member b
-		    ON a.m_id = b.m_id
-		 WHERE b.m_type = '1'
-		 GROUP BY a.m_id -->
 		 <![CDATA[
 			 SELECT b.m_id, b.p_point
 			   FROM (SELECT rownum as rnum, a.m_id, a.p_point
@@ -39,5 +34,27 @@
 			 WHERE b.rnum >= #{startRow}
 		 ]]>
 	</select>
+	
+	<!-- 구매취소 표인트 정보 -->
+	<insert id="buyCancelPoint">
+		<![CDATA[
+			INSERT INTO picker_point (p_num, m_id, p_date, p_history, p_point, b_code) 
+			     SELECT (SELECT NVL(MAX(p_num)+1, 1) AS p_num FROM picker_point), m_id, sysdate
+			          , DECODE(SIGN(p_point), -1, '구매 취소 환급', '구매 적립 취소') AS p_history
+			          , DECODE(SIGN(p_point), -1, (p_point*-1), (p_point*-1)) AS p_point, b_code
+			       FROM picker_point 
+			      WHERE m_id = #{m_id}
+			        AND b_code = #{b_code} 
+			        AND p_point < 0 
+			      UNION ALL
+			     SELECT (SELECT NVL(MAX(p_num)+2, 1) AS p_num FROM picker_point), m_id, sysdate
+			          , DECODE(SIGN(p_point), -1, '구매 취소 환급', '구매 적립 취소') AS p_history
+			          , DECODE(SIGN(p_point), -1, (p_point*-1), (p_point*-1)) AS p_point, b_code
+			       FROM picker_point 
+			      WHERE m_id = #{m_id}
+			        AND b_code = #{b_code} 
+			        AND p_point > 0
+		]]>
+	</insert>
 	
 </mapper>

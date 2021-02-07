@@ -39,6 +39,7 @@
 			<mapping path="/qnaWrite"/>
 			<mapping path="/qnaWriteProc"/>
 			<mapping path="/adminPage"/>
+			<mapping path="/allBuyList"/>
 			<mapping path="/allPointList"/>
 			<mapping path="/goMemberList"/>
 			<mapping path="/goItemList"/>
@@ -47,6 +48,11 @@
 		</interceptor>
 		<interceptor>
 			<mapping path="/adminPage"/>
+			<mapping path="/allBuyList"/>
+			<mapping path="/allPointList"/>
+			<mapping path="/goMemberList"/>
+			<mapping path="/goItemList"/>
+			<mapping path="/goItemInsert"/>
 			<mapping path="/noticeWrite"/>
 			<mapping path="/noticeWriteProc"/>
 			<mapping path="/noticeModify"/>

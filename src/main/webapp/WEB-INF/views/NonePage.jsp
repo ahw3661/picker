@@ -23,7 +23,13 @@
 				</div>
 				<div class="none_buy_num">
 					<div class="none_buy_info_title"><b>주문번호</b></div>
-					<div class="none_buy_info_detail">${bdto.b_code }</div>
+					<div class="none_buy_info_detail">${bdto.b_code }<input type="hidden" name="b_code" value="${bdto.b_code }" id="bCode"></div>
+				</div>
+				<div class="none_buy_item_price">
+					<div class="none_buy_info_title"><b>주문금액</b></div>
+					<div class="none_buy_info_detail">
+						<fmt:formatNumber var="item_price" value="${total }" pattern="#,###"/>${item_price }원
+					</div>
 				</div>
 				<div class="none_buy_price">
 					<div class="none_buy_info_title"><b>총 결제금액</b></div>
@@ -79,7 +85,7 @@
 				</div>
 			</div>
 			<div class="btn_div">
-				<input type="button" value="주문취소">
+				<input type="button" value="주문취소" id="buy_Cancel">
 				<input type="button" value="닫기" onclick="location.href='closed'">
 			</div>
 		</div>
@@ -96,6 +102,29 @@
 				price.not(":eq(0)").remove(); // 중복되는 td 삭제
 			}
 		});
+	});
+	
+	$("#buy_Cancel").click(function() {
+		if(confirm("해당 구매 건에 대해 구매 취소를 하시겠습니까?") == true) {
+			$.ajax({
+				url : "buyCancelRun",
+				type : "post",
+				data : { "b_code" : $("#bCode").val() },
+				datatype : "json",
+				success : function(data) {
+					if(data.msg == "success") {
+						alert("구매 취소가 완료되었습니다.");
+						location.href="section";
+					}
+				},
+				error : function(data, error) {
+					alert("code : " + data.status + "\n"+"message : " + data.responseText + "\n" + "error : " + error);
+				}
+			});
+		}else {
+			return false;
+		}
+		
 	});
 </script>
 </html>

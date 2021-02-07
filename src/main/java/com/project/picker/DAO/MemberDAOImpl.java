@@ -56,4 +56,14 @@ public class MemberDAOImpl implements MemberDAO {
 		return sqlSession.selectList("member.pointList", map);
 	}
 
+	@Override
+	public List<BuyDTO> buyCancelContent(String m_id, int startRow, int endRow) {
+		logger.info(">>> 구매취소 내역");
+		Map<String, Object>map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		return sqlSession.selectList("member.buyCancelContent", map);
+	}
+
 }

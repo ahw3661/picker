@@ -5,7 +5,7 @@ section .none_buy_info_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 section .none_buy_info_wrap>h3 { width: 100%; height: 40px; text-align: center; }
 section .none_buy_info_wrap>h4, .none_item_info>h4, .none_take_info>h4 { width: 100%; height: 60px; padding-top: 30px; }
 section .none_buy_info_wrap .none_buy_info { width: 100%; margin: 0 auto; border-top: 1px solid gray; border-bottom: 1px solid gray; }
-section .none_buy_info_wrap .none_buy_info .none_buy_date, .none_buy_info .none_buy_num, .none_buy_info .none_buy_price { display: flex; align-items: center; }
+section .none_buy_info_wrap .none_buy_info .none_buy_date, .none_buy_info .none_buy_num, .none_buy_info .none_buy_item_price, .none_buy_info .none_buy_price { display: flex; align-items: center; }
 section .none_buy_info_wrap .none_buy_info .none_buy_info_title { width: 200px; height: 40px; padding: 9px 10px; font-size: 15px; }
 section .none_buy_info_wrap .none_buy_info .none_buy_info_detail { width: 800px; height: 40px; padding: 12px 10px; }
 section .none_buy_info_wrap .none_item_info { width: 1000px; margin: 0 auto; }

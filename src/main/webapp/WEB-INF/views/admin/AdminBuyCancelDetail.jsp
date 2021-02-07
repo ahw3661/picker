@@ -9,43 +9,43 @@
 </head>
 <body>
 	<section>
-		<div class="buy_info_detail_wrap">
+		<div class="buy_cancel_list_detail_wrap">
 			<h3>주문상세</h3>
 			<h4>주문정보</h4>
-			<div class="buy_info">
+			<div class="buy_cancel_list_detail">
 				<div class="buy_date">
-					<div class="buy_info_title"><b>주문일자</b></div>
-					<div class="buy_info_detail">
+					<div class="buy_cancel_title"><b>주문일자</b></div>
+					<div class="buy_cancel_detail">
 						<fmt:parseDate var="bdate" value="${bdto.b_date }" pattern="yyyy-MM-dd HH:mm:ss" />
 						<fmt:formatDate var="b_date" value="${bdate }" pattern="yyyy-MM-dd" />${b_date }
 					</div>
 				</div>
 				<div class="buy_num">
-					<div class="buy_info_title"><b>주문번호</b></div>
-					<div class="buy_info_detail">${bdto.b_code }</div>
+					<div class="buy_cancel_title"><b>주문번호</b></div>
+					<div class="buy_cancel_detail">${bdto.b_code }<input type="hidden" name="b_code" value="${bdto.b_code }" id="bCode"></div>
 				</div>
 				<div class="buy_item_price">
-					<div class="buy_info_title"><b>주문금액</b></div>
-					<div class="buy_info_detail">
+					<div class="buy_cancel_title"><b>주문금액</b></div>
+					<div class="buy_cancel_detail">
 						<fmt:formatNumber var="item_price" value="${total }" pattern="#,###"/>${item_price }원
 					</div>
 				</div>
 				<div class="buy_point">
-					<div class="buy_info_title"><b>사용 포인트</b></div>
+					<div class="buy_cancel_title"><b>사용 포인트</b></div>
 					<c:if test="${empty point }">
-						<div class="buy_info_detail">0포인트</div>
+						<div class="buy_cancel_detail">0포인트</div>
 					</c:if>
 					<c:if test="${not empty point }">
-						<div class="buy_info_detail"><fmt:formatNumber var="usePoint" value="${point }" pattern="#,###"/>${usePoint }포인트</div>
+						<div class="buy_cancel_detail"><fmt:formatNumber var="usePoint" value="${point }" pattern="#,###"/>${usePoint }포인트</div>
 					</c:if>
 				</div>
 				<div class="buy_price">
-					<div class="buy_info_title"><b>총 결제금액</b></div>
+					<div class="buy_cancel_title"><b>총 결제금액</b></div>
 					<c:if test="${(total+point) < 50000 }">
-						<div class="buy_info_detail"><fmt:formatNumber var="totalPrice" value="${(total+point)+3000 }" pattern="#,###"/>${totalPrice }원</div>
+						<div class="buy_cancel_detail"><fmt:formatNumber var="totalPrice" value="${(total+point)+3000 }" pattern="#,###"/>${totalPrice }원</div>
 					</c:if>
 					<c:if test="${(total+point) >= 50000 }">
-						<div class="buy_info_detail"><fmt:formatNumber var="totalPrice" value="${(total+point) }" pattern="#,###"/>${totalPrice }원</div>
+						<div class="buy_cancel_detail"><fmt:formatNumber var="totalPrice" value="${(total+point) }" pattern="#,###"/>${totalPrice }원</div>
 					</c:if>
 				</div>
 			</div>
@@ -81,18 +81,27 @@
 					</table>
 				</div>
 			</div>
-			<div class="take_info">
-				<h4>배송지</h4>
-				<div class="take_detail">
-					<div class="take_detail_left"><b>받는사람</b></div>
-					<div class="take_detail_right">
-						<p>${bdto.b_take_name }</p>
-						<p>(${bdto.b_take_zipcode }) ${bdto.b_take_roadaddr } ${bdto.b_take_detailaddr }</p>
-						<p>/ ${bdto.b_take_phone }</p>
+			<div class="cancel_info">
+				<h4>취소정보</h4>
+				<div class="cancel_info_date">
+					<div class="buy_cancel_left">
+						<div class="buy_cancel_title"><b>취소자</b></div>
+						<div class="buy_cancel_title"><b>취소일자</b></div>
+					</div>
+					<div class="buy_cancel_right">
+						<div class="buy_cancel_detail">
+						<c:if test="${cancelId == 'nonmember'}">비회원</c:if>
+						<c:if test="${cancelId != 'nonmember'}">${cancelId }</c:if>
+						</div>
+						<div class="buy_cancel_detail">
+							<fmt:formatDate var="cancelDate" value="${cancelDate }" pattern="yyyy-MM-dd"/>${cancelDate }
+						</div>
 					</div>
 				</div>
 			</div>
-			<div class="list_btn"><input type="button" value="목록" onclick="javascript:buyInfo(${pageNum});"></div>
+			<div class="list_btn">
+				<input type="button" value="목록" onclick="javascript:allBuyCancel(${pageNum});">
+			</div>
 		</div>
 	</section>
 </body>
@@ -109,10 +118,33 @@
 		});
 	});
 	
+	$("#buy_Cancel").click(function() {
+		if(confirm("해당 구매 건에 대해 구매 취소를 하시겠습니까?") == true) {
+			$.ajax({
+				url : "buyCancelRun",
+				type : "post",
+				data : { "b_code" : $("#bCode").val() },
+				datatype : "json",
+				success : function(data) {
+					if(data.msg == "success") {
+						alert("구매 취소가 완료되었습니다");
+						location.href="myPage";
+					}
+				},
+				error : function(data, error) {
+					alert("code : " + data.status + "\n"+"message : " + data.responseText + "\n" + "error : " + error);
+				}
+			});
+		}else {
+			return false;
+		}
+		
+	});
+	
 	//주문목록
-	function buyInfo(pn) {
+	function allBuyCancel(pn) {
 		$.ajax({
-			url : "buyInfo",
+			url : "allBuyCancel",
 			type : "post",
 			data : { "pageNum" : pn },
 			datatype : "html",

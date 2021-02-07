@@ -4,3 +4,7 @@
 section { background: #FCF8ED; }
 section .img_div { width: 1200px; height: 1000px; text-align: center; }
 section .img_div img { width: 1000px; height: 950px; }
+section #searchForm {  text-align: center; }
+section #searchForm #item_search { background: #FCF8ED; font-size:20px; width: 200px; height:40px; padding:5px; border: none; border-bottom: 2px solid black; }
+section #searchForm #item_search::placeholder { font-size:20px;  }
+section #searchForm #item_search:-webkit-autofill { -webkit-box-shadow:0 0 0px 1000px #FCF8ED inset ; }

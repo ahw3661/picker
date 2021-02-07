@@ -151,18 +151,38 @@ public class AdminServicelmpl implements AdminService {
 	}
 
 	@Override
-	public BuyDTO getOneBuyInfo(String b_code) {
+	public BuyDTO getOneBuyInfo(int b_code) {
 		return adao.getOneBuyInfo(b_code);
 	}
 
 	@Override
-	public ArrayList<BuyitemDTO> getOneBuyItemInfo(String b_code) {
+	public ArrayList<BuyitemDTO> getOneBuyItemInfo(int b_code) {
 		return adao.getOneBuyItemInfo(b_code);
 	}
 
 	@Override
-	public int getSumBuyPrice(String b_code) {
+	public int getSumBuyPrice(int b_code) {
 		return adao.getSumBuyPrice(b_code);
+	}
+
+	@Override
+	public ArrayList<BuyitemDTO> buyItemList() {
+		return adao.buyItemList();
+	}
+
+	@Override
+	public int getAllBuyCancelCount() {
+		return adao.getAllBuyCancelCount();
+	}
+
+	@Override
+	public List<BuyDTO> allBuyCancel(int startRow, int endRow) {
+		return amdao.allBuyCancel(startRow, endRow);
+	}
+
+	@Override
+	public BuyDTO oneBuyCancel(int b_code) {
+		return adao.oneBuyCancel(b_code);
 	}
 	
 }

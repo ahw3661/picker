@@ -18,7 +18,7 @@ public interface AdminService {
 	public MemberDTO oneList(String m_id);
 	public ArrayList<ItemDTO> itemList(int startRow, int endRow);
 	public int itemListCount();
-	public ItemDTO oneItemList( String i_code);
+	public ItemDTO oneItemList(String i_code);
 	public int memberCount();
 	public int itemCount();
 	public String getCode();
@@ -31,8 +31,12 @@ public interface AdminService {
 	public int getAllBuyCount();
 	public List<BuyDTO> allBuyList(int startRow, int endRow);
 	public ArrayList<BuyitemDTO> allBuyItem();
-	public BuyDTO getOneBuyInfo(String b_code);
-	public ArrayList<BuyitemDTO> getOneBuyItemInfo(String b_code);
-	public int getSumBuyPrice(String b_code);
+	public BuyDTO getOneBuyInfo(int b_code);
+	public ArrayList<BuyitemDTO> getOneBuyItemInfo(int b_code);
+	public int getSumBuyPrice(int b_code);
+	public ArrayList<BuyitemDTO> buyItemList();
+	public int getAllBuyCancelCount();
+	public List<BuyDTO> allBuyCancel(int startRow, int endRow);
+	public BuyDTO oneBuyCancel(int b_code);
 	
 }

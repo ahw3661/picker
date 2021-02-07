@@ -1,6 +1,7 @@
 package com.project.picker.Controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.inject.Inject;
 
@@ -23,17 +24,50 @@ public class ItemController {
 	@Inject
 	ItemService Iservice;
 		
+	/*// 이름에 따른 높은 순으로 정렬하는 함수
+		@RequestMapping(value="itemUp", method= {RequestMethod.GET, RequestMethod.POST})
+		public String itemUp(@RequestParam(required=false, defaultValue="item_up") String item_sort, Model model){
+			System.out.println(item_sort);
+			ArrayList<ItemDTO> idto = Iservice.itemUp(item_sort);
+			model.addAttribute("idto", idto);
+			
+			
+			model.addAttribute("section", "item/ItemList.jsp");
+			return "Index";
+		}*/
+	
+	@RequestMapping(value="searchItem", method={RequestMethod.GET, RequestMethod.POST})
+	public String itemSearch( @RequestParam String item_search, Model model, ItemDTO itdto) {
+		
+			logger.info("상품출력");
+		
+			System.out.println("item_search :" +item_search);
+			item_search = "%" + item_search + "%";
+			ArrayList<ItemDTO> idto = Iservice.itemSearch(item_search);
+			model.addAttribute("idto", idto);
+			
+			int cnt = Iservice.itemSearchCnt(item_search);
+			System.out.println("cnt :" + cnt);
+			
+				model.addAttribute("cnt", cnt);
+				model.addAttribute("section", "item/ItemSearch.jsp");
+	
+				return "Index";
+	}
+	
 	// 카테고리 별 상품리스트를 보는 맵핑
 	@RequestMapping(value="goList", method={RequestMethod.GET, RequestMethod.POST})
-	public String goList(@ RequestParam String i_category,Model model){
+	public String goList( @RequestParam(required=false, defaultValue="item_up") String item_sort, @ RequestParam String i_category, Model model){
 		 
 		logger.info("상품리스트 출력");
-		ArrayList<ItemDTO> itemlist = Iservice.ItemList(i_category);
+/*		ArrayList<ItemDTO> itemlist = Iservice.ItemList(i_category);
+		model.addAttribute("itemlist", itemlist);*/
+		System.out.println(item_sort);
+		List<ItemDTO> itemlist = Iservice.itemListBySort(i_category, item_sort);
 		model.addAttribute("itemlist", itemlist);
 		
 		ItemDTO cateName = Iservice.cateName(i_category);
 		model.addAttribute("cateName", cateName);
-		
 		model.addAttribute("section", "item/ItemList.jsp");
 		return "Index";
 	}
@@ -46,9 +80,10 @@ public class ItemController {
 		ItemDTO idto = Iservice.itemView(i_code);
 		
 		model.addAttribute("idto", idto);
-	
+		
 		model.addAttribute("section", "item/ItemDetail.jsp");
 		return "Index";
 	} 
+	
 	
 }

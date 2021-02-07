@@ -11,4 +11,6 @@ public interface AdminDAO {
 
 	List<BuyDTO> allBuyList(int startRow, int endRow);
 
+	List<BuyDTO> allBuyCancel(int startRow, int endRow);
+
 }

@@ -7,7 +7,7 @@ import com.project.picker.DTO.PointDTO;
 public interface PointDAO {
 
 	public List<PointDTO> allPointList(int startRow, int endRow);
-
 	public List<PointDTO> onePointDetail(String m_id, int startRow, int endRow);
+	public void buyCancelPoint(String m_id, int b_code);
 
 }

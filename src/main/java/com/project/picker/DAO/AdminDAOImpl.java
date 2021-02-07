@@ -40,4 +40,13 @@ public class AdminDAOImpl implements AdminDAO {
 		return sqlSession.selectList("admin.allBuyList", map);
 	}
 
+	@Override
+	public List<BuyDTO> allBuyCancel(int startRow, int endRow) {
+		logger.info(">>> 전체 구매취소 목록");
+		Map<String, Object>map = new HashMap<>();
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		return sqlSession.selectList("admin.allBuyCancel", map);
+	}
+
 }

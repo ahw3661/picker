@@ -46,8 +46,6 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	String [] sum_quantity;
 	String [] item_price;
 	int quantity = 0;
-	int plus_point;
-	int minus_point;
 	
 	
 	@Override
@@ -103,35 +101,32 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	    i_code = request.getParameterValues("item_code");
 	    item_price = request.getParameterValues("price_hidden");
 	    
-	    for(int i=0;i<item_name.length;i++) {
-	    	int cnt = Integer.valueOf(sum_quantity[i].toString());
-	    	quantity = quantity + cnt;
-	    }
-	    String sum_cnt = Integer.toString(quantity);
-	    
-	    // ↓ point메서드를 위한 request값
-	    
-	    plus_point = +Integer.parseInt(request.getParameter("saving_point")); 
-	    minus_point = -Integer.parseInt(request.getParameter("usePoint"));
-	    System.out.println(plus_point);
-	    System.out.println(minus_point);
-	    
 	    // 상품수량 합계와 상품명 여러개 받아오기위한 for문 작성
-	    params.add("item_name", item_name[0] + " 외 "+ (quantity-1)+"개"); // 상품명, 최대 100자 -> 상품명(i_name)
+		for(int i=0;i<item_name.length;i++) {
+			int cnt = Integer.valueOf(sum_quantity[i].toString());
+			quantity = quantity + cnt;
+		}
+		String sum_cnt = Integer.toString(quantity);
+		
+		if(item_name.length==1) {
+			params.add("item_name", item_name[0]); // 상품명, 최대 100자 -> 상품명(i_name)
+		}else {
+			params.add("item_name", item_name[0] + " 외 "+ (quantity-1)+"개"); // 상품명, 최대 100자 -> 상품명(i_name)
+		}
 	    params.add("quantity", sum_cnt); // 상품 수량 (c_cnt)
 	    params.add("total_amount", tot); // 상품 총액
 	    params.add("tax_free_amount", "0"); // 상품 비과세 금액
 	    params.add("vat_amount", vat_amount); // 상품 부과세 금액
-	    params.add("approval_url", "http://localhost:8090/picker/kakaoPaySuccess"); // 결제 성공 시 redirect url, 최대 255자
-	    params.add("cancel_url", "http://localhost:8090/picker/kakaoPayCancel"); // 결제 취소 시 redirect url, 최대 255자
-	    params.add("fail_url", "http://localhost:8090/picker/kakaoPaySuccessFail"); // 결제 실패 시 redirect url, 최대 255자
+	    params.add("approval_url", "http://localhost:8090/picker/buy/kakaoPaySuccess"); // 결제 성공 시 redirect url, 최대 255자
+	    params.add("cancel_url", "http://localhost:8090/picker/buy/kakaoPayCancel"); // 결제 취소 시 redirect url, 최대 255자
+	    params.add("fail_url", "http://localhost:8090/picker/buy/kakaoPaySuccessFail"); // 결제 실패 시 redirect url, 최대 255자
 	 
 		HttpEntity<MultiValueMap<String, Object>> body = new HttpEntity<MultiValueMap<String, Object>>(params, headers);
 		System.out.println("body : "+body);
 	    try {
 	    		System.out.println("try");
 	    	kakaoPayReadyDTO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyDTO.class);
-	    		System.out.println("VO : " + kakaoPayReadyDTO.getTid());
+	    		System.out.println("tid : " + kakaoPayReadyDTO.getTid());
 	    	
 	    	//성공시           
 	        return kakaoPayReadyDTO.getNext_redirect_pc_url();
@@ -199,23 +194,25 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	public void insertBuyitems(BuyDTO bdto, HttpServletRequest request, HttpSession session, Model model) {
 		// picker_buyitem에 insert할 dto에 set 작업----------------------------------------------------		
 		
-		ArrayList<BuyitemDTO> arr = new ArrayList<>();	
+		String[] imgs = request.getParameterValues("i_img");
+		ArrayList<BuyitemDTO> arr = new ArrayList<>();
+		
 		for(int i=0; i<item_name.length; i++) {
 			BuyitemDTO bidto = new BuyitemDTO();
 			int bi_cnt = Integer.valueOf(sum_quantity[i].toString());
 			int i_price = Integer.valueOf(item_price[i].toString());
-				bidto.setB_code(b_code);
-				bidto.setI_img("imgs");
-				bidto.setI_code(i_code[i]);
-				bidto.setI_name(item_name[i]);
-				bidto.setBi_cnt(bi_cnt);
-				bidto.setI_price(i_price);
-				arr.add(bidto);
+			bidto.setB_code(b_code);
+			bidto.setI_img(imgs[i]);
+			bidto.setI_code(i_code[i]);
+			bidto.setI_name(item_name[i]);
+			bidto.setBi_cnt(bi_cnt);
+			bidto.setI_price(i_price);
+			arr.add(bidto);
 		}
+		
 		for(int i=0;i<arr.size();i++) {
 			bdao.insertBuyitem(arr.get(i));
 		}
-		
 		
 		// picker_buy에 insert할 dto에 set 작업----------------------------------------------------
 		bdto.setB_code(b_code);
@@ -232,26 +229,39 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		bdto.setB_price(Integer.parseInt(request.getParameter("b_price")));
 
 		bdao.insertBuy(bdto);
+	}
+	
+	@Override
+	public void insertPoint(int plus_point, int minus_point) {
+		PointDTO pdto = new PointDTO();
 		
+		System.out.println("m_id :"+m_id);
+		pdto.setM_id(m_id);
+		pdto.setB_code(b_code);
+		
+		if(minus_point!=0) {
+			pdto.setP_point(minus_point);
+			pdto.setP_history("사용");
+			bdao.insertPoint(pdto);
+		}
+		
+		if(plus_point!=0) {
+			pdto.setP_point(plus_point);
+			pdto.setP_history("적립");
+			bdao.insertPoint(pdto);
+		}	
 	}
 
 	@Override
-	public void insertPlusPoint(PointDTO pdto) {
-		pdto.setM_id(m_id);
-		String p_history;
-		int p_point = plus_point;
-		if(p_point<0) {
-			p_history = "사용";
-		}else {
-			p_history = "적립";
-		}
-		
-		
-		pdto.setP_history(p_history);
-		pdto.setP_point(p_point);
-		pdto.setB_code(b_code);
+	public void updatePoint(String m_id) {
+		bdao.updatePoint(m_id);	
 	}
 
+	@Override
+	public void delCartItem(int c_num) {
+		bdao.delCartItem(c_num);
+	}
 	
 
+	
 }

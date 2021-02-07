@@ -3,14 +3,14 @@ package com.project.picker.DTO;
 public class BuyDTO {
 	
 	private String b_order_name, b_order_phone, b_order_email, b_take_name, b_take_email, b_take_phone, 
-		b_take_zipcode, b_take_roadaddr, b_take_detailaddr, m_id, b_date, b_agree;
-	private int b_price, b_code;
+		b_take_zipcode, b_take_roadaddr, b_take_detailaddr, m_id, b_date, b_agree, u_date;
+	private int b_price, b_code, b_chk;
 	private BuyitemDTO bidto;
 	
 	public BuyDTO() { }
 	public BuyDTO(int b_code, String b_order_name, String b_order_phone, String b_order_email, String b_take_name,
 			String b_take_email, String b_take_phone, String b_take_zipcode, String b_take_roadaddr,
-			String b_take_detailaddr, String m_id, String b_date, String b_agree, int b_price, BuyitemDTO bidto) {
+			String b_take_detailaddr, String m_id, String b_date, String b_agree, int b_price,int b_chk, String u_date, BuyitemDTO bidto) {
 		this.b_code = b_code;//주문코드(PK)
 		this.b_order_name = b_order_name;//주문자이름
 		this.b_order_phone = b_order_phone;//주문자연락처
@@ -25,13 +25,9 @@ public class BuyDTO {
 		this.b_date = b_date; //구매일자
 		this.b_agree = b_agree; //구매동의여부
 		this.b_price = b_price; //배송비
+		this.b_chk = b_chk; // 주문체크키(0,1)
+		this.u_date = u_date; // 취소일자
 		this.bidto = bidto; // BuyitemDTO
-	}
-	public int getB_code() {
-		return b_code;
-	}
-	public void setB_code(int b_code) {
-		this.b_code = b_code;
 	}
 	public String getB_order_name() {
 		return b_order_name;
@@ -111,6 +107,24 @@ public class BuyDTO {
 	public void setB_price(int b_price) {
 		this.b_price = b_price;
 	}
+	public int getB_code() {
+		return b_code;
+	}
+	public void setB_code(int b_code) {
+		this.b_code = b_code;
+	}
+	public int getB_chk() {
+		return b_chk;
+	}
+	public void setB_chk(int b_chk) {
+		this.b_chk = b_chk;
+	}
+	public String getU_date() {
+		return u_date;
+	}
+	public void setU_date(String u_date) {
+		this.u_date = u_date;
+	}
 	public BuyitemDTO getBidto() {
 		return bidto;
 	}
@@ -118,5 +132,4 @@ public class BuyDTO {
 		this.bidto = bidto;
 	}
 	
-		
 }

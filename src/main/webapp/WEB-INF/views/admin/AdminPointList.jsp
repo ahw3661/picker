@@ -63,7 +63,6 @@
 				$(".menu_info").html(data);
 			},
 			error : function(request, status, error) {
-				//alert("ajax 실패");
 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		});

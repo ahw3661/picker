@@ -67,8 +67,8 @@
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
 			},
-			error : function(data) {
-				alert("ajax 실패");
+			error : function(request, error) {
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		});
 	}

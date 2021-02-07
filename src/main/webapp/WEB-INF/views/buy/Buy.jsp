@@ -20,8 +20,11 @@
 					<table id="t1">		
 						<c:forEach var="payList" items="${payList }">
 							<tr class="trs" onclick="location.href='goDetail?i_code=${payList.i_code}'">
+								
 								<td><img src="resources/image/category_img/${payList.i_img}" id="imgs"></td>
 								<td class="tds">
+									<input type="hidden" name="i_img" value="${payList.i_img}">
+									<input type="hidden" name="c_num" value="${payList.c_num }">
 									<input type="text" name="item_name" class="i_name" value="${payList.i_name }"><br>
 									<input type="hidden" name="quantity" class="cnt_hidden" value="${payList.c_cnt }">
 									<input type="text" name="c_cnt" class="c_cnt" value="${payList.c_cnt }개"><br>
@@ -37,40 +40,40 @@
 					<c:if test="${u_id!=null }">
 						<div id="order_user_info" class="order_info">
 						<h4>주문자 정보</h4>
-							<input type="text" name="b_order_name" id="mname" value="${mdto.m_name }" class="user_info" readonly="readonly"><br>
-							<input type="text" name="b_order_phone" id="mphone" value="${mdto.m_phone }" class="user_info" readonly="readonly"><br>
-							<input type="text" name="b_order_email" id="memail" value="${mdto.m_email }" class="user_info" readonly="readonly">
+							<input type="text" name="b_order_name" id="mname" value="${mdto.m_name }" class="text_inputs" readonly="readonly"><br>
+							<input type="text" name="b_order_phone" id="mphone" value="${mdto.m_phone }" class="text_inputs" readonly="readonly"><br>
+							<input type="text" name="b_order_email" id="memail" value="${mdto.m_email }" class="text_inputs" readonly="readonly">
 							</div>
 						<div id="order_delivery_info" class="order_info">
 						<h4>배송 정보</h4>
 							<input type="checkbox" id="delivery_chk"> <span class="chk_span">주문자 정보와 동일</span><br>
-							<input type="text" name="b_take_name" id="m_name" placeholder="수령인"> <input type="text" name="b_take_phone" id="m_phone" placeholder="연락처"><br>
-							<input type="text" name="b_take_email" id="m_email" placeholder="이메일"><br>
-							<input type="text" name="b_take_zipcode" id="m_zipcode" placeholder="우편번호"> <input type="button" id="find_btn" value="주소찾기" onclick="postcode()"> <br>
-							<input type="text" name="b_take_roadaddr" id="m_roadaddr" placeholder="주소"><br>
-							<input type="text" name="b_take_detailaddr" id="m_detailaddr" placeholder="상세주소">
+							<input type="text" name="b_take_name" id="m_name" class="text_inputs" placeholder="수령인" ><input type="text" name="b_take_phone" id="m_phone" class="text_inputs" placeholder="연락처"><br>
+							<input type="text" name="b_take_email" id="m_email" class="text_inputs" placeholder="이메일"><br>
+							<input type="text" name="b_take_zipcode" id="m_zipcode" class="text_inputs" placeholder="우편번호"> <input type="button" id="find_btn" value="주소찾기" onclick="postcode()"> <br>
+							<input type="text" name="b_take_roadaddr" id="m_roadaddr" class="text_inputs" placeholder="주소"><br>
+							<input type="text" name="b_take_detailaddr" id="m_detailaddr" class="text_inputs" placeholder="상세주소">
 						</div>
 						<div id="order_point_info" class="order_info">
 							<h4>포인트</h4>
-							<input type="hidden" name="minus_point" id="point_use" value="${mdto.m_point }">
-							<input type="text" name="point" id="point"><input type="button" id="point_use_btn" value="사용"><input type="button" id="point_btn" value="전액사용">
+							<input type="text" name="point" id="point"><input type="button" id="point_use_btn" value="사용"><input type="button" id="point_btn" value="전액사용"><input type="button" id="cancel_btn" value="사용취소" style="display:none">
 							<p id="point_P">보유 포인트<input type="text" name="m_point" id="m_point" value="${mdto.m_point }"></p>
-							<p id="point_Pinfo">1,000 포인트 이상 보유 및 10,000원 이상 구매시 사용가능</p>
+							<input type="hidden" name="point_use" id="point_use" value="${mdto.m_point }">
+							<p id="point_Pinfo">※ 1,000 포인트 이상 보유 및 10,000원 이상 구매시 사용가능</p>
 						</div>
 					</c:if>
 					<c:if test="${u_id==null }">
 						<div id="order_user_info" class="order_info">
 						<h4>주문자 정보</h4>
-							<input type="text" name="b_order_name"  value="${mdto.m_name }" class="null_user" placeholder="이름을 입력해주세요"> <input type="text" name="b_order_phone" value="${mdto.m_phone }" class="null_user" placeholder="연락처를 입력해주세요"><br>
-							<input type="text" name="b_order_email" value="${mdto.m_email }" class="null_user" placeholder="E-mail을 입력해주세요">
+							<input type="text" name="b_order_name" id="mnameN" class="text_inputs" placeholder="이름을 입력해주세요"> <input type="text" name="b_order_phone" id="mphoneN" class="text_inputs" placeholder="연락처를 입력해주세요"><br>
+							<input type="text" name="b_order_email" id="memailN" class="text_inputs" placeholder="E-mail을 입력해주세요">
 						</div>
 						<div id="order_delivery_info" class="order_info">
 						<h4>배송 정보</h4>
-							<input type="text" name="b_take_name" id="m_name" placeholder="수령인"> <input type="text" name="b_take_phone" id="m_phone" placeholder="연락처"><br>
-							<input type="text" name="b_take_email" id="m_email" placeholder="이메일"><br>
-							<input type="text" name="b_take_zipcode" id="m_zipcode" placeholder="우편번호"> <input type="button" id="find_btn" value="주소찾기" onclick="postcode()"> <br>
-							<input type="text" name="b_take_roadaddr" id="m_roadaddr" placeholder="주소"><br>
-							<input type="text" name="b_take_detailaddr" id="m_detailaddr" placeholder="상세주소">	
+							<input type="text" name="b_take_name" id="m_name" class="text_inputs" placeholder="수령인"><input type="text" name="b_take_phone" id="m_phone" class="text_inputs" placeholder="연락처"><br>
+							<input type="text" name="b_take_email" id="m_email" class="text_inputs" placeholder="이메일"><br>
+							<input type="text" name="b_take_zipcode" id="m_zipcode" class="text_inputs" placeholder="우편번호" readonly="readonly"> <input type="button" id="find_btn" value="주소찾기" onclick="postcode()"> <br>
+							<input type="text" name="b_take_roadaddr" id="m_roadaddr" class="text_inputs" placeholder="주소" readonly="readonly"><br>
+							<input type="text" name="b_take_detailaddr" id="m_detailaddr" class="text_inputs" placeholder="상세주소">	
 						</div>
 					</c:if>
 					<input type="hidden" id="zipcode" value="${mdto.m_zipcode}">
@@ -93,9 +96,11 @@
 				<div class="order_info bg-gray">
 				<c:if test="${u_id==null }">
 					<p>포인트 적립은 회원만 가능합니다.</p>
+					<input type="hidden" name="saving_point" class="saving_point" id="saving_point">
 				</c:if>
 				<c:if test="${u_id!=null }">
 					<p><input type="text" name="saving_point" class="saving_point" id="saving_point">포인트 적립예정</p>
+					<input type=hidden name="saving_P" id="saving_P">
 				</c:if>
 				</div>
 				<div id="pay_option" class="order_info">
@@ -130,6 +135,7 @@ function postcode() {
 }
 
 $(function(){
+	parseInt($("#point").val("0"));
 	calculate();
 	$("#delivery_chk").click(function(){ // 주문자 동일 체크박스 선택시 이벤트
     	var chek = $(this).is(":checked");
@@ -151,35 +157,7 @@ $(function(){
 	});
 	
 	$("#point_btn").click(function(){
-		var cnt_hidden = document.getElementsByClassName("cnt_hidden");
-		var price_hidden = document.getElementsByClassName("price_hidden");
-		var total=0;
-		var price=0;
-		for(var i=0;i<cnt_hidden.length;i++){
-			console.log("price : "+parseInt(price_hidden[i].value));
-			console.log("cnt : "+parseInt(cnt_hidden[i].value));
-			price = parseInt(price_hidden[i].value) * parseInt(cnt_hidden[i].value);
-			total = total + parseInt(price);
-		}
-		if(total>=50000){
-			delivery = 0;
-		}else{
-			delivery = 3000;
-		}
-		$("#point").val($("#point_use").val());
-		$("#usePoint").val($("#point").val().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
-		var tot_price = total-$("#point_use").val()+delivery;
-		$("#totalPrice").val(tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
-		var saving = (total-$("#point_use").val())*0.02;
-		$("#saving_point").val(saving.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
-	});
-	
-	$("#point_use_btn").click(function(){
-		console.log("usep:"+$("#point_use").val());
-		console.log("p:"+$("#point").val());
-		if(parseInt($("#point").val()) > parseInt($("#point_use").val())){
-			alert("보유포인트가 부족합니다.다시 입력해주세요");
-		}else if(parseInt($("#point").val()) < 1000){
+		if(parseInt($("#point_use").val()) < 1000){
 			alert("1000P 부터 사용가능합니다");
 		}else{
 			var cnt_hidden = document.getElementsByClassName("cnt_hidden");
@@ -197,14 +175,91 @@ $(function(){
 				}else{
 					delivery = 3000;
 				}
-			$("#usePoint").val($("#point").val().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
+			$("#usePoint_hidden").val($("#point").val());
+			if($("#point_use").val()>total){
+				$("#point").val(total);
+				$("#usePoint").val(total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"P");
+			}else{
+				$("#point").val($("#point_use").val());
+				$("#usePoint").val($("#point").val().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"P");
+			}
 			var tot_price = total-$("#point").val()+delivery;
+			$("#tot").val(tot_price);
 			$("#totalPrice").val(tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
-			var saving = (total-$("#point").val())*0.02;
-			$("#saving_point").val(saving.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+			$("saving_P").val((total-$("#point").val())*0.02);
+			$("#saving_point").val((total-$("#point").val())*0.02.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
 		}
+		$("#point_btn").hide();
+		$("#point_use_btn").hide();
+		$("#cancel_btn").show();
+	});
+	
+	$("#point_use_btn").click(function(){
+		if(parseInt($("#point").val()) > parseInt($("#point_use").val())){ // 포인트 인풋값 > 보유포인트
+			alert("보유포인트가 부족합니다.다시 입력해주세요");
+		}else if(parseInt($("#point").val()) > 0 && parseInt($("#point").val()) < 1000){ // 0 < 포인트 인풋값 < 1000
+			alert("1000P 부터 사용가능합니다");
+ 		}else if($("#point").val()==""){ // 포인트 인풋값이 0 이거나 비어있을경우
+			alert("사용포인트를 입력해주세요");
+		}else{
+			var cnt_hidden = document.getElementsByClassName("cnt_hidden");
+			var price_hidden = document.getElementsByClassName("price_hidden");
+			var total=0;
+			var price=0;
+				for(var i=0;i<cnt_hidden.length;i++){
+					console.log("price : "+parseInt(price_hidden[i].value));
+					console.log("cnt : "+parseInt(cnt_hidden[i].value));
+					price = parseInt(price_hidden[i].value) * parseInt(cnt_hidden[i].value);
+					total = total + parseInt(price);
+				}
+				if(total>=50000){
+					delivery = 0;
+				}else{
+					delivery = 3000;
+				}
+			$("#usePoint_hidden").val($("#point").val());
+			$("#usePoint").val($("#point").val().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"P");
+			var tot_price = total-$("#usePoint_hidden").val()+delivery;
+			$("#tot").val(tot_price);
+			$("#totalPrice").val(tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
+			$("saving_P").val((total-$("#point").val())*0.02);
+			$("#saving_point").val((total-$("#point").val())*0.02.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		}
+		$("#point_btn").hide();
+		$("#point_use_btn").hide();
+		$("#cancel_btn").show();
 	});
 
+	$("#cancel_btn").click(function(){
+		$("#point_btn").show();
+		$("#point_use_btn").show();
+		$("#cancel_btn").hide();
+		$("#point").val(parseInt("0"));
+		var cnt_hidden = document.getElementsByClassName("cnt_hidden");
+		var price_hidden = document.getElementsByClassName("price_hidden");
+		var total=0;
+		var price=0;
+			for(var i=0;i<cnt_hidden.length;i++){
+				console.log("price : "+parseInt(price_hidden[i].value));
+				console.log("cnt : "+parseInt(cnt_hidden[i].value));
+				price = parseInt(price_hidden[i].value) * parseInt(cnt_hidden[i].value);
+				total = total + parseInt(price);
+			}
+			if(total>=50000){
+				delivery = 0;
+			}else{
+				delivery = 3000;
+			}
+		$("#usePoint_hidden").val($("#point").val());
+		$("#usePoint").val($("#point").val().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"P");
+		var tot_price = total-$("#usePoint_hidden").val()+delivery;
+		$("#tot").val(tot_price);
+		$("#totalPrice").val(tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");
+		$("saving_P").val((total-$("#point").val())*0.02);
+		$("#saving_point").val((total-$("#point").val())*0.02.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","));
+		
+	});
+	
 });
 	
 function calculate(){ //계산만하는 함수
@@ -222,39 +277,92 @@ function calculate(){ //계산만하는 함수
 	var usePoint = document.getElementById("usePoint");
 	var usePoint_hidden = document.getElementById("usePoint_hidden");
 	var use_point = parseInt(usePoint_hidden.value);
+	var pointCal_hidden = document.getElementById("pointCal_hidden");
+	var saving_P = document.getElementById("saving_P");
+	
+	var sPoint = "";
+	
+	if(saving_P != null) { // 개체의 null 체크 (.value가 아닌 개체 자체의 null 체크)
+		sPoint = saving_P.value;
+	}
 	
 	for(var i=0;i<cnt_hidden.length;i++){
-		console.log("price : "+parseInt(price_hidden[i].value));
-		console.log("cnt : "+parseInt(cnt_hidden[i].value));
-		price = parseInt(price_hidden[i].value) * parseInt(cnt_hidden[i].value);
-		total = total + parseInt(price);
+		price = parseInt(price_hidden[i].value) * parseInt(cnt_hidden[i].value); //상품가격
+		total = total + parseInt(price); // 상품가격 합계
 	}
-	console.log("total : "+total);
+	
 	if(total>=50000){
-		delivery = 0;
+		delivery = 0; //배송비
 	}else{
 		delivery = 3000;
 	}
-	console.log("delivery : "+delivery);
-	itemPrice.value = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
-	deiliveryPrice.value = delivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
-	hidden_delivery.value = delivery;
-	usePoint.value = parseInt(usePoint_hidden.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
-	totalPrice.value = (total-parseInt(usePoint_hidden.value)+delivery).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
-	tot.value = total + delivery;
-	saving_point.value = ((total-use_point)*0.02).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+	
+	itemPrice.value = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원"; //상품가격 
+	deiliveryPrice.value = delivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원"; // 배송비
+	hidden_delivery.value = delivery; // 히든 배송비(계산 하기위한 숫자값)
+	usePoint.value = parseInt(usePoint_hidden.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"P"; // 사용할 포인트
+	tot.value = total-parseInt(usePoint_hidden.value)+ delivery; // 배송비 포함 전체 합계 금액 
+	totalPrice.value = (tot.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원"; // 배송비 포함 전체 합계 금액  천단위 구분 표시
+	if(sPoint != ""){
+		saving_P.value = (total-use_point)*0.02; // 적립포인트
+		saving_point.value = (saving_P.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 적립포인트 천단위 구분 표시
+	}
+	//saving_P.value = (total-use_point)*0.02; // 적립포인트
+	//saving_point.value = (saving_P.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 적립포인트 천단위 구분 표시
+	
+	var mid = "";
+	
+	if(m_id != null) { // 개체의 null 체크 (.value가 아닌 개체 자체의 null 체크)
+		mid = m_id.value;
+	}
+	
+	if(mid!=""){
+	//if(m_id!=null){
+		usePoint_hidden.value = parseInt(usePoint_hidden.value);
+	}else{
+		usePoint_hidden.value = 0;
+	}
+	
+}
+function null_input(){
+	$(".text_inputs").each(function(){
+		if($.trim($(this).val()) == "") {
+			alert("주문자정보와 배송정보를 확인해주세요");
+			return false; //each문 탈출
+		}
+	});
 }
 
  $(function(){
 	calculate();
 	$("#pay_abtn").click(function(){
 		var payform = $("#payform").serialize();
+		var isRight = true;
+		
+        $("#payform").find(".text_inputs").each(function(){
+            // 아무값없이 띄어쓰기만 있을 때도 빈 값으로 체크되도록 trim() 함수 호출
+            if ($(this).val().trim() == '') {
+                /* alert("주문자정보와 배송정보를 확인해주세요"); */
+                isRight = false;
+                return false; //each문 탈출
+            }
+        });
+		
 		if($("#kakaopay_btn").is(":checked")==false && $("#agree").is(":checked")==false){
-			alert("결제방법과 동의 여부를 체크 후 이용해주세요");
-		}else if($("#kakaopay_btn").is(":checked")==false){
-			alert("결제방법을 체크 후 이용해주세요");
-		}else if($("#agree").is(":checked")==false){
-			alert("구매조건 확인 및 결제진행에 동의 후 이용해 주세요");
+			if(!isRight){
+				alert("동의여부와 결제방법 또는 주문자정보와 배송정보를 확인해주세요");
+			}else{
+				alert("결제방법과 동의 여부를 체크 후 이용해주세요");
+			}
+			
+		}else if($("#kakaopay_btn").is(":checked")==false || $("#agree").is(":checked")==false){
+			if(!isRight){
+				alert("동의여부와 결제방법 또는 주문자정보와 배송정보를 확인해주세요");
+			}else{
+				alert("결제방법과 동의 여부를 체크 후 이용해주세요");
+			}
+		}else if(!isRight) {
+			alert("주문자정보와 배송정보를 확인해주세요");
 		}else{
 			$.ajax({
 				url:'kakaoPay', // RequestMapping 값 입력

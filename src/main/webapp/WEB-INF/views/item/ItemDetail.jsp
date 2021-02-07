@@ -29,7 +29,8 @@
 					<input type="hidden"  name="i_price"  value="${idto.i_price}" id="item_price">
 		            <fmt:formatNumber var="item_price_info" value="${idto.i_price}" pattern="#,###원"/>
 		            <input type="text" name="item_price_info" id=item_price_info value="${item_price_info }"><hr>
-					<p id="purchase_info"><strong>구매혜택</strong><br> 140 포인트 적립 예정</p><br>
+					<p id="purchase_info"><strong>구매혜택</strong></p>
+					<p><span id="saving_point"></span><span>포인트 적립 예정</span></p><br>
 					<p><strong>배송비</strong><br> 3,000원(50,000원 이상 무료 배송)</p>
 				</div>
 				<div id="cnt_info">		

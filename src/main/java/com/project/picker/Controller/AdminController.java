@@ -1,6 +1,7 @@
 package com.project.picker.Controller;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,14 +23,18 @@ import com.project.picker.DTO.MemberDTO;
 import com.project.picker.DTO.PagingDTO;
 import com.project.picker.DTO.PointDTO;
 import com.project.picker.Service.AdminService;
+import com.project.picker.Service.MemberService;
 
 @Controller 
 public class AdminController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
+	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	@Inject
 	AdminService aservice;
+	
+	@Inject
+	MemberService mservice;
 	
 	// 관리자 화면
 	@RequestMapping(value="adminPage", method= {RequestMethod.GET, RequestMethod.POST})
@@ -44,7 +49,7 @@ public class AdminController {
 		return "Index";
 	}
 	
-	// 전체 회원 비회원 구매 목록
+	// 전체 회원 및 비회원 구매 목록
 	@RequestMapping(value="allBuyList", method={RequestMethod.GET, RequestMethod.POST})
 	public String allBuyList(@RequestParam int pageNum, Model model) {
 		ArrayList<BuyitemDTO> buyItem = aservice.allBuyItem();
@@ -60,9 +65,9 @@ public class AdminController {
 		return "admin/AdminBuyList";
 	}
 	
-	// 전체 회원 비회원 주문 상세
+	// 전체 회원 및 비회원 주문 상세
 	@RequestMapping(value="buyDetail", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyDetail(@RequestParam String b_code, @RequestParam int pageNum, Model model, HttpSession session) {
+	public String buyDetail(@RequestParam int b_code, @RequestParam int pageNum, Model model, HttpSession session) {
 		BuyDTO bdto = aservice.getOneBuyInfo(b_code);
 		ArrayList<BuyitemDTO> bidto = aservice.getOneBuyItemInfo(b_code);
 		int total = aservice.getSumBuyPrice(b_code);
@@ -71,6 +76,45 @@ public class AdminController {
 		model.addAttribute("total", total);
 		model.addAttribute("pageNum", pageNum);
 		return "admin/AdminBuyDetail";
+	}
+	
+	// 회원별 구매취소 완료된 목록
+	@RequestMapping(value="allBuyCancel", method= {RequestMethod.GET, RequestMethod.POST})
+	public String buyCancel(@RequestParam int pageNum, Model model) {
+		ArrayList<BuyitemDTO> buyitem = aservice.buyItemList();
+		logger.info(">>> pageNum : "+pageNum);
+		int cnt = aservice.getAllBuyCancelCount();
+		
+		if(cnt > 0) {
+			PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5);
+			model.addAttribute("pgdto", pgdto);
+			List<BuyDTO> allBuyCancel = aservice.allBuyCancel(pgdto.getStartRow(), pgdto.getEndRow());
+			model.addAttribute("allBuyCancel", allBuyCancel);
+			logger.info(">>> 구매 취소 완료 목록 존재");
+		}
+		logger.info(">>> 구매 취소 완료 목록");
+		model.addAttribute("buyitem", buyitem);
+		model.addAttribute("pageNum", pageNum);
+		return "admin/AdminBuyCancelList";
+	}
+	
+	// 주문취소 완료 주문 상세
+	@RequestMapping(value="oneBuyCancel", method= {RequestMethod.GET, RequestMethod.POST})
+	public String buyCancelDetail(@RequestParam int b_code, @RequestParam int pageNum, Model model, HttpSession session) {
+		logger.info("주문취소 완료 건");
+		BuyDTO bdto = aservice.oneBuyCancel(b_code);
+		ArrayList<BuyitemDTO> bidto = aservice.getOneBuyItemInfo(b_code);
+		int total = aservice.getSumBuyPrice(b_code);
+		Integer point = mservice.preUsePoint(b_code);
+		Date cancelDate = mservice.getCancelDate(b_code);
+		model.addAttribute("bdto", bdto);
+		model.addAttribute("bidto", bidto);
+		model.addAttribute("total", total);
+		model.addAttribute("point", point);
+		model.addAttribute("cancelId", bdto.getM_id());
+		model.addAttribute("cancelDate", cancelDate);
+		model.addAttribute("pageNum", pageNum);
+		return "admin/AdminBuyCancelDetail";
 	}
 	
 	// 전체 회원 포인트 목록
@@ -84,6 +128,7 @@ public class AdminController {
 			List<PointDTO> pdto = aservice.allPointList(pgdto.getStartRow(), pgdto.getEndRow());
 			model.addAttribute("pdto", pdto);
 		}
+		model.addAttribute("pageNum", pageNum);
 		return "admin/AdminPointList";
 	}
 	
@@ -131,7 +176,7 @@ public class AdminController {
 			model.addAttribute("mdto", mdto);
 			model.addAttribute("m_type", m_type);
 			model.addAttribute("pageNum", pageNum);
-		}else if(type == 2){
+		}else {
 			m_type = "탈퇴회원";
 			model.addAttribute("mdto", mdto);
 			model.addAttribute("m_type", m_type);

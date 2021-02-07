@@ -7,7 +7,6 @@ section .my_page_wrap .menu_list_left { width: 200px; }
 section .my_page_wrap .menu_list_right { width: 1000px; }
 section .my_page_wrap .menu_list_left ul { width: 100%; }
 section .my_page_wrap .menu_list_left ul li { height: 40px; }
-section .my_page_wrap .menu_list_left ul li a:hover { border-bottom: 1px solid black; }
 section .my_page_wrap .menu_list_left ul li .my_a.off { border-bottom: none; }
 section .my_page_wrap .menu_list_left ul li .my_a.on { border-bottom: 1px solid black; }
 section .my_page_wrap .menu_list_right .right_top { width: 100%; height: 180px; display: flex; align-items: center; background: white; }
@@ -41,7 +40,7 @@ section .buy_info_detail_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 section .buy_info_detail_wrap>h3 { width: 100%; height: 40px; text-align: center; }
 section .buy_info_detail_wrap>h4, .item_info>h4, .take_info>h4 { width: 100%; height: 60px; padding-top: 30px; }
 section .buy_info_detail_wrap .buy_info { width: 100%; margin: 0 auto; border-top: 1px solid gray; border-bottom: 1px solid gray; }
-section .buy_info_detail_wrap .buy_info .buy_date, .buy_info .buy_num, .buy_info .buy_price { display: flex; align-items: center; }
+section .buy_info_detail_wrap .buy_info .buy_date, .buy_info .buy_num, .buy_info .buy_item_price, .buy_info .buy_point, .buy_info .buy_price { display: flex; align-items: center; }
 section .buy_info_detail_wrap .buy_info .buy_info_title { width: 200px; height: 40px; padding: 9px 10px; font-size: 15px; }
 section .buy_info_detail_wrap .buy_info .buy_info_detail { width: 800px; height: 40px; padding: 12px 10px; }
 section .buy_info_detail_wrap .item_info { width: 1000px; margin: 0 auto; }
@@ -64,17 +63,52 @@ section .buy_info_detail_wrap .list_btn input { width: 150px; height: 40px; bord
 
 /* BuyCancel.jsp CSS */
 section .buy_cancel_wrap { width: 1000px; height: 100%; margin: 0 auto; }
-section .buy_cancel_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+section .buy_cancel_wrap .choice_input { display: flex; width: 100%; height: 40px; }
+section .buy_cancel_wrap .choice_input .a_div { width: 462px; }
+section .buy_cancel_wrap .choice_input .a_div a { width: 120px; height: 30px; padding: 5px 0; text-align: center; font-size: 14px; border: 1px solid lightgray; }
+section .buy_cancel_wrap .choice_input .a_div a:hover { background: lightgray; }
+section .buy_cancel_wrap .choice_input h3 { width: 538px; padding-left: 0.5px; }
 section .buy_cancel_wrap .buy_cancel_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table { width: 100%; margin: 0 auto; }
-section .buy_cancel_wrap .buy_cancel_table_wrap table tr .buy_cancel_th { height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_cancel_wrap .buy_cancel_table_wrap table tr .buy_cancel_th, tr .buyCancel_th { height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table tr .buy_cancel_th, tr .date_td, tr .iprice_td, tr .cnt_td, tr .bprice_td { width: 130px; }
+section .buy_cancel_wrap .buy_cancel_table_wrap table tr .buyCancel_th, tr .date_td, tr .iprice_td, tr .cnt_td, tr .bprice_td, tr .cancel_date_td { width: 110px; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table tr .buy_cancel_th:nth-child(3), tr .item_td { width: 350px; }
+section .buy_cancel_wrap .buy_cancel_table_wrap table tr .buyCancel_th:nth-child(3), tr .item_td { width: 340px; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table tr td { height: 55px; text-align: center; font-size: 14px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table tr .code_td { width: 130px; border-right: 1px solid #E5E5E5; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table tr .code_td a:hover, tr .item_td a:hover { text-decoration: underline; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table tr .item_td { text-align: left; padding: 0 8px; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table tr .item_td img { width: 40px; height: 40px; text-align: left; vertical-align: middle; }
+section .buy_cancel_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
+section .buy_cancel_wrap .curr_div { font-weight: bold; color: red; }
+
+/* BuyCancelDetail.jsp CSS */
+section .buy_cancel_detail_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+section .buy_cancel_detail_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+section .buy_cancel_detail_wrap>h4, .item_info>h4, .cancel_info>h4, .take_info>h4 { width: 100%; height: 60px; padding-top: 30px; }
+section .buy_cancel_detail_wrap .buy_cancel { width: 100%; margin: 0 auto; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_cancel_detail_wrap .buy_cancel .buy_date, .buy_cancel .buy_num, .buy_cancel .buy_item_price, .buy_cancel .buy_point, .buy_cancel .buy_price { display: flex; align-items: center; }
+section .buy_cancel_detail_wrap .buy_cancel .buy_cancel_title { width: 200px; height: 40px; padding: 9px 10px; font-size: 15px; }
+section .buy_cancel_detail_wrap .buy_cancel .buy_cancel_detail { width: 800px; height: 40px; padding: 12px 10px; }
+section .buy_cancel_detail_wrap .item_info { width: 1000px; margin: 0 auto; }
+section .buy_cancel_detail_wrap .item_info .item_detail { width: 100%; height: auto; margin: 0 auto; }
+section .buy_cancel_detail_wrap .item_info .item_detail table { width: 1000px; margin: 0 auto; }
+section .buy_cancel_detail_wrap .item_info .item_detail table tr .item_th { height: 40px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_cancel_detail_wrap .item_info .item_detail table tr .item_th, tr .item_td { text-align: center; font-size: 14px; }
+section .buy_cancel_detail_wrap .item_info .item_detail table tr .item_th:nth-child(1) { width: 50px; }
+section .buy_cancel_detail_wrap .item_info .item_detail table tr .item_th:nth-child(2), tr .item_td:nth-child(2) { width: 350px; }
+section .buy_cancel_detail_wrap .item_info .item_detail table tr .item_th:nth-child(3), tr .item_td:nth-child(3) { width: 100px; }
+section .buy_cancel_detail_wrap .item_info .item_detail table tr .item_th:nth-child(4), tr .item_th:nth-child(5), tr .item_td:nth-child(4), tr .item_td:nth-child(5) { width: 150px; }
+section .buy_cancel_detail_wrap .item_info .item_detail table tr .item_td { height: 50px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+section .buy_cancel_detail_wrap .item_info .item_detail table tr .item_td:nth-child(1) { width: 50px; border-right: 1px solid lightgray; }
+section .buy_cancel_detail_wrap .take_info, .cancel_info { width: 1000px; margin: 0 auto; }
+section .buy_cancel_detail_wrap .take_info .take_detail, .cancel_info .cancel_info_date { display: flex; }
+section .buy_cancel_detail_wrap .take_info .take_detail .take_detail_left, .cancel_info .cancel_info_date .buy_cancel_left { width: 200px; height: 100px; text-align: center; font-size: 15px; padding: 39px 0; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_cancel_detail_wrap .take_info .take_detail .take_detail_right { width: 800px; height: 100px; padding: 20px 0 20px 10px; border: 1px solid gray; border-left: 0; border-right: 0; }
+section .buy_cancel_detail_wrap .cancel_info .cancel_info_date .buy_cancel_right { width: 800px; height: 100px; padding: 41px 0 41px 10px; border: 1px solid gray; border-left: 0; border-right: 0; }
+section .buy_cancel_detail_wrap .list_btn { width: 1000px; margin: 30px auto; text-align: center; }
+section .buy_cancel_detail_wrap .list_btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
 
 /* PointInfo.jsp CSS */
 section .point_info_wrap { width: 1000px; height: 100%; margin: 0 auto; }

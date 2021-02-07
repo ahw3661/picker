@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 
 import com.project.mapper.MemberMapperDAO;
 import com.project.picker.DAO.MemberDAO;
+import com.project.picker.DAO.PointDAO;
 import com.project.picker.DTO.BuyDTO;
 import com.project.picker.DTO.BuyitemDTO;
 import com.project.picker.DTO.LoginDTO;
@@ -25,6 +26,9 @@ public class MemberServiceImpl implements MemberService {
 	@Inject
 	MemberMapperDAO mmdao;
 	
+	@Inject
+	PointDAO pdao;
+	
 	@Override
 	public ArrayList<MemberDTO> memberList() {
 		return mmdao.memberList();
@@ -36,13 +40,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public void deleteMember(String m_id) {
+	public void updateMemberType(String m_id) {
 		mmdao.deletePoint(m_id);
 		mmdao.deleteCart(m_id);
 		mmdao.updateQna(m_id);
 		mmdao.updateEval(m_id);
 		mmdao.updateReply(m_id);
-		mmdao.deleteMember(m_id);
+		mmdao.updateMemberType(m_id);
 	}
 
 	@Override
@@ -95,12 +99,12 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public BuyDTO oneBuyInfo(String m_id, String b_code) {
+	public BuyDTO oneBuyInfo(String m_id, int b_code) {
 		return mmdao.oneBuyInfo(m_id, b_code);
 	}
 
 	@Override
-	public ArrayList<BuyitemDTO> oneBuyItemInfo(String b_code) {
+	public ArrayList<BuyitemDTO> oneBuyItemInfo(int b_code) {
 		return mmdao.oneBuyItemInfo(b_code);
 	}
 
@@ -130,23 +134,79 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public BuyDTO noneOneBuyInfo(String b_code, String b_order_phone) {
+	public BuyDTO noneOneBuyInfo(int b_code, String b_order_phone) {
 		return mmdao.noneOneBuyInfo(b_code, b_order_phone);
 	}
 
 	@Override
-	public ArrayList<BuyitemDTO> noneOneBuyItemInfo(String b_code) {
+	public ArrayList<BuyitemDTO> noneOneBuyItemInfo(int b_code) {
 		return mmdao.noneOneBuyItemInfo(b_code);
 	}
 
 	@Override
-	public int sumBuyPrice(String b_code) {
+	public int sumBuyPrice(int b_code) {
 		return mmdao.sumBuyPrice(b_code);
 	}
 
 	@Override
 	public ArrayList<BuyDTO> buyCancelList(String m_id) {
 		return mmdao.buyCancelList(m_id);
+	}
+
+	@Override
+	public Integer usePoint(int b_code) {
+		return mmdao.usePoint(b_code);
+	}
+
+	@Override
+	public void buyState(int b_code) {
+		mmdao.buyState(b_code);		
+	}
+
+	@Override
+	public void buyCancelPoint(String m_id, int b_code) {
+		pdao.buyCancelPoint(m_id, b_code);		
+	}
+	
+	@Override
+	public int sumPoint(String m_id) {
+		return mmdao.sumPoint(m_id);
+	}
+	
+	@Override
+	public void updatePoint(String m_id, int m_point) {
+		mmdao.updatePoint(m_id, m_point);
+		
+	}
+
+	@Override
+	public int getBuyCancelCount(String m_id) {
+		return mmdao.getBuyCancelCount(m_id);
+	}
+
+	@Override
+	public List<BuyDTO> buyCancelContent(String m_id, int startRow, int endRow) {
+		return mdao.buyCancelContent(m_id, startRow, endRow);
+	}
+
+	@Override
+	public BuyDTO oneBuyCancelInfo(String m_id, int b_code) {
+		return mmdao.oneBuyCancelInfo(m_id, b_code);
+	}
+
+	@Override
+	public ArrayList<BuyitemDTO> oneBuyCancelItemInfo(int b_code) {
+		return mmdao.oneBuyCancelItemInfo(b_code);
+	}
+
+	@Override
+	public Integer preUsePoint(int b_code) {
+		return mmdao.preUsePoint(b_code);
+	}
+
+	@Override
+	public Date getCancelDate(int b_code) {
+		return mmdao.getCancelDate(b_code);
 	}
 	
 }

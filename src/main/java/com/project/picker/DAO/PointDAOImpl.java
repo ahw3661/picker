@@ -40,4 +40,14 @@ public class PointDAOImpl implements PointDAO {
 		return sqlSession.selectList("point.onePointDetail", map);
 	}
 
+	@Override
+	public void buyCancelPoint(String m_id, int b_code) {
+		logger.info(">>> 구매 취소 포인트 변경");
+		Map<String, Object>map = new HashMap<>();
+		map.put("m_id", m_id);
+		map.put("b_code", b_code);
+		sqlSession.selectList("point.buyCancelPoint", map);
+		
+	}
+
 }

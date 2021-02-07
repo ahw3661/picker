@@ -6,7 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<link rel="stylesheet" href="resources/css/kakaoPaySuccess.css">
+<link rel="stylesheet" href="../resources/css/kakaoPaySuccess.css">
 </head>
 <body>
 <div class="wrap">
@@ -29,15 +29,15 @@
 	</div>
 </div>
 </body>
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
-
 	function close_window(){
 		window.open('','_self').close();
 	}
 	
 	$(function(){
 		setTimeout("close_window()", 5000);
-		window.opener.$("#payform").attr("action", "/picker/insertBuyitems");
+		window.opener.$("#payform").attr("action", "/picker/buy/insertBuyitems");
 		window.opener.$("#payform").submit();
 	});
 	

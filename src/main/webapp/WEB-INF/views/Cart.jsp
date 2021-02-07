@@ -90,7 +90,6 @@
 	</div>
 </section>
 </body>
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script type="text/javascript">
 
 $(function(){
@@ -143,6 +142,7 @@ function plma(n,idx){
 }
 
 function calculate(){ //계산만하는 함수
+	var m_id = document.getElementById("m_id");
 	var c_cnt = document.getElementsByClassName("c_cnt"); // 상품수량
 	var i_price = document.getElementsByClassName("i_price"); //상품단가
 	var point = document.getElementsByClassName("point"); // 포인트
@@ -155,33 +155,75 @@ function calculate(){ //계산만하는 함수
 	var price = 0; //  합계금액(단가*수량)계산값 담을 변수
 	var total = 0; // 상품들 가격합계 계산 값 담을 변수
 	var chk = document.getElementsByClassName("chk"); // 체크박스
+	var mid = "";
 	
-	for(var i=0;i<c_cnt.length;i++){
-		price = parseInt(i_price[i].value) * parseInt(c_cnt[i].value);
-		sum_price[i].value = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
-		point[i].value =  (price * 0.02).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"P";
-		console.log(chk[i].checked);
-		if(chk[i].checked == true){
-			total = total + parseInt(price);
-		}
+	if(m_id != null) { // 개체의 null 체크 (.value가 아닌 개체 자체의 null 체크)
+		mid = m_id.value;
 	}
-	if(total==0){
-		deliveryPrice.innerHTML = "-";
-		totalfmt.innerHTML = "-";
-		pointfmt.innerHTML = "-";
-		sum_totalfmt.innerHTML = "0원";
+	
+	if(mid != ""){
+	//if(m_id.value != ""){
+		for(var i=0;i<c_cnt.length;i++){
+			price = parseInt(i_price[i].value) * parseInt(c_cnt[i].value);
+			sum_price[i].value = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+			point[i].value =  (price * 0.02).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"P";
+			console.log(chk[i].checked);
+			if(chk[i].checked == true){
+				total = total + parseInt(price);
+			}
+		}
+		if(c_cnt.length != 0){ // 장바구니 목록이 있을 때 실행
+			if(total==0){
+				deliveryPrice.innerHTML = "-";
+				totalfmt.innerHTML = "-";
+				pointfmt.innerHTML = "-";
+				sum_totalfmt.innerHTML = "0원";
+			}else{
+				if(total>=50000){
+					delivery = 0;
+				}else{
+					delivery = 3000;
+				}
+				console.log(delivery);
+				deliveryPrice.innerHTML = delivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+				totalfmt.innerHTML = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+				pointfmt.innerHTML = (total * 0.02).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"P";
+				sum_totalfmt.innerHTML = (total + delivery).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+			}
+		}
 	}else{
-		if(total>=50000){
-			delivery = 0;
-		}else{
-			delivery = 3000;
+		for(var i=0;i<c_cnt.length;i++){
+			price = parseInt(i_price[i].value) * parseInt(c_cnt[i].value);
+			sum_price[i].value = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+			point[i].value =  "-";
+			console.log(chk[i].checked);
+			if(chk[i].checked == true){
+				total = total + parseInt(price);
+			}
 		}
-		console.log(delivery);
-		deliveryPrice.innerHTML = delivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
-		totalfmt.innerHTML = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
-		pointfmt.innerHTML = (total * 0.02).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"P";
-		sum_totalfmt.innerHTML = (total + delivery).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+		
+		if(c_cnt.length != 0){ // 장바구니 목록이 있을 때 실행
+			if(total==0){
+				deliveryPrice.innerHTML = "-";
+				totalfmt.innerHTML = "-";
+				pointfmt.innerHTML = "-";
+				sum_totalfmt.innerHTML = "0원";
+			}else{
+				if(total>=50000){
+					delivery = 0;
+				}else{
+					delivery = 3000;
+				}
+				console.log(delivery);
+				deliveryPrice.innerHTML = delivery.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+				totalfmt.innerHTML = total.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+				pointfmt.innerHTML = "-";
+				sum_totalfmt.innerHTML = (total + delivery).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
+			}
+		}
+		
 	}
+	
 }
 
 /* 	var price = 0;

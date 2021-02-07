@@ -27,10 +27,11 @@ function buyInfo(pn) {
 }
 
 //주문취소
-function buyCancel() {
+function buyCancel(pn) {
 	$.ajax({
 		url : "buyCancel",
 		type : "post",
+		data : { "pageNum" : pn },
 		datatype : "html",
 		beforeSend : function(xmlHttpRequest) {
 			xmlHttpRequest.setRequestHeader("ajax", "true");

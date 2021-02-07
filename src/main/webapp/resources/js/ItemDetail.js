@@ -3,11 +3,13 @@ var total_price = document.getElementById("total_price");
 var item_price_info = document.getElementById("item_price_info");
 var cnted = 1;
 var code = $("input[name=i_code]").val();
+var saving_point = document.getElementById("saving_point");
 
 function plus(){
 	cnted += 1;
 	cnt.value = cnted;
 	price = item_price.value * cnt.value;
+	saving_point.innerHTML= (price * 0.02).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 	total_price.value = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
 	console.log("total_price= " + total_price.value);
 }
@@ -17,12 +19,15 @@ function minus(){
 		cnted -= 1;
 		cnt.value = cnted;
 		price = item_price.value * cnt.value;
+		saving_point.innerHTML= (price * 0.02).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 		total_price.value = price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원";
 		console.log("total_price= " + total_price.value);
 	}
 }
 
 $(function(){
+   var point = ($("#item_price").val()*0.02).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+   $("#saving_point").html(point);
    $("#basket_btn").click(function(){
       var fm = $("#fm").serialize();
       $.ajax({

@@ -50,7 +50,7 @@
 					<tr>
 						<th>포인트</th>
 						<td>
-							<fmt:formatNumber var="m_point" value="${mdto.m_point }" pattern="#,###"/>${m_point }
+							<fmt:formatNumber var="m_point" value="${mdto.m_point }" pattern="#,###"/>${m_point }포인트
 						</td>
 					</tr>
 					<tr>

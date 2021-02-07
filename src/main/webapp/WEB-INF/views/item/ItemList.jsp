@@ -12,11 +12,21 @@
 <section>
 	<div class="wrap item_wrap" >
 	<div id="head_name">
+		<div id="info_div">
 			<a href="#" id="menuBtn">Home</a>&nbsp;&nbsp;》&nbsp;&nbsp;
 			<a><strong>${cateName.i_category }</strong></a>
-			<br><br> 
-			<hr>	 
-		 </div>
+		</div>	
+		<div id="select_div">
+			<select name="item_sort" id="item_sort" onchange="itemUp()">
+						<option value="none">카테고리 선택
+						<option value="price_up">가격낮은 순
+						<option value="price_down">가격높은 순
+						<option value="item_up"  >상품 명 오름차순
+						<option value="item_down">상품 명 내림차순
+			</select>
+		</div>
+	</div>
+	<hr>
 		<c:forEach var="itemlist" items="${itemlist }">
 		
 			 <div class="item_div">
@@ -28,4 +38,9 @@
 	</div>
 </section>
 </body>
+<script type="text/javascript">
+function itemUp() {
+	location.href="goList?i_category=${cateName.i_category }&item_sort=" + $("#item_sort").val();
+}
+</script>
 </html>

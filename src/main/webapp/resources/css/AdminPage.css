@@ -62,6 +62,48 @@ section .buy_list_detail_wrap .take_info .take_detail .take_detail_right { width
 section .buy_list_detail_wrap .list_btn { width: 1000px; margin: 30px auto; text-align: center; }
 section .buy_list_detail_wrap .list_btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
 
+/* AdminBuyCancelList.jsp CSS */
+section .buy_cancel_list_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+section .buy_cancel_list_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+section .buy_cancel_list_wrap .buy_cancel_list_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
+section .buy_cancel_list_wrap .buy_cancel_list_table_wrap table { width: 100%; margin: 0 auto; }
+section .buy_cancel_list_wrap .buy_cancel_list_table_wrap table tr .buyCancelList_th { height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_cancel_list_wrap .buy_cancel_list_table_wrap table tr .buyCancelList_th, tr .date_td, tr .iprice_td, tr .cnt_td, tr .bprice_td, tr .state_td { width: 110px; }
+section .buy_cancel_list_wrap .buy_cancel_list_table_wrap table tr .buyCancelList_th:nth-child(3), tr .item_td { width: 340px; }
+section .buy_cancel_list_wrap .buy_cancel_list_table_wrap table tr td { height: 55px; text-align: center; font-size: 14px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+section .buy_cancel_list_wrap .buy_cancel_list_table_wrap table tr .code_td { width: 130px; border-right: 1px solid #E5E5E5; }
+section .buy_cancel_list_wrap .buy_cancel_list_table_wrap table tr .code_td a:hover, tr .item_td a:hover { text-decoration: underline; }
+section .buy_cancel_list_wrap .buy_cancel_list_table_wrap table tr .item_td { text-align: left; padding: 0 8px; }
+section .buy_cancel_list_wrap .buy_cancel_list_table_wrap table tr .item_td img { width: 40px; height: 40px; text-align: left; vertical-align: middle; }
+section .buy_cancel_list_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
+section .buy_cancel_list_wrap .curr_div { font-weight: bold; color: red; }
+
+/* AdminBuyCancelDetail.jsp CSS */
+section .buy_cancel_list_detail_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+section .buy_cancel_list_detail_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+section .buy_cancel_list_detail_wrap>h4, .item_info>h4, .cancel_info>h4, .take_info>h4 { width: 100%; height: 60px; padding-top: 30px; }
+section .buy_cancel_list_detail_wrap .buy_cancel_list_detail { width: 100%; margin: 0 auto; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_cancel_list_detail_wrap .buy_cancel_list_detail .buy_date, .buy_cancel_list_detail .buy_num, .buy_cancel_list_detail .buy_item_price, .buy_cancel_list_detail .buy_point, .buy_cancel_list_detail .buy_price { display: flex; align-items: center; }
+section .buy_cancel_list_detail_wrap .buy_cancel_list_detail .buy_cancel_title, .cancel_info .cancel_info_date .buy_cancel_left .buy_cancel_title { width: 200px; height: 40px; padding: 10px; font-size: 15px; }
+section .buy_cancel_list_detail_wrap .buy_cancel_list_detail .buy_cancel_detail, .cancel_info .cancel_info_date .buy_cancel_right .buy_cancel_detail { width: 800px; height: 40px; padding: 12px 10px; }
+section .buy_cancel_list_detail_wrap .item_info { width: 1000px; margin: 0 auto; }
+section .buy_cancel_list_detail_wrap .item_info .item_detail { width: 100%; height: auto; margin: 0 auto; }
+section .buy_cancel_list_detail_wrap .item_info .item_detail table { width: 1000px; margin: 0 auto; }
+section .buy_cancel_list_detail_wrap .item_info .item_detail table tr .item_th { height: 40px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_cancel_list_detail_wrap .item_info .item_detail table tr .item_th, tr .item_td { text-align: center; font-size: 14px; }
+section .buy_cancel_list_detail_wrap .item_info .item_detail table tr .item_th:nth-child(1) { width: 50px; }
+section .buy_cancel_list_detail_wrap .item_info .item_detail table tr .item_th:nth-child(2), tr .item_td:nth-child(2) { width: 350px; }
+section .buy_cancel_list_detail_wrap .item_info .item_detail table tr .item_th:nth-child(3), tr .item_td:nth-child(3) { width: 100px; }
+section .buy_cancel_list_detail_wrap .item_info .item_detail table tr .item_th:nth-child(4), tr .item_th:nth-child(5), tr .item_td:nth-child(4), tr .item_td:nth-child(5) { width: 150px; }
+section .buy_cancel_list_detail_wrap .item_info .item_detail table tr .item_td { height: 50px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+section .buy_cancel_list_detail_wrap .item_info .item_detail table tr .item_td:nth-child(1) { width: 50px; border-right: 1px solid lightgray; }
+section .buy_cancel_list_detail_wrap .cancel_info { width: 1000px; margin: 0 auto; }
+section .buy_cancel_list_detail_wrap .cancel_info .cancel_info_date { display: flex; }
+section .buy_cancel_list_detail_wrap .cancel_info .cancel_info_date .buy_cancel_left { width: 200px; height: 100px; font-size: 15px; padding: 9px 0; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_cancel_list_detail_wrap .cancel_info .cancel_info_date .buy_cancel_right { width: 800px; height: 100px; padding: 9px 10px; border: 1px solid gray; border-left: 0; border-right: 0; }
+section .buy_cancel_list_detail_wrap .list_btn { width: 1000px; margin: 30px auto; text-align: center; }
+section .buy_cancel_list_detail_wrap .list_btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
+
 /* AdminPointList.jsp CSS */
 section .point_list_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 section .point_list_wrap>h3 { width: 100%; height: 40px; text-align: center; }
@@ -126,8 +168,8 @@ section .point_detail_wrap .list_btn input { width: 150px; height: 40px; border:
 .AdminUserList_wrap>h3 { width: 100%; height: 40px; text-align: center; }
 .AdminUserList_wrap .AdminUserList_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
 .AdminUserList_wrap .AdminUserList_table_wrap table { margin: 0 auto; text-align: center; width:100%; }
-.AdminUserList_wrap .AdminUserList_table_wrap table tr th { height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
-.AdminUserList_wrap .AdminUserList_table_wrap table tr td { width: 200px; height: 55px; text-align: center; font-size: 14px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+.AdminUserList_wrap .AdminUserList_table_wrap table tr th { width: 250px; height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+.AdminUserList_wrap .AdminUserList_table_wrap table tr td { width: 250px; height: 55px; text-align: center; font-size: 14px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
 .AdminUserList_wrap .AdminUserList_table_wrap table tr td a span:hover { border-bottom: 1px solid black; }
 .AdminUserList_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
 .AdminUserList_wrap .curr_div { font-weight: bold; color: red; }

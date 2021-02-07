@@ -13,8 +13,15 @@ public interface ItemMapperDAO {
 	
 	// 매개변수 @Param 작업 할 것!
 	
+	//상품 검색하는 함수
+	@Select("SELECT * FROM picker_item WHERE i_name LIKE #{item_search}")
+	public ArrayList<ItemDTO> itemSearch(@Param("item_search") String item_search);
+	
+	// 검색한 상품의 개수를 구하는 함수
+	@Select("SELECT COUNT(*) FROM picker_item WHERE i_name LIKE #{item_search}")
+	public int itemSearchCnt(@Param("item_search") String item_search);
 	// 카테고리 및 정렬기준 설정해서 리스트 불러오는 함수
-	@Select("SELECT * FROM picker_item WHERE i_category = #{i_category} ORDER BY #{option}")
+	@Select("SELECT * FROM picker_item WHERE i_category = #{i_category}")
 	public ArrayList<ItemDTO> listBy( @Param("i_category") String i_category, @Param("option") String option);
 	
 	// 카테고리 값을 가진 리스트를 불러오는 함수

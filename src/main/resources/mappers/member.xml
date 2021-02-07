@@ -29,6 +29,25 @@
 			          FROM (SELECT b_date, b_code, b_price, m_id 
 							  FROM picker_buy 
 							 WHERE m_id = #{m_id} 
+							   AND b_chk = 0
+							 ORDER BY b_date DESC, b_code DESC
+			               ) a
+			         WHERE rownum <= #{endRow}
+			       ) b
+			 WHERE b.rnum >= #{startRow}
+		 ]]>
+	</select>
+	
+	<!-- 회원별 구매취소 목록 -->
+	<select id="buyCancelContent" resultType="bdto">
+		<!-- 부등호 사용을 위한 처리 -->
+		<![CDATA[
+			SELECT b.b_date, b.b_code, b.b_price, b.m_id
+			  FROM (SELECT rownum as rnum, a.b_date, a.b_code, a.b_price, a.m_id
+			          FROM (SELECT b_date, b_code, b_price, m_id 
+							  FROM picker_buy 
+							 WHERE m_id = #{m_id} 
+							   AND b_chk = 1
 							 ORDER BY b_date DESC, b_code DESC
 			               ) a
 			         WHERE rownum <= #{endRow}
@@ -46,7 +65,7 @@
 			          FROM (SELECT p_date, p_history, p_point
 			                  FROM picker_point
 			                 WHERE m_id = #{m_id}
-			                 ORDER BY p_date DESC, p_num DESC
+			                 ORDER BY p_num DESC, p_date DESC
 			               ) a
 			         WHERE rownum <= #{endRow}
 			       ) b

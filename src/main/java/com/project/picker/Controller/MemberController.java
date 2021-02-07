@@ -52,7 +52,8 @@ public class MemberController {
     		model.addAttribute("msg", "잘못된 접근입니다.");
     	}else {
     		
-    		if(referrer.equals("http://localhost:8090/picker/loginPage") || referrer.equals("http://localhost:8090/picker/logout")) {
+    		if(referrer.equals("http://localhost:8090/picker/loginPage") || referrer.equals("http://localhost:8090/picker/logout")
+    				|| referrer.equals("http://localhost:8090/picker/joinAgree") || referrer.equals("http://localhost:8090/picker/findIdPw")) {
         		session.setAttribute("url", null);
         	}else {
         		session.setAttribute("url", referrer);
@@ -193,26 +194,26 @@ public class MemberController {
 			logger.info(">>> 입력 정보 일치 구매내역 존재");
 			session.setAttribute("u_code", bdto1.getB_code());
 			session.setAttribute("u_phone", bdto1.getB_order_phone());
-			logger.info(">>> 조회 성공");
 		}else {
 			logger.info(">>> 입력 정보 일치 구매내역 비존재");
 			map.put("msg", "fail");
-			logger.info(">>> 조회 실패");
 		}
 		return map;
 	}
 	
-	// 비회원 조회 화면
+	// 비회원 조회 결과 화면
 	@RequestMapping(value="nonePage", method= {RequestMethod.GET, RequestMethod.POST})
 	public String nonePage(HttpSession session, Model model, HttpServletRequest request) {
-		String b_code = (String)session.getAttribute("u_code");
+		int b_code = (int)session.getAttribute("u_code");
 		String b_order_phone = (String)session.getAttribute("u_phone");
 		BuyDTO bdto = mservice.noneOneBuyInfo(b_code, b_order_phone);
 		ArrayList<BuyitemDTO> bidto = mservice.noneOneBuyItemInfo(b_code);
 		int total = mservice.sumBuyPrice(b_code);
+		Integer point = mservice.usePoint(b_code);
 		model.addAttribute("bdto", bdto);
 		model.addAttribute("bidto", bidto);
 		model.addAttribute("total", total);
+		model.addAttribute("point", point);
 		model.addAttribute("section", "NonePage.jsp");
 		return "Index";
 	}
@@ -271,40 +272,103 @@ public class MemberController {
 	
 	// 회원별 주문 상세
 	@RequestMapping(value="buyInfoDetail", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyInfoDetail(@RequestParam String b_code, @RequestParam int pageNum, Model model, HttpSession session) {
+	public String buyInfoDetail(@RequestParam int b_code, @RequestParam int pageNum, Model model, HttpSession session) {
 		String m_id = (String)session.getAttribute("u_id");
 		BuyDTO bdto = mservice.oneBuyInfo(m_id, b_code);
 		ArrayList<BuyitemDTO> bidto = mservice.oneBuyItemInfo(b_code);
 		int total = mservice.sumBuyPrice(b_code);
+		Integer point = mservice.usePoint(b_code);
 		model.addAttribute("bdto", bdto);
 		model.addAttribute("bidto", bidto);
 		model.addAttribute("total", total);
+		model.addAttribute("point", point);
 		model.addAttribute("pageNum", pageNum);
 		return "myPage/BuyInfoDetail";
 	}
 	
-	// 회원별 주문취소 가능 주문 목록
+	// 회원별 주문취소 가능 주문 목록 및 구매취소 완료된 목록
 	@RequestMapping(value="buyCancel", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyCancel(Model model, HttpSession session) {
+	public String buyCancel(@RequestParam int pageNum, Model model, HttpSession session) {
 		String m_id = (String)session.getAttribute("u_id");
-		ArrayList<BuyDTO> buyCancelList = mservice.buyCancelList(m_id);
 		ArrayList<BuyitemDTO> buyitem = mservice.buyItem();
-		model.addAttribute("buyCancelList", buyCancelList);
+		logger.info(">>> pageNum : "+pageNum);
+		if(pageNum == 0) {
+			ArrayList<BuyDTO> buyCancelList = mservice.buyCancelList(m_id);
+			model.addAttribute("buyCancelList", buyCancelList);
+			model.addAttribute("pageNum", pageNum);
+			logger.info(">>> 구매 취소 가능 목록");
+		}else {
+			int cnt = mservice.getBuyCancelCount(m_id);
+			
+			if(cnt > 0) {
+				PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5);
+				model.addAttribute("pgdto", pgdto);
+				List<BuyDTO> buyCancelContent = mservice.buyCancelContent(m_id, pgdto.getStartRow(), pgdto.getEndRow());
+				model.addAttribute("buyCancelContent", buyCancelContent);
+				model.addAttribute("pageNum", pageNum);
+				logger.info(">>> 구매 취소 완료 목록 존재");
+			}else {
+				model.addAttribute("pageNum", pageNum);
+			}
+			logger.info(">>> 구매 취소 완료 목록");
+		}
 		model.addAttribute("buyitem", buyitem);
 		return "myPage/BuyCancel";
 	}
 	
-	// 회원별 주문 상세
+	// 회원별 주문취소 가능 및 주문취소 완료 주문 상세
 	@RequestMapping(value="buyCancelDetail", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyCancelDetail(@RequestParam String b_code, Model model, HttpSession session) {
+	public String buyCancelDetail(@RequestParam int b_code, @RequestParam int pageNum, Model model, HttpSession session) {
 		String m_id = (String)session.getAttribute("u_id");
-		BuyDTO bdto = mservice.oneBuyInfo(m_id, b_code);
-		ArrayList<BuyitemDTO> bidto = mservice.oneBuyItemInfo(b_code);
-		int total = mservice.sumBuyPrice(b_code);
+		BuyDTO bdto = null;
+		ArrayList<BuyitemDTO> bidto = null;
+		int total = 0;
+		Integer point = new Integer(0);
+		Date cancelDate = new Date();
+		
+		if(pageNum == 0) {
+			logger.info("주문취소 가능");
+			bdto = mservice.oneBuyInfo(m_id, b_code);
+			bidto = mservice.oneBuyItemInfo(b_code);
+			total = mservice.sumBuyPrice(b_code);
+			point = mservice.usePoint(b_code);
+		}else {
+			logger.info("주문취소 완료 건");
+			bdto = mservice.oneBuyCancelInfo(m_id, b_code);
+			bidto = mservice.oneBuyCancelItemInfo(b_code);
+			total = mservice.sumBuyPrice(b_code);
+			point = mservice.preUsePoint(b_code);
+			cancelDate = mservice.getCancelDate(b_code);
+		}
 		model.addAttribute("bdto", bdto);
 		model.addAttribute("bidto", bidto);
 		model.addAttribute("total", total);
+		model.addAttribute("point", point);
+		model.addAttribute("cancelDate", cancelDate);
+		model.addAttribute("pageNum", pageNum);
 		return "myPage/BuyCancelDetail";
+	}
+	
+	// 회원 및 비회원 구매취소
+	@RequestMapping(value="buyCancelRun", method= {RequestMethod.GET, RequestMethod.POST}, produces="application/json; charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> buyCancelRun(@RequestParam int b_code, Model model, HttpSession session) {
+		Map<String, Object> map = new HashMap<>();
+		String m_id = (String)session.getAttribute("u_id");
+		logger.info(">>> 구매 취소 진행");
+		
+		if(m_id != null) {
+			logger.info("회원 구매 취소 진행");
+			mservice.buyState(b_code);
+			mservice.buyCancelPoint(m_id, b_code);
+			int m_point = mservice.sumPoint(m_id);
+			mservice.updatePoint(m_id, m_point);
+		}else {
+			logger.info("비회원 구매 취소 진행");
+			mservice.buyState(b_code);
+		}
+		map.put("msg", "success");
+		return map;
 	}
 	
 	// 내 정보 수정 화면
@@ -338,7 +402,7 @@ public class MemberController {
 		int cnt = mservice.getPointCount(m_id);
 		
 		if(cnt > 0) {
-			PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5); // 10 10
+			PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5);
 			model.addAttribute("pgdto", pgdto);
 			List<PointDTO> list = mservice.pointList(m_id, pgdto.getStartRow(), pgdto.getEndRow());
 			model.addAttribute("list", list);
@@ -365,7 +429,7 @@ public class MemberController {
 			map.put("msg", "fail");
 		}else {
 			logger.info(">>> 비밀번호 일치 탈퇴 진행");
-			mservice.deleteMember(m_id);
+			mservice.updateMemberType(m_id);
 			session.setAttribute("u_id", null);
 			session.setAttribute("u_name", null);
 			session.setAttribute("u_type", null);

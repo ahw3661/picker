@@ -1,5 +1,7 @@
 package com.project.picker.DTO;
 
+import java.security.Timestamp;
+
 public class MemberDTO {
 
 	private String m_id; // 아이디
@@ -17,11 +19,13 @@ public class MemberDTO {
 	private int m_point; // 포인트
 	private String m_terms; // 이용약관동의
 	private String m_personal; // 개인정보수집및이용동의
+	private String session_key; // 세션(쿠키) 아이디
+	private Timestamp session_limit; // 세션(쿠키) 유효시간
 	
 	public MemberDTO() {}
 	public MemberDTO(String m_id, String m_password, String m_newpassword, String m_email, String m_name,
 			String m_phone, String m_zipcode, String m_roadaddr, String m_detailaddr, String m_date, int m_type,
-			int m_point, String m_terms, String m_personal) {
+			int m_point, String m_terms, String m_personal, String session_key, Timestamp session_limit) {
 		this.m_id = m_id;
 		this.m_password = m_password;
 		this.m_newpassword = m_newpassword;
@@ -36,6 +40,8 @@ public class MemberDTO {
 		this.m_point = m_point;
 		this.m_terms = m_terms;
 		this.m_personal = m_personal;
+		this.session_key = session_key;
+		this.session_limit = session_limit;
 	}
 	
 	public String getM_id() {
@@ -127,6 +133,18 @@ public class MemberDTO {
 	}
 	public void setM_personal(String m_personal) {
 		this.m_personal = m_personal;
+	}
+	public String getSession_key() {
+		return session_key;
+	}
+	public void setSession_key(String session_key) {
+		this.session_key = session_key;
+	}
+	public Timestamp getSession_limit() {
+		return session_limit;
+	}
+	public void setSession_limit(Timestamp session_limit) {
+		this.session_limit = session_limit;
 	}
 	
 }

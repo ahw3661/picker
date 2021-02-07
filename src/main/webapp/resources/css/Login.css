@@ -1,7 +1,7 @@
 @charset "UTF-8";
 
 /* Login.jsp CSS */
-section .login_wrap { width: 1000px; height: 700px; margin: 0 auto; position: relative; }
+section .login_wrap { width: 1000px; height: 700px; margin: 0 auto; }
 section .login_wrap div { width: 400px; margin: 10px auto; }
 section .login_wrap div p { margin-bottom: 0; }
 section .login_wrap div>span { display: block; height: 10px; font-size: 11px; }

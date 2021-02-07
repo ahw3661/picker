@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -18,24 +19,36 @@
 						<th>전화번호</th>
 						<th>이메일</th>
 						<th>회원유형</th>
-						<th>가입일자</th>
 					</tr>
 					<c:forEach var="mdto" items="${mdto }">
-					<tr>
-						<td>
-							<a href="javascript:goOneList('${mdto.m_id }', ${pgdto.pageNum });"><span>${mdto.m_id }</span></a>
-						</td>
-						<td>${mdto.m_phone }</td>
-						<td>${mdto.m_email }</td>
-						<td>
-							<c:if test="${mdto.m_type == 1 }">일반회원</c:if>
-							<c:if test="${mdto.m_type == 2 }">탈퇴회원</c:if>
-						</td>
-						<td>
-							<fmt:parseDate var="m_date" value="${mdto.m_date }" pattern="yyyy-mm-dd"/>
-							<fmt:formatDate var="mb_date" value="${m_date }" pattern="yyyy-mm-dd"/>${mb_date }
-						</td>
-					</tr>
+						<tr>
+							<td>
+								<c:if test="${mdto.m_type == 1 }">
+									<a href="javascript:goOneList('${mdto.m_id }', ${pgdto.pageNum });"><span>${mdto.m_id }</span></a>
+								</c:if>
+								<c:if test="${mdto.m_type == 2 }"><span>${mdto.m_id }</span></c:if>
+							</td>
+							<td>
+								<c:if test="${mdto.m_type == 1 }">${mdto.m_phone }</c:if>
+								<c:if test="${mdto.m_type == 2 }">
+									<c:set var="phone" value="${mdto.m_phone}" />
+									<c:set var="totalLength" value="${fn:length(phone) }" />
+									<c:forEach begin="1" end="${totalLength-1 }">*</c:forEach>
+								</c:if>
+							</td>
+							<td>
+								<c:if test="${mdto.m_type == 1 }">${mdto.m_email }</c:if>
+								<c:if test="${mdto.m_type == 2 }">
+									<c:set var="email" value="${mdto.m_email}" />
+									<c:set var="totalLength" value="${fn:length(email) }" />
+									<c:forEach begin="1" end="${totalLength-1 }">*</c:forEach>
+								</c:if>
+							</td>
+							<td>
+								<c:if test="${mdto.m_type == 1 }">일반회원</c:if>
+								<c:if test="${mdto.m_type == 2 }">탈퇴회원</c:if>
+							</td>
+						</tr>
 					</c:forEach>
 				</table>
 			</div>
@@ -59,6 +72,7 @@
 	</section>
 </body>
 <script type="text/javascript">
+	// 회원정보 상세
 	function goOneList(id, pn) {
 		$.ajax({
 			url : "goOneList",

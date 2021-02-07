@@ -11,6 +11,7 @@ import com.project.picker.DTO.BuyDTO;
 import com.project.picker.DTO.BuyitemDTO;
 import com.project.picker.DTO.ItemDTO;
 import com.project.picker.DTO.MemberDTO;
+import com.project.picker.DTO.PointDTO;
 
 @Repository 
 public interface AdminMapperDAO {
@@ -21,7 +22,7 @@ public interface AdminMapperDAO {
 	
 	// 상품 리스트를 가져오는 함수
 	@Select("SELECT i_code,i_name,i_price,i_date,i_img,i_detailimg,i_category,i_chk FROM (SELECT I.*, ROWNUM AS rnum FROM (SELECT * FROM picker_item ORDER BY i_code DESC)I) WHERE rnum BETWEEN #{startRow} AND #{endRow}")
-	public ArrayList<ItemDTO> itemList(@Param("startRow")  int startRow, @Param("endRow") int endRow);
+	public ArrayList<ItemDTO> itemList(@Param("startRow") int startRow, @Param("endRow") int endRow);
 	
 	// 한 명의 상품정보를 가져오는 함수	
 	@Select("SELECT * FROM picker_item WHERE i_code = #{i_code}")
@@ -47,7 +48,7 @@ public interface AdminMapperDAO {
 	@Select("SELECT MAX(i_code) FROM picker_item")
 	public String getCode();
 	
-	// 전체 회원 포인트 목록 카운트
+	// 전체 회원 포인트 카운트
 	@Select("SELECT COUNT(SUM(a.p_point)) FROM picker_point a INNER JOIN picker_member b ON a.m_id = b.m_id WHERE b.m_type = '1' GROUP BY a.m_id")
 	public int getAllPointCount();
 	
@@ -55,28 +56,40 @@ public interface AdminMapperDAO {
 	@Select("SELECT COUNT(*) FROM picker_point WHERE m_id = #{m_id}")
 	public int getOnePointCount(@Param("m_id") String m_id);
 
-	// 전체 회원 목록 카운트
+	// 전체 회원 카운트
 	@Select("SELECT COUNT(*) FROM picker_member WHERE m_type IN (1, 2)")
 	public int getAllMemberCount();
 
-	// 전체 회원 비회원 구매 목록 카운트
-	@Select("SELECT COUNT(*) FROM picker_buy")
+	// 전체 회원 및 비회원 구매 카운트
+	@Select("SELECT COUNT(*) FROM picker_buy WHERE b_chk = 0")
 	public int getAllBuyCount();
 
-	// 전체 회원 비회원 구매상품 목록 카운트
+	// 전체 회원 및 비회원 구매상품 카운트
 	@Select("SELECT * FROM picker_buyitem ORDER BY bi_num DESC")
 	public ArrayList<BuyitemDTO> allBuyItem();
 	
-	// 전체 회원 비회원 구매상세1
+	// 전체 회원 및 비회원 구매상세1
 	@Select("SELECT * FROM picker_buy WHERE b_code = #{b_code}")
-	public BuyDTO getOneBuyInfo(@Param("b_code") String b_code);
+	public BuyDTO getOneBuyInfo(@Param("b_code") int b_code);
 
-	// 전체 회원 비회원 구매상세2
+	// 전체 회원 및 비회원 구매상세2
 	@Select("SELECT * FROM picker_buyitem WHERE b_code = #{b_code}")
-	public ArrayList<BuyitemDTO> getOneBuyItemInfo(@Param("b_code") String b_code);
+	public ArrayList<BuyitemDTO> getOneBuyItemInfo(@Param("b_code") int b_code);
 	
-	// 전체 회원 비회원 상품구매 금액 합계
+	// 전체 회원 및 비회원 상품구매 금액 합계
 	@Select("SELECT SUM(bi_cnt*i_price) FROM picker_buyitem WHERE b_code = #{b_code}")
-	public int getSumBuyPrice(@Param("b_code") String b_code);
+	public int getSumBuyPrice(@Param("b_code") int b_code);
+
+	// 전체 회원 및 비회원 구매취소상품 목록
+	@Select("SELECT * FROM picker_buyitem")
+	public ArrayList<BuyitemDTO> buyItemList();
+
+	// 전체 회원 및 비회원 구매취소상품 카운트
+	@Select("SELECT COUNT(*) FROM picker_buy WHERE b_chk = 1")
+	public int getAllBuyCancelCount();
+
+	// 전체 회원 및 비회원 구매취소상품 상세
+	@Select("SELECT * FROM picker_buy WHERE b_code = #{b_code} AND b_chk = 1")
+	public BuyDTO oneBuyCancel(@Param("b_code") int b_code);
 	
 }

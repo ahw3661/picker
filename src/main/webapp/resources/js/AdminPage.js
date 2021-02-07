@@ -32,6 +32,32 @@ function allBuyList(pn) {
 	});
 }
 
+// 주문취소관리
+function allBuyCancel(pn) {
+	$.ajax({
+		url : "allBuyCancel",
+		type : "post",
+		data : { "pageNum" : pn },
+		datatype : "html",
+		beforeSend : function(xmlHttpRequest) {
+			xmlHttpRequest.setRequestHeader("ajax", "true");
+		},
+		success : function(data) {
+			$(".menu_info").children().remove();
+			$(".menu_info").html(data);
+		},
+		error : function(data, error) {
+			if(data.status == -1) {
+				var hostIndex = location.href.indexOf(location.host) + location.host.length; // http://localhost:8090/
+				var ctxPath = location.href.substring(hostIndex, location.href.indexOf('/', hostIndex + 1)); // picker
+				location.href = ctxPath + "/loginPage";
+			}else {
+				alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+error);
+			}
+		}
+	});
+}
+
 // 포인트관리
 function allPointList(pn) {
 	$.ajax({
