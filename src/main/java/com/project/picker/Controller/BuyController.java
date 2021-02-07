@@ -37,6 +37,7 @@ public class BuyController {
 	
 	@RequestMapping(value="gobuyPage_FromCart", method={RequestMethod.GET, RequestMethod.POST})
 	public String gobuyPage_FromCart(HttpSession session, Model model, HttpServletRequest request){
+		// 구매 페이지로 이동 (장바구니에서 구매시 이동하는 맵핑)
 		String m_id = "";
 		ArrayList<CartDTO> payList = new ArrayList<>();
 		CartDTO cdto = new CartDTO();
@@ -65,12 +66,13 @@ public class BuyController {
 		MemberDTO mdto =  Mservice.viewMember(m_id);
 		model.addAttribute("mdto", mdto);
 		
-		model.addAttribute("section", "Buy.jsp");
+		model.addAttribute("section", "buy/Buy.jsp");
 		return "Index";
 	}
 	
 	@RequestMapping(value="gobuyPage_FromDetail", method={RequestMethod.GET, RequestMethod.POST})
 	public String gobuyPage_FromDetail(HttpSession session, Model model, HttpServletRequest request){
+		// 구매 페이지로 이동 (상품 상세페이지에서 구매시 이동하는 맵핑)
 		String m_id = "";
 		ArrayList<CartDTO> payList = new ArrayList<>();
 		CartDTO cdto = new CartDTO();
@@ -93,7 +95,7 @@ public class BuyController {
 		MemberDTO mdto =  Mservice.viewMember(m_id);
 		model.addAttribute("mdto", mdto);
 		
-		model.addAttribute("section", "Buy.jsp");
+		model.addAttribute("section", "buy/Buy.jsp");
 		return "Index";
 	}
 }

@@ -8,6 +8,7 @@ input[type=submit], input[type=reset], input[type=button] { cursor: pointer; }
 table { border-collapse: collapse; }
 ul { list-style-type: none; }
 section { min-height: 650px; padding: 50px 0; }
+aside { width: 100%; height: 100%; z-index: 200; background-color: rgba(0, 0, 0, 0.3); position: fixed; top: 0; left: 0; }
 .wrap { width: 1280px; height: 100%; margin: 0 auto; }
 .stretchBlock { display: flex; justify-content: space-between; align-items: center; }
 .stretchInline { display: inline-flex; justify-content: space-between; align-items: center; }
@@ -34,7 +35,6 @@ header .header_block #buttondiv a { text-decoration: none; font-size:13px; }
 header .header_block #buttondiv a [data-tooltip-text]:hover { position: relative; }
 header .header_block #buttondiv a [data-tooltip-text]:hover:after { content: attr(data-tooltip-text); position: absolute; width: 70px; top: 50px; left: 0; z-index: 9999; font-size: 11px; text-align: center; }
 header .header_block #buttondiv a #login, a #join, a #cart, a #admin_logout, a #admin, a #logout, a #mypagemenu { display: inline-block; width: 65px; text-align: center; }
-header .header_block #buttondiv #blankmenu { display: block; width: 65px; text-align: center; }
 header .header_block #buttondiv a #cart #fs { vertical-align: middle; }
 header .header_block #buttondiv a #login img, a #join img, a #cart img, a #admin_logout img, a #logout img, a #mypagemenu img { width: 28px; height: 25px; vertical-align: middle; }
 header .header_block #buttondiv a #admin img { width: 34px; height: 34px; vertical-align: middle; }

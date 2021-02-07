@@ -143,5 +143,10 @@ public class MemberServiceImpl implements MemberService {
 	public int sumBuyPrice(String b_code) {
 		return mmdao.sumBuyPrice(b_code);
 	}
+
+	@Override
+	public ArrayList<BuyDTO> buyCancelList(String m_id) {
+		return mmdao.buyCancelList(m_id);
+	}
 	
 }

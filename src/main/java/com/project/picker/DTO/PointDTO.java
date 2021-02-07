@@ -2,11 +2,11 @@ package com.project.picker.DTO;
 
 public class PointDTO {
 	
-	private int p_num, p_point;
-	private String m_id, p_date, p_history, b_code;
+	private int p_num, p_point, b_code;
+	private String m_id, p_date, p_history;
 	
 	public PointDTO() { }
-	public PointDTO(int p_num, int p_point, String m_id, String p_date, String p_history, String b_code) {
+	public PointDTO(int p_num, int p_point, String m_id, String p_date, String p_history, int b_code) {
 		this.p_num = p_num;
 		this.p_point = p_point;
 		this.m_id = m_id;
@@ -14,6 +14,7 @@ public class PointDTO {
 		this.p_history = p_history;
 		this.b_code = b_code;
 	}
+	
 	public int getP_num() {
 		return p_num;
 	}
@@ -44,13 +45,10 @@ public class PointDTO {
 	public void setP_history(String p_history) {
 		this.p_history = p_history;
 	}
-	public String getB_code() {
+	public int getB_code() {
 		return b_code;
 	}
-	public void setB_code(String b_code) {
+	public void setB_code(int b_code) {
 		this.b_code = b_code;
 	}
-	
-	
-
 }

@@ -21,8 +21,12 @@
 					<c:forEach var="pdto" items="${pdto }">
 						<tr>
 							<td class="pointlist_td">${pdto.m_id }</td>
-							<td class="pointlist_td"><fmt:formatNumber var="p_point" value="${pdto.p_point }" pattern="#,###"/>${p_point } 포인트</td>
-							<td class="pointlist_td"><input type="button" name="m_id" value="상세보기" onclick="javascript:pointDetail('${pdto.m_id }');"></td>
+							<td class="pointlist_td">
+								<fmt:formatNumber var="p_point" value="${pdto.p_point }" pattern="#,###"/>${p_point } 포인트
+							</td>
+							<td class="pointlist_td">
+								<input type="button" name="m_id" value="상세보기" onclick="javascript:pointDetail('${pdto.m_id }', ${pgdto.pageNum });">
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -48,11 +52,11 @@
 </body>
 <script type="text/javascript">
 	// 포인트내역 상세
-	function pointDetail(id) {
+	function pointDetail(id, pn) {
 		$.ajax({
 			url : "pointDetail",
 			type : "post",
-			data : { "m_id" : id, "pageNum" : 1 },
+			data : { "m_id" : id, "pageNum" : pn },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();

@@ -14,9 +14,9 @@
 					</span>
 					<span>${qna.q_date}</span>
 					<c:if test="${qna.m_id == u_id}">
-						<a href="qnaModify?num=${qna.q_num}">수정</a>
-						<a href="javascript:qnaDelete()">삭제</a>
+						<a href="qnaModify?q_num=${qna.q_num}">수정</a>
 					</c:if>
+					<a href="javascript:qnaDelete()">삭제</a>
 				</p>
 			</div>
 			<div class="popClose centerBlock"><a href="javascript:closePop()"><img src="resources/image/icon/closeBtn.svg" alt="닫기"></a></div>

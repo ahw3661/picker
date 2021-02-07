@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -11,62 +11,49 @@
 	<section>
 		<div class="AdminItemDetail_wrap">
 			<h3>상품상세</h3>
-			<table>
-				<tr>
-					<td colspan="2" class="info_title">상품 이미지</td>  
-					<td colspan="2" class="info_title">상품 이름</td>
-				</tr>
-				<tr>
-					<td colspan="2"><img alt="img" src="resources/image/category_img/${idto.i_img }"></td>
-					<td colspan="2"><strong>${idto.i_name }</strong></td>
-				</tr>    
-				<tr>
-					<th class="info_title">상품 가격</th>
-					<td colspan="3"><fmt:formatNumber var="i_price" value="${idto.i_price }" pattern="#,###원"/>${i_price }</td>
-				</tr>
-				<tr>
-					<th class="info_title">입고 날짜</th>
-					<td colspan="3">
+			<div class="AdminItemDetail_div">
+				<div class="item_img_div">
+					<img alt="img" src="resources/image/category_img/${idto.i_img }">
+				</div>&nbsp;
+				<div class="item_info_div">
+					<p><label>상품명</label><span>${idto.i_name }</span></p>
+					<p>
+						<label>상품가격</label>
+						<span><fmt:formatNumber var="i_price" value="${idto.i_price }" pattern="#,###원"/>${i_price }</span>
+					</p>
+					<p>
+						<label>입고날짜</label>
 						<fmt:parseDate var="i_date" value="${idto.i_date }" pattern="yyyy-MM-dd"/>
-						<fmt:formatDate var="ib_date" value="${i_date }" pattern="yyyy-MM-dd"/>
-						${ib_date }
-					</td>
-				</tr>
-				<tr>
-					<th class="info_title">카테고리</th>
-					<td colspan="3">${idto.i_category }</td>
-				</tr>
-				<tr>
-					<th class="info_title">상품게시여부</th>
-					<td colspan="3">
-						<c:if test="${idto.i_chk == 0 }">
-							판매중
-						</c:if>
-						<c:if test="${idto.i_chk == 1 }">
-							판매중지
-						</c:if>
-						<c:if test="${idto.i_chk == 2 }">
-							품절
-						</c:if>
-					</td>
-				</tr>
-				<tr>
-					<th class="info_title">상품 코드</th>
-					<td colspan="3">${idto.i_code }</td>
-				</tr>
-			</table>
+						<fmt:formatDate var="ib_date" value="${i_date }" pattern="yyyy-MM-dd"/><span>${ib_date }</span>
+					</p>
+					<p>
+						<label>카테고리</label>
+						<span>${idto.i_category }</span>
+					</p>
+					<p>
+						<label>상품게시여부</label>
+						<c:if test="${idto.i_chk == 0 }"><span>판매중</span></c:if>
+						<c:if test="${idto.i_chk == 1 }"><span>판매중지</span></c:if>
+						<c:if test="${idto.i_chk == 2 }"><span>품절</span></c:if>
+					</p>
+					<p>
+						<label>상품코드</label>
+						<span>${idto.i_code }</span>
+					</p>
+				</div>
+		  	</div>
 			<div id="List_btn">
-			 <input type="button" value="목록보기" onclick="javascript:goItemList();">
+				<input type="button" value="목록보기" onclick="javascript:goItemList(${pageNum});">
 			</div>
 		</div>
 	</section>
 </body>
-<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
 <script type="text/javascript">
-	function goItemList() {
+	function goItemList(pn) {
 		$.ajax({
 			url : "goItemList",
 			type : "post",
+			data : { "pageNum" : pn },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();

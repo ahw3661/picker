@@ -77,7 +77,10 @@
 					</div>
 				</div>
 			</div>
-			<div class="list_btn"><input type="button" value="목록" onclick="javascript:buyInfo(${pageNum});"></div>
+			<div class="list_btn">
+				<input type="button" value="주문취소" id="buy_Cancel">
+				<input type="button" value="목록" onclick="javascript:buyCancel();">
+			</div>
 		</div>
 	</section>
 </body>
@@ -95,18 +98,17 @@
 	});
 	
 	//주문목록
-	function buyInfo(pn) {
+	function buyCancel() {
 		$.ajax({
-			url : "buyInfo",
+			url : "buyCancel",
 			type : "post",
-			data : { "pageNum" : pn },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
 			},
-			error : function(data) {
-				alert("ajax 실패");
+			error : function(data, error) {
+				alert("code : "+data.status+"\n"+"message : "+data.responseText+"\n"+"error : "+error);
 			}
 		});
 	}

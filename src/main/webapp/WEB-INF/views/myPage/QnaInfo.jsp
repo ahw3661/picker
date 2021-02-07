@@ -20,7 +20,7 @@
 				<div class="qnaContent">${qna.q_content}</div>
 				<p class="qnaOpt">
 					<a href="javascript:replyPop(${qna.q_num}, null)">답글</a> /
-					<a href="qnaModify?num=${qna.q_num}">수정</a> /
+					<a href="qnaModify?q_num=${qna.q_num}">수정</a> /
 					<a href="javascript:qnaDelete(${qna.q_num})">지우기</a>
 				</p>
 				<c:forEach var="reply" items="${replylist}">
@@ -50,6 +50,7 @@
 			</li>
 		</c:forEach>
 		</ul>
+		<input type="hidden" name="row" value="${row}">
 		<c:if test="${qnacnt > row}">
 			<div class="qnaMore centerBlock"><a href="javascript:qnaInfo(${row + 5})" class="centerInline">
 				<img src="resources/image/icon/arrow_down.png" alt="더 보기"><span>&nbsp;더 보기</span>

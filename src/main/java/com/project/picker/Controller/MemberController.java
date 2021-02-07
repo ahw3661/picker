@@ -46,21 +46,18 @@ public class MemberController {
 	// 로그인 화면
 	@RequestMapping(value="loginPage", method= {RequestMethod.GET, RequestMethod.POST})
 	public String loginPage(HttpSession session, Model model, HttpServletRequest request) {
-		/*if(session.getAttribute("tempUrl") != null) {
-			model.addAttribute("url", session.getAttribute("tempUrl"));
-			session.setAttribute("tempUrl", null);
-		}*/
-		// 이전페이지가 loginPage 또는 logout이 아니거나 직접 로그인페이지 또는 로그아웃URL에 접속하지 않았을때만 referrer 저장
-        if (!(request.getRequestURI().equals("/loginPage") && request.getHeader("referer").equals("http://localhost:8090/picker/loginPage")) 
-        		|| !(request.getRequestURI().equals("/logout") && request.getHeader("referer").equals("http://localhost:8090/picker/logout"))) {
-	        // url 세션에 이전 페이지 정보 저장
-        	logger.info("referrer : "+request.getHeader("referer"));
-        	String referrer = request.getHeader("referer");
-	        //session.setAttribute("url", request.getHeader("referer"));
-	        //session.setAttribute("url", null);
-        	model.addAttribute("referrer", referrer);
-	        
-        }
+    	String referrer = request.getHeader("referer");
+    	
+    	if(referrer == null) {
+    		model.addAttribute("msg", "잘못된 접근입니다.");
+    	}else {
+    		
+    		if(referrer.equals("http://localhost:8090/picker/loginPage") || referrer.equals("http://localhost:8090/picker/logout")) {
+        		session.setAttribute("url", null);
+        	}else {
+        		session.setAttribute("url", referrer);
+        	}
+    	}
 		model.addAttribute("section", "login/Login.jsp");
 		return "Index";
 	}
@@ -76,12 +73,13 @@ public class MemberController {
 		
 		if(mdto != null) {
 			logger.info(">>> 입력 정보 일치 사용자 존재 로그인 진행");
-			int count = Cservice.totalCartCount(mdto.getM_id());
-			session.setAttribute("cnt", count);
+			session.setAttribute("login", mdto);
 			session.setAttribute("u_id", mdto.getM_id());
 			session.setAttribute("u_name", mdto.getM_name());
 			session.setAttribute("u_type", mdto.getM_type());
-			//session.setMaxInactiveInterval(10*1);
+			int count = Cservice.totalCartCount(mdto.getM_id());
+			session.setAttribute("cnt", count);
+			//session.setMaxInactiveInterval(10*2);
 			
 			if(log == true) { // 로그인 상태 유지에 체크를 한 경우 쿠키 생성
 				String sessionId = (String)session.getAttribute("u_id");
@@ -180,17 +178,6 @@ public class MemberController {
 		session.setAttribute("cnt", null);
 		logger.info(">>> 세션 초기화");
 		
-		/*PrintWriter out;
-		try {
-			out = response.getWriter();
-			out.println("<script>");
-			out.println("location.href=document.referrer;");
-			out.println("</script>");
-			out.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}*/
-		
 		model.addAttribute("section", "Section.jsp");
 		return "Index";
 	}
@@ -238,9 +225,17 @@ public class MemberController {
 		return "Index";
 	}
 	
+	// 잘못된 접근
+	@RequestMapping(value="wrongAccess", method= {RequestMethod.GET, RequestMethod.POST})
+	public String wrongAccess(Model model) {
+		model.addAttribute("msg", "잘못된 접근입니다.");
+		model.addAttribute("loc", 3);
+		return "Error";
+	}
+	
 	// 에러 메시지
 	@RequestMapping(value="errorPage", method= {RequestMethod.GET, RequestMethod.POST})
-	public String errorPage(HttpSession session, Model model, HttpServletRequest request) {
+	public String errorPage(Model model) {
 		model.addAttribute("msg", "로그인 후 이용 가능합니다.");
 		model.addAttribute("loc", 1);
 		return "Error";
@@ -276,7 +271,7 @@ public class MemberController {
 	
 	// 회원별 주문 상세
 	@RequestMapping(value="buyInfoDetail", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyInfoDetail(@RequestParam String b_code, Model model, HttpSession session) {
+	public String buyInfoDetail(@RequestParam String b_code, @RequestParam int pageNum, Model model, HttpSession session) {
 		String m_id = (String)session.getAttribute("u_id");
 		BuyDTO bdto = mservice.oneBuyInfo(m_id, b_code);
 		ArrayList<BuyitemDTO> bidto = mservice.oneBuyItemInfo(b_code);
@@ -284,9 +279,34 @@ public class MemberController {
 		model.addAttribute("bdto", bdto);
 		model.addAttribute("bidto", bidto);
 		model.addAttribute("total", total);
+		model.addAttribute("pageNum", pageNum);
 		return "myPage/BuyInfoDetail";
 	}
-		
+	
+	// 회원별 주문취소 가능 주문 목록
+	@RequestMapping(value="buyCancel", method= {RequestMethod.GET, RequestMethod.POST})
+	public String buyCancel(Model model, HttpSession session) {
+		String m_id = (String)session.getAttribute("u_id");
+		ArrayList<BuyDTO> buyCancelList = mservice.buyCancelList(m_id);
+		ArrayList<BuyitemDTO> buyitem = mservice.buyItem();
+		model.addAttribute("buyCancelList", buyCancelList);
+		model.addAttribute("buyitem", buyitem);
+		return "myPage/BuyCancel";
+	}
+	
+	// 회원별 주문 상세
+	@RequestMapping(value="buyCancelDetail", method= {RequestMethod.GET, RequestMethod.POST})
+	public String buyCancelDetail(@RequestParam String b_code, Model model, HttpSession session) {
+		String m_id = (String)session.getAttribute("u_id");
+		BuyDTO bdto = mservice.oneBuyInfo(m_id, b_code);
+		ArrayList<BuyitemDTO> bidto = mservice.oneBuyItemInfo(b_code);
+		int total = mservice.sumBuyPrice(b_code);
+		model.addAttribute("bdto", bdto);
+		model.addAttribute("bidto", bidto);
+		model.addAttribute("total", total);
+		return "myPage/BuyCancelDetail";
+	}
+	
 	// 내 정보 수정 화면
 	@RequestMapping(value="myInfo", method= {RequestMethod.GET, RequestMethod.POST})
 	public String myInfo(HttpSession session, Model model) {

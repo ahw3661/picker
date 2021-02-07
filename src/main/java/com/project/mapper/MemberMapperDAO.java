@@ -65,8 +65,8 @@ public interface MemberMapperDAO {
 	@Delete("DELETE FROM picker_cart WHERE m_id = #{m_id}")
 	public void deleteCart(@Param("m_id") String m_id);
 	
-	// 포인트 총계
-	@Select("SELECT SUM(p_point) FROM picker_point WHERE m_id = #{m_id}")
+	// 회원별 총 포인트
+	@Select("SELECT m_point FROM picker_member WHERE m_id = #{m_id}")
 	public int onePoint(@Param("m_id") String m_id);
 	
 	// 아이디찾기 - 이메일
@@ -116,4 +116,8 @@ public interface MemberMapperDAO {
 	// 비회원 구매상세2
 	@Select("SELECT * FROM picker_buyitem WHERE b_code = #{b_code}")
 	public ArrayList<BuyitemDTO> noneOneBuyItemInfo(@Param("b_code") String b_code);
+
+	// 회원별 주문취소 가능 구매 목록
+	@Select("SELECT * FROM picker_buy WHERE m_id = #{m_id} AND b_date >= to_char(sysdate - 1, 'yy/MM/dd') ORDER BY b_date DESC, b_code DESC")
+	public ArrayList<BuyDTO> buyCancelList(String m_id);
 }

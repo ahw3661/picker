@@ -34,5 +34,6 @@ public interface MemberService {
 	public BuyDTO noneOneBuyInfo(String b_code, String b_order_phone);
 	public ArrayList<BuyitemDTO> noneOneBuyItemInfo(String b_code);
 	public int sumBuyPrice(String b_code);
+	public ArrayList<BuyDTO> buyCancelList(String m_id);
 	
 }

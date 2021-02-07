@@ -53,9 +53,9 @@ public class QnaController {
 	}
 	
 	@RequestMapping("qnaPop")
-	public String qnaPop(@RequestParam int num, Model model) {
-		model.addAttribute("qna", service.getQnaWithReplyCount(num));
-		model.addAttribute("replylist", service.getReplyByQna(num));
+	public String qnaPop(@RequestParam int q_num, Model model) {
+		model.addAttribute("qna", service.getQnaWithReplyCount(q_num));
+		model.addAttribute("replylist", service.getReplyByQna(q_num));
 		return "item/ItemQnaPop";
 	}
 	
@@ -70,6 +70,7 @@ public class QnaController {
 	@RequestMapping("qnaWriteProc")
 	public Map<String, Object> qnaWriteProc(QnaDTO dto, HttpSession session){
 		logger.info("글쓰기 작동");
+		logger.info("title : " + dto.getQ_title());
 		Map<String, Object> json = new HashMap<>();
 		dto.setM_id((String)session.getAttribute("u_id"));
 		dto.setM_name((String)session.getAttribute("u_name"));
@@ -78,8 +79,8 @@ public class QnaController {
 	}
 	
 	@RequestMapping("qnaModify")
-	public String qnaModify(@RequestParam int num, Model model) {
-		model.addAttribute("dto", service.getQnaByNum(num));
+	public String qnaModify(@RequestParam int q_num, Model model) {
+		model.addAttribute("dto", service.getQnaByNum(q_num));
 		model.addAttribute("section", "board/BoardModify.jsp");
 		return "Index";
 	}
@@ -89,66 +90,58 @@ public class QnaController {
 	public Map<String, Object> qnaModifyProc(QnaDTO dto) {
 		logger.info("글쓰기 수정");
 		Map<String, Object> json = new HashMap<>();
-		json.put("chk", service.modifyQna(dto));		
+		json.put("chk", service.modifyQna(dto));
 		return json;
 	}
 	
+	@ResponseBody
 	@RequestMapping("qnaDelete")
-	public String qnaDelete(@RequestParam int num, @RequestParam(required=false) String code) {
-		String msg = service.deleteQna(num) ? "success" : "fail";
-		logger.info("delete " + msg);
-		if(code != null) return "redirect:itemQnaList?code=" + code;
-		else return "redirect: qnaMemberList";
+	public Map<String, Object> qnaDelete(@RequestParam int q_num) {
+		Map<String, Object> json = new HashMap<>();
+		json.put("chk", service.deleteQna(q_num));
+		return json;
 	}
 	
 	@RequestMapping("qnaError")
-	public String qnaError(Model model) {
+	public String qnaError(@RequestParam(required=false, defaultValue="0") int loc, Model model) {
 		model.addAttribute("msg", "비밀글입니다.");
-		model.addAttribute("log", 2);
+		if(loc != 0) model.addAttribute("loc", 2);
 		return "Error";
 	}
 	
-	@RequestMapping("replyWriteMyPage")
-	public String replyWriteByMember(ReplyDTO dto, @RequestParam(required=false, defaultValue="0") int ref, HttpSession session) {
+	@ResponseBody
+	@RequestMapping("replyWrite")
+	public Map<String, Object> replyWriteByMember(ReplyDTO dto, @RequestParam(required=false, defaultValue="0") int ref, HttpSession session) {
 		dto.setM_id((String)session.getAttribute("u_id"));
 		dto.setM_name((int)session.getAttribute("u_type") == 0 ? "더피커" : (String)session.getAttribute("u_name"));
 		dto.setR_content(dto.getR_content().replace("\r\n", "<br>"));
-		String msg = service.writeReply(dto, ref) ? "success in " : "failed to ";
-		logger.info(msg + "reply write");
-		return "redirect: qnaMemberList";
-	}
-	
-	@RequestMapping("replyWriteItemDetail")
-	public String replyWriteItemDetail(ReplyDTO dto, @RequestParam(required=false, defaultValue="0") int ref, HttpSession session) {
-		dto.setM_id((String)session.getAttribute("u_id"));
-		dto.setM_name((int)session.getAttribute("u_type") == 0 ? "더피커" : (String)session.getAttribute("u_name"));
-		dto.setR_content(dto.getR_content().replace("\r\n", "<br>"));
-		String msg = service.writeReply(dto, ref) ? "success in " : "failed to ";
-		logger.info(msg + "reply write");
-		return "redirect: qnaPop?num=" + dto.getQ_num();
+		Map<String, Object> json = new HashMap<>();
+		json.put("chk", service.writeReply(dto, ref));
+		if(session.getAttribute("u_type") != null && (int)session.getAttribute("u_type") == 0) service.setAdminReplied(dto.getQ_num());
+		return json;
 	}
 	
 	@ResponseBody
-	@RequestMapping(value="replyGetContent", produces="application/text; charset=utf8")
-	public String replyGetContent(@RequestParam int num) {
-		return service.getReplyContent(num).replace("<br>", "\r\n");
+	@RequestMapping("replyGetContent")
+	public String replyGetContent(@RequestParam int r_num) {
+		return service.getReplyContent(r_num).replace("<br>", "\r\n");
 	}
 	
+	@ResponseBody
 	@RequestMapping("replyModify")
-	public String replyModify(ReplyDTO dto, @RequestParam(required=false, defaultValue="false") boolean returnText) {
+	public Map<String, Object> replyModify(ReplyDTO dto) {		
 		dto.setR_content(dto.getR_content().replace("\r\n", "<br>"));
-		String msg = service.modifyReply(dto) ? "success in " : "failed to ";
-		logger.info(msg + "reply update");
-		if(returnText) return "redirect: replyGetContent?num="+ dto.getR_num();
-		else return "redirect: qnaMemberList";
+		Map<String, Object> json = new HashMap<>();
+		json.put("chk", service.modifyReply(dto));
+		return json;
 	}
 
+	@ResponseBody
 	@RequestMapping("replyDelete")
-	public String replyDelete(@RequestParam int r_num, @RequestParam(required=false, defaultValue="0") int q_num) {
-		String msg = service.deleteReply(r_num) ? "success in " : "failed to ";
-		logger.info(msg + "reply delete");
-		if(q_num != 0) return "redirect: qnaPop?num=" + q_num;
-		else return "redirect: qnaMemberList";
+	public Map<String, Object> replyDelete(@RequestParam int r_num) {
+		Map<String, Object> json = new HashMap<>();
+		json.put("chk", service.deleteReply(r_num));
+		return json;
 	}
 	
 	@RequestMapping("replyError")

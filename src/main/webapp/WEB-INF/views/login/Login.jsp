@@ -51,62 +51,60 @@
 <script type="text/javascript">
 	var url = ${not empty url} ? "${url}" : null;
 	
-	$(function() {
-		$("#Id").keyup(function() {
-			$("#idchk").empty();
-		});
-		
-		$("#Pw").keyup(function() {
-			$("#pwchk").empty();
-		});
-		
-		$("#login_btn").click(function() {
-			event.preventDefault(); // 기존 submit 막기
-			var log = $("input[id='logchk']").is(":checked"); // 로그인 사용 유지 체크 여부 true/false
+	if(${not empty msg}) {
+		alert("${msg}");
+		history.back();
+	}else {
+		$(function() {
+			$("#Id").keyup(function() {
+				$("#idchk").empty();
+			});
 			
-			if($("#Id").val() == "") {
-				$("#idchk").text("아이디를 입력하세요.");
-				$("#Id").focus();
-				$('#idchk').css("color", "red");
-				return false;
-			}else if($("#Pw").val() == "") {
-				$("#pwchk").text("비밀번호를 입력하세요.");
-				$("#Pw").focus();
-				$('#pwchk').css("color", "red");
-				return false;
-			}else {
-				$.ajax({
-					url:"login",
-					type:"POST",
-					data: {
-						"m_id" : $("#Id").val(),
-						"m_password" : $("#Pw").val(),
-						"log" : log
-					},
-					datatype:"json",
-					success:function(data){
-						if(data.msg == "fail") {
-							$("#pwchk").text("아이디 또는 비밀번호를 확인하세요.");
-							$('#pwchk').css("color", "red");
-						}else {
-							//location.href = (url != null ? url : document.referrer);
-							location.href = (url != null ? url : "${referrer}");
-							console.log("referrer : "+"${referrer}");
-							//location.href = (url != null ? url : "section");
-							/* if(document.referrer != null) {
-								history.back();
+			$("#Pw").keyup(function() {
+				$("#pwchk").empty();
+			});
+			
+			$("#login_btn").click(function() {
+				event.preventDefault(); // 기존 submit 막기
+				var log = $("input[id='logchk']").is(":checked"); // 로그인 사용 유지 체크 여부 true/false
+				
+				if($("#Id").val() == "") {
+					$("#idchk").text("아이디를 입력하세요.");
+					$("#Id").focus();
+					$('#idchk').css("color", "red");
+					return false;
+				}else if($("#Pw").val() == "") {
+					$("#pwchk").text("비밀번호를 입력하세요.");
+					$("#Pw").focus();
+					$('#pwchk').css("color", "red");
+					return false;
+				}else {
+					$.ajax({
+						url:"login",
+						type:"POST",
+						data: {
+							"m_id" : $("#Id").val(),
+							"m_password" : $("#Pw").val(),
+							"log" : log
+						},
+						datatype:"json",
+						success:function(data){
+							if(data.msg == "fail") {
+								$("#pwchk").text("아이디 또는 비밀번호를 확인하세요.");
+								$('#pwchk').css("color", "red");
 							}else {
-								location.href = url;
-							} */
+								//location.href = (url != null ? url : document.referrer);
+								location.href = (url != null ? url : "section");
+							}
+						},
+						error:function(request, status, error){
+							console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 						}
-					},
-					error:function(request, status, error){
-						console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-					}
-				});
-			 }
+					});
+				 }
+			});
 		});
-	});
+	}
 	
 	$(function() {
 		$("#none_member_search_btn").click(function() {

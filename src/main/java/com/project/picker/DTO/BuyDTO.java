@@ -2,35 +2,35 @@ package com.project.picker.DTO;
 
 public class BuyDTO {
 	
-	private String b_code, b_order_name, b_order_phone, b_order_email, b_take_name, b_take_email, b_take_phone, 
+	private String b_order_name, b_order_phone, b_order_email, b_take_name, b_take_email, b_take_phone, 
 		b_take_zipcode, b_take_roadaddr, b_take_detailaddr, m_id, b_date, b_agree;
-	private int b_price;
+	private int b_price, b_code;
 	private BuyitemDTO bidto;
 	
 	public BuyDTO() { }
-	public BuyDTO(String b_code, String b_order_name, String b_order_phone, String b_order_email, String b_take_name,
+	public BuyDTO(int b_code, String b_order_name, String b_order_phone, String b_order_email, String b_take_name,
 			String b_take_email, String b_take_phone, String b_take_zipcode, String b_take_roadaddr,
 			String b_take_detailaddr, String m_id, String b_date, String b_agree, int b_price, BuyitemDTO bidto) {
-		this.b_code = b_code;
-		this.b_order_name = b_order_name;
-		this.b_order_phone = b_order_phone;
-		this.b_order_email = b_order_email;
-		this.b_take_name = b_take_name;
-		this.b_take_email = b_take_email;
-		this.b_take_phone = b_take_phone;
-		this.b_take_zipcode = b_take_zipcode;
-		this.b_take_roadaddr = b_take_roadaddr;
-		this.b_take_detailaddr = b_take_detailaddr;
-		this.m_id = m_id;
-		this.b_date = b_date;
-		this.b_agree = b_agree;
-		this.b_price = b_price;
-		this.bidto = bidto;
+		this.b_code = b_code;//주문코드(PK)
+		this.b_order_name = b_order_name;//주문자이름
+		this.b_order_phone = b_order_phone;//주문자연락처
+		this.b_order_email = b_order_email;//주문자이메일
+		this.b_take_name = b_take_name;//수령인이름
+		this.b_take_email = b_take_email;// 수령인 이메일
+		this.b_take_phone = b_take_phone;//수령인연락처
+		this.b_take_zipcode = b_take_zipcode; //수령인우편번호
+		this.b_take_roadaddr = b_take_roadaddr; //수령인주소
+		this.b_take_detailaddr = b_take_detailaddr; //수령인상세주소
+		this.m_id = m_id; //아이디
+		this.b_date = b_date; //구매일자
+		this.b_agree = b_agree; //구매동의여부
+		this.b_price = b_price; //배송비
+		this.bidto = bidto; // BuyitemDTO
 	}
-	public String getB_code() {
+	public int getB_code() {
 		return b_code;
 	}
-	public void setB_code(String b_code) {
+	public void setB_code(int b_code) {
 		this.b_code = b_code;
 	}
 	public String getB_order_name() {

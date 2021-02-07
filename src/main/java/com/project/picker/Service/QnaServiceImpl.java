@@ -117,12 +117,17 @@ public class QnaServiceImpl implements QnaService {
 			else logger.info("SeqUpdate : " + dao.updateSequence(dto.getQ_num(), seq));
 			dto.setR_seq(seq);
 		}
-		return dao.insertReplyByMember(dto) == 1;
+		return dao.insertReply(dto) == 1;
+	}
+	
+	@Override
+	public void setAdminReplied(int num) {
+		dao.setAdminReplied(num);
 	}
 	
 	@Override
 	public String getReplyContent(int num) {
-		return dao.getContent(num);
+		return dao.getReplyContent(num);
 	}
 
 	@Override

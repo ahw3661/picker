@@ -32,7 +32,14 @@
 							<span id="join" data-tooltip-text="회원가입"><img alt="user_image" src="resources/image/icon/user.png"></span>
 						</a>
 						<a href="cartList">
-							<span id="cart" data-tooltip-text="장바구니"><img alt="cart_image" src="resources/image/icon/shopping_cart.png"><span id="fs">(${cnt })</span></span>
+							<span id="cart" data-tooltip-text="장바구니"><img alt="cart_image" src="resources/image/icon/shopping_cart.png">
+								<c:if test="${empty cnt || cnt == null}">
+									<span id="fs">(0)</span>
+								</c:if>
+								<c:if test="${not empty cnt }">
+									<span id="fs">(${cnt })</span>
+								</c:if>
+							</span>
 						</a>
 					</c:if>
 					<c:if test="${u_id != null }">
@@ -43,7 +50,17 @@
 							<a href="adminPage">
 								<span id="admin" data-tooltip-text="관리페이지"><img alt="admin_image" src="resources/image/icon/admin.png"></span>
 							</a>
-							<span id="blankmenu">&nbsp;</span>
+							<a href="cartList">
+								<span id="cart" data-tooltip-text="장바구니">
+									<img alt="cart_image" src="resources/image/icon/shopping_cart.png">
+									<c:if test="${empty cnt || cnt == null}">
+										<span id="fs">(0)</span>
+									</c:if>
+									<c:if test="${not empty cnt }">
+										<span id="fs">(${cnt })</span>
+									</c:if>
+								</span>
+							</a>
 						</c:if>
 						<c:if test="${u_type == 1 }">
 							<a href="myPage">

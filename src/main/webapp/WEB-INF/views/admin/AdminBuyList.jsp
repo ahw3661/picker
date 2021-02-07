@@ -28,17 +28,23 @@
 						<c:forEach var="list" items="${buyList }">
 							<c:forEach var="item" items="${buyItem }">
 								<c:if test="${list.b_code == item.b_code }">
-									<tr class="gubun">
+									<tr>
 										<td class="date_td">
 											<fmt:parseDate var="bdate" value="${list.b_date }" pattern="yyyy-MM-dd HH:mm:ss" />
 											<fmt:formatDate var="b_date" value="${bdate }" pattern="yyyy-MM-dd" />${b_date }
 										</td>
-										<td class="code_td"><a href="javascript:buyDetail('${item.b_code }');">${item.b_code }</a></td>
+										<td class="code_td">
+											<a href="javascript:buyDetail('${item.b_code }', ${pgdto.pageNum });">${item.b_code }</a>
+											<c:if test="${empty list.m_id }"><span>비회원</span></c:if>
+											<c:if test="${not empty list.m_id }"><span>회원</span></c:if>
+										</td>
 										<td class="item_td">
 											<img alt="img" src="resources/image/category_img/${item.i_img }">&nbsp;
 											<a href="goDetail?i_code=${item.i_code}">${item.i_name }</a>
 										</td>
-										<td class="iprice_td"><fmt:formatNumber var="i_price" value="${item.i_price }" pattern="#,###"/>${i_price }원</td>
+										<td class="iprice_td">
+											<fmt:formatNumber var="i_price" value="${item.i_price }" pattern="#,###"/>${i_price }원
+										</td>
 										<td class="cnt_td">${item.bi_cnt }개</td>
 										<td class="bprice_td bprice">
 											<c:if test="${list.b_price == 0}">
@@ -101,11 +107,11 @@
 	});
 	
 	// 주문조회상세
-	function buyDetail(cd) {
+	function buyDetail(cd, pn) {
 		$.ajax({
 			url : "buyDetail",
 			type : "post",
-			data : { "b_code" : cd },
+			data : { "b_code" : cd, "pageNum" : pn },
 			datatype : "html",
 			success : function(data) {
 				$('.menu_info').children().remove();

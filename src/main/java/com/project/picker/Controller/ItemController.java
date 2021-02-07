@@ -27,6 +27,7 @@ public class ItemController {
 	@RequestMapping(value="goList", method={RequestMethod.GET, RequestMethod.POST})
 	public String goList(@ RequestParam String i_category,Model model){
 		 
+		logger.info("상품리스트 출력");
 		ArrayList<ItemDTO> itemlist = Iservice.ItemList(i_category);
 		model.addAttribute("itemlist", itemlist);
 		
@@ -41,6 +42,7 @@ public class ItemController {
 	@RequestMapping(value="goDetail", method= {RequestMethod.GET, RequestMethod.POST})
 	public String goDetail(@RequestParam String i_code, Model model){
 		
+		logger.info("상품상세 출력");							 
 		ItemDTO idto = Iservice.itemView(i_code);
 		
 		model.addAttribute("idto", idto);

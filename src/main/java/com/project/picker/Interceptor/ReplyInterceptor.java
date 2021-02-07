@@ -19,12 +19,16 @@ public class ReplyInterceptor extends HandlerInterceptorAdapter {
 		throws Exception {
 		HttpSession session = request.getSession();
 		if(session.getAttribute("u_id") != null && session.getAttribute("u_type") != null) {
-			int num = Integer.parseInt(request.getParameter("num"));
-			if(((String)session.getAttribute("u_id")).equals(dao.getReplyWriter(num))) {
+			int r_num = Integer.parseInt(request.getParameter("r_num"));
+			if(((String)session.getAttribute("u_id")).equals(dao.getReplyWriter(r_num))) {
 				return true;
 			}
 		}
-		if(request.getHeader("ajax") != null && request.getHeader("ajax").equals("true")) {
+		if(request.getHeader("ajax") != null && request.getHeader("ajax").equals("json")) {
+			response.sendRedirect(request.getContextPath() + "/ajaxError");
+			return false;
+		}
+		if(request.getHeader("ajax") != null && request.getHeader("ajax").equals("html")) {
 			response.sendRedirect(request.getContextPath() + "/ajaxError");
 			return false;
 		}

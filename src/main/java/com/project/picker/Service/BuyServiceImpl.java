@@ -19,4 +19,5 @@ public class BuyServiceImpl implements BuyService {
 		return bdao.payList_cart(m_id, i_code);
 	}
 
+	
 }

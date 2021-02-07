@@ -33,7 +33,7 @@ public class AdminController {
 	
 	// 관리자 화면
 	@RequestMapping(value="adminPage", method= {RequestMethod.GET, RequestMethod.POST})
-	public String adminPage(Model model, HttpSession session) {
+	public String adminPage(Model model) {
 		int memberCount = aservice.memberCount();
 		int itemCount = aservice.itemCount();
 		logger.info(">>> 회원수 : "+memberCount);
@@ -62,13 +62,14 @@ public class AdminController {
 	
 	// 전체 회원 비회원 주문 상세
 	@RequestMapping(value="buyDetail", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyDetail(@RequestParam String b_code, Model model, HttpSession session) {
+	public String buyDetail(@RequestParam String b_code, @RequestParam int pageNum, Model model, HttpSession session) {
 		BuyDTO bdto = aservice.getOneBuyInfo(b_code);
 		ArrayList<BuyitemDTO> bidto = aservice.getOneBuyItemInfo(b_code);
 		int total = aservice.getSumBuyPrice(b_code);
 		model.addAttribute("bdto", bdto);
 		model.addAttribute("bidto", bidto);
 		model.addAttribute("total", total);
+		model.addAttribute("pageNum", pageNum);
 		return "admin/AdminBuyDetail";
 	}
 	
@@ -98,6 +99,7 @@ public class AdminController {
 			model.addAttribute("m_id", m_id);
 			model.addAttribute("list", list);
 		}
+		model.addAttribute("pageNum", pageNum);
 		return "admin/AdminPointDetail";
 	}
 	
@@ -117,7 +119,7 @@ public class AdminController {
 	
 	//한 명의 회원정보 리스트 보이는 맵핑
 	@RequestMapping(value="goOneList", method= {RequestMethod.GET, RequestMethod.POST})
-	public String goOneList(@RequestParam String m_id, Model model, HttpSession session) {
+	public String goOneList(@RequestParam String m_id, @RequestParam int pageNum, Model model, HttpSession session) {
 		
 		MemberDTO mdto = aservice.oneList(m_id);
 		logger.info(">>> 회원유형 : "+mdto.getM_type());
@@ -128,10 +130,12 @@ public class AdminController {
 			m_type = "회원";
 			model.addAttribute("mdto", mdto);
 			model.addAttribute("m_type", m_type);
+			model.addAttribute("pageNum", pageNum);
 		}else if(type == 2){
 			m_type = "탈퇴회원";
 			model.addAttribute("mdto", mdto);
 			model.addAttribute("m_type", m_type);
+			model.addAttribute("pageNum", pageNum);
 		}
 		return "admin/AdminOneUserInfo";
 	}
@@ -152,9 +156,10 @@ public class AdminController {
 	
 	// 한개의 상품을  보이는 맵핑
 	@RequestMapping(value="goAdminItemDetail", method={RequestMethod.GET, RequestMethod.POST})
-	public String goAdminItemDetail(@RequestParam String i_code, Model model) {
+	public String goAdminItemDetail(@RequestParam String i_code, @RequestParam int pageNum, Model model) {
 		ItemDTO idto = aservice.oneItemList(i_code);
 		model.addAttribute("idto", idto);
+		model.addAttribute("pageNum", pageNum);
 		return "admin/AdminItemDetail";
 	}
 	

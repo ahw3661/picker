@@ -112,9 +112,10 @@ public class NoticeController {
 	@ResponseBody
 	@RequestMapping("ajaxError")
 	public Map<String, Object> noticeAdminAjaxError(){
-		logger.info("ajax interceptor ¿€µø");
+		logger.info("ajax interceptor : false");
 		Map<String, Object> json = new HashMap<>();
 		json.put("chk", false);
+		json.put("logError", true);
 		return json;
 	}
 

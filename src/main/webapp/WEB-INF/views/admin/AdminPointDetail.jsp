@@ -26,7 +26,9 @@
 								<fmt:formatDate var="p_date" value="${pdate }" pattern="yyyy-MM-dd" />${p_date }
 							</td>
 							<td class="pointdetail_td">${list.p_history }</td>
-							<td class="pointdetail_td"><span><fmt:formatNumber var="p_point" value="${list.p_point }" pattern="#,###"/>${p_point } 포인트</span></td>
+							<td class="pointdetail_td">
+								<span><fmt:formatNumber var="p_point" value="${list.p_point }" pattern="#,###"/>${p_point } 포인트</span>
+							</td>
 						</tr>
 					</c:forEach>
 				</table>
@@ -47,7 +49,9 @@
 	 				<div class="next_div"><a href="javascript:pointDetail('${m_id }', ${startPage + pgdto.pageSize });"><b>》</b></a></div>
 	 			</c:if>
 			</div>
-			<div class="list_btn"><input type="button" value="목록" onclick="javascript:allPointList(1);"></div>
+			<div class="list_btn">
+				<input type="button" value="목록" onclick="javascript:allPointList(${pageNum});">
+			</div>
 		</div>
 	</section>
 </body>

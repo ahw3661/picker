@@ -32,6 +32,8 @@ $('#writeBtn').click(function(){
 			if(json.chk) {
 				window.alert('게시글이 작성되었습니다.');
 				location.href=document.referrer;
+			} else if(json.logError != undefined && json.logError) {	
+				window.alert('[세션종료] 세션이 종료되었습니다.');
 			} else {
 				window.alert('글 작성 오류');
 			}
@@ -49,12 +51,14 @@ $('#modifyBtn').click(function(){
 		datatype : 'json',
 		data : $('form').serialize(),
 		beforeSend : function(xmlHttpRequest) {
-			xmlHttpRequest.setRequestHeader("ajax", "true");
+			xmlHttpRequest.setRequestHeader("ajax", "json");
 		},
 		success : function(json){
 			if(json.chk) {
 				window.alert('게시글이 수정되었습니다.');
 				location.href=document.referrer;
+			} else if(json.logError != undefined && json.logError) {	
+				window.alert('[세션종료] 세션이 종료되었습니다.');
 			} else {
 				window.alert('글 수정 오류');
 			}
@@ -79,6 +83,8 @@ $('#noticeWriteBtn').click(function(){
 			if(json.chk) {
 				window.alert('공지글이 작성되었습니다.');
 				location.href='noticeList';
+			} else if(json.logError != undefined && json.logError) {	
+				window.alert('[세션종료] 세션이 종료되었습니다.');
 			} else {
 				window.alert('공지 작성 오류');
 			}
@@ -102,6 +108,8 @@ $('#noticeModifyBtn').click(function(){
 			if(json.chk) {
 				window.alert('공지글이 수정되었습니다.');
 				location.href=document.referrer;
+			} else if(json.logError != undefined && json.logError) {	
+				window.alert('[세션종료] 세션이 종료되었습니다.');
 			} else {
 				window.alert('공지 수정 오류');
 			}

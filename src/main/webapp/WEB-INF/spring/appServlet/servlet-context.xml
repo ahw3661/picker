@@ -26,6 +26,7 @@
 	<beans:bean id="loginInterceptor" class="com.project.picker.Interceptor.LoginInterceptor"/>
 	<beans:bean id="adminInterceptor" class="com.project.picker.Interceptor.AdminInterceptor"/>
 	<beans:bean id="qnaInterceptor" class="com.project.picker.Interceptor.QnaInterceptor"/>
+	<beans:bean id="replyInterceptor" class="com.project.picker.Interceptor.ReplyInterceptor"/>
 	
 	<interceptors>
 		<interceptor>
@@ -34,7 +35,9 @@
 			<mapping path="/myInfo"/>
 			<mapping path="/pointInfo"/>
 			<mapping path="/withdrawPage"/>
+			<mapping path="/qnaMemberList"/>
 			<mapping path="/qnaWrite"/>
+			<mapping path="/qnaWriteProc"/>
 			<mapping path="/adminPage"/>
 			<mapping path="/allPointList"/>
 			<mapping path="/goMemberList"/>
@@ -43,6 +46,7 @@
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 		<interceptor>
+			<mapping path="/adminPage"/>
 			<mapping path="/noticeWrite"/>
 			<mapping path="/noticeWriteProc"/>
 			<mapping path="/noticeModify"/>
@@ -51,11 +55,18 @@
 			<beans:ref bean="adminInterceptor"/>
 		</interceptor>
 		<interceptor>
+			<mapping path="/qnaPop"/>
 			<mapping path="/qnaModify"/>
 			<mapping path="/qnaModifyProc"/>
 			<mapping path="/qnaDelete"/>
+			<mapping path="/replyWrite"/>
 			<beans:ref bean="qnaInterceptor"/>
-		</interceptor>	   
+		</interceptor>
+		<interceptor>
+			<mapping path="/replyModify"/>
+			<mapping path="/replyDelete"/>
+			<beans:ref bean="replyInterceptor"/>
+		</interceptor>
 	</interceptors>
 	
 </beans:beans>

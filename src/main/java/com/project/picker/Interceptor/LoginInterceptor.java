@@ -26,6 +26,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		logger.info(">>> pre");
 		HttpSession session = request.getSession();
+		//MemberDTO login = (MemberDTO)session.getAttribute("login");
 		
 		if(session.getAttribute("u_id") != null) {
 			logger.info(">>> 세션 아이디 존재");
@@ -54,7 +55,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				return false;
 			}else {
 				logger.info(">>> 로그인 화면으로 이동");
-				//request.getSession().setAttribute("tempUrl", request.getRequestURL());
 				response.sendRedirect(request.getContextPath() + "/loginPage");
 				return false;
 			}

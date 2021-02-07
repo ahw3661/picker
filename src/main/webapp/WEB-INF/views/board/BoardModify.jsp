@@ -9,7 +9,7 @@
 <body>
 	<section class="wrap">
 		<form id="writeForm" class="writeWrap" method="post">
-			<h3>문의 작성</h3>
+			<h3>문의 수정</h3>
 			<c:if test="${not empty i_code}">
 				<p>관련상품 : <input type="text" name="i_name" value="${i_name}" readonly></p>
 				<input type="hidden" name="i_img" value="${i_img}">

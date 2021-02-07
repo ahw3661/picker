@@ -13,15 +13,15 @@
 		 	<h3>상품목록</h3>
 		 	<div class="AdminItemList_div">
 			 	<table>
-				 	<tr id="list_Title">
-				 	 	<td>상품 코드</td>
-				 	 	<td>상품 명</td>
-				 	 	<td>상품 카테고리</td>
+				 	<tr>
+				 	 	<th>상품 코드</th>
+				 	 	<th>상품 명</th>
+				 	 	<th>상품 카테고리</th>
 				 	</tr>
 				 	<c:forEach var="itemlist" items="${itemList }">
 						<tr>
 							<td>${itemlist.i_code }</td>
-							<td><a href="javascript:goAdminItemDetail('${itemlist.i_code }');">${itemlist.i_name }</a></td>
+							<td><a href="javascript:goAdminItemDetail('${itemlist.i_code }', ${pgdto.pageNum });">${itemlist.i_name }</a></td>
 							<td>${itemlist.i_category }</td>
 						</tr>
 				 	</c:forEach>
@@ -48,11 +48,11 @@
 	</section>
 </body>
 <script type="text/javascript">
-	function goAdminItemDetail(cd) {
+	function goAdminItemDetail(cd, pn) {
 		$.ajax({
 			url : "goAdminItemDetail",
 			type : "post",
-			data : { "i_code" : cd },
+			data : { "i_code" : cd, "pageNum" : pn },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();

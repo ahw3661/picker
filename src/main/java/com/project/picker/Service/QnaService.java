@@ -22,6 +22,7 @@ public interface QnaService {
 	public boolean modifyQna(QnaDTO dto); // 게시글 수정
 	public boolean deleteQna(int num); // 게시글 삭제
 	public boolean writeReply(ReplyDTO dto, int ref); // 댓글 등록
+	public void setAdminReplied(int num); // 관리자 댓글 등록
 	public String getReplyContent(int num); // 댓글 내용 호출
 	public boolean modifyReply(ReplyDTO dto); // 댓글 수정
 	public boolean deleteReply(int num); // 댓글 삭제

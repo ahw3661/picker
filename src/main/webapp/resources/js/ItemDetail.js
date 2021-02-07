@@ -48,15 +48,27 @@ $(document).on("click", ".replySub", function(event){
 	var formData = new FormData(event.target.closest("form"));
 	formData.append("q_num", $("input[name=q_num]").val());
 	$.ajax({
-		url : "replyWriteItemDetail",
+		url : "replyWrite",
 		type : "post",
-		datatype : "html",
+		dataType : "json",
 		data : formData,
 		contentType : false, 
 		processData : false,
-		success : function(data){
-			$("aside").html(data);
-			setReplyPop();
+		beforeSend : function(xmlHttpRequest) {
+			xmlHttpRequest.setRequestHeader("ajax", "json");
+			xmlHttpRequest.setRequestHeader("admin", "accessible");
+		},
+		success : function(json){
+			if(json.chk){
+				var qnum = $("input[name=q_num]").val();
+				window.alert("댓글이 등록되었습니다.");
+				$("aside").remove();
+				getQnaPop(qnum);
+			} else if(json.logError != undefined && json.logError) {
+				window.alert("[세션종료] 댓글은 작성자 본인 또는 관리자만 작성할 수 있습니다.");
+			} else {
+				window.alert("[오류] 댓글 작성 실패하였습니다.");
+			}
 		},
 		error:function(request,error){
 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -99,7 +111,7 @@ function setReplyPop(){
 	$(".replyModifyBtn").each(function(){
 		$(this).data("pop", true);
 		$(this).click(function(){
-			console.log($(this).data("pop"));
+			
 			var txtarea = $(this).closest(".replyInner").find(".replyContent");
 			if($(this).data("pop")){
 				txtarea.html("<textarea rows='5' cols='100' maxlength='500' name='r_content' class='replyModifyArea'>" 
@@ -109,13 +121,24 @@ function setReplyPop(){
 				$.ajax({
 					url : "replyModify", 
 					type : "post",
-					datatype : "text",
-					data : {"returnText" : true, "r_num" : $(this).closest(".qnaOpt").find("input[name=r_num]").val(),
+					datatype : "json",
+					beforeSend : function(xmlHttpRequest) {
+						xmlHttpRequest.setRequestHeader("ajax", "json");
+					},
+					data : {"r_num" : $(this).closest(".qnaOpt").find("input[name=r_num]").val(),
 						"r_content" : $(this).closest(".replyInner").find(".replyModifyArea").val()},
-					context: this,
-					success : function(text){
-						txtarea.html(text);
-						$(this).data("pop", true);
+	   
+					success : function(json){
+						if(json.chk){
+							var qnum = $("input[name=q_num]").val();
+							window.alert("댓글이 수정되었습니다.");
+							$("aside").remove();
+							getQnaPop(qnum);
+						} else if(json.logError != undefined && json.logError) {
+							window.alert("[세션종료] 작성자 본인만 수정 가능합니다.");
+						} else {
+							window.alert("[오류] 댓글 수정 실패하였습니다.");
+						}
 					}
 				})
 			}
@@ -125,13 +148,19 @@ function setReplyPop(){
 
 function getQnaPop(num){
 	$.ajax({
-		url : "qnaPop?num=" + num,
+		url : "qnaPop?q_num=" + num,
 		type : "get",
-		datatype : "html",
+		dataType : "html",
+		beforeSend : function(xmlHttpRequest) {
+			xmlHttpRequest.setRequestHeader("ajax", "html");
+			xmlHttpRequest.setRequestHeader("admin", "accessible");
+		},
 		success : function(data){
 			$("body").append(data);
-			$("body").css("overflow-y", "hidden");
-			setReplyPop();
+			if($("#qnaPop").length){
+				$("body").css("overflow-y", "hidden");
+				setReplyPop();
+			}
 		},
 		error:function(request,error){
 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
@@ -149,11 +178,21 @@ function qnaDelete(){
 		$.ajax({
 			url : "qnaDelete?code=" + $("input[name=i_code]").val() + "&num=" + $("input[name=q_num]").val(),
 			type : "get",
-			datatype : "html",
-			success : function(data){
-				window.alert("해당 글이 삭제되었습니다.");
-				$("#item_qna").html(data);
-				closePop();
+			dataType : "json",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "json");
+				xmlHttpRequest.setRequestHeader("admin", "accessible");
+			},
+			success : function(json){
+				if(json.chk){
+					window.alert("해당 글이 삭제되었습니다.");
+					closePop();
+					getQnaList(1);
+				} else if(json.logError != undefined && json.logError) {
+					window.alert("[세션종료] 작성자 본인만 삭제 가능합니다.");
+				} else {
+					window.alert("[오류] 삭제 실패하였습니다.");
+				}
 			}
 		})
 	}
@@ -163,12 +202,24 @@ function qnaDelete(){
 function replyDelete(num){
 	if(window.confirm("댓글을 삭제하시겠습니까?")){
 		$.ajax({
-			url : "replyDelete?q_num=" + $("input[name=q_num]").val() + "&r_num=" + num,
+			url : "replyDelete?r_num=" + num,
 			type : "get",
-			datatype : "html",
-			success : function(data){
-				$("aside").html(data);
-				setReplyPop();
+			dataType : "json",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "json");
+				xmlHttpRequest.setRequestHeader("admin", "accessible");
+			},
+			success : function(json){
+				if(json.chk){
+					var qnum = $("input[name=q_num]").val();
+					window.alert("댓글이 삭제되었습니다.");
+					$("aside").remove();
+					getQnaPop(qnum);
+				} else if(json.logError != undefined && json.logError) {
+					window.alert("[세션종료] 작성자 본인만 삭제 가능합니다.");
+				} else {
+					window.alert("[오류] 댓글 삭제 실패하였습니다.");
+				}
 			}
 		})
 	}

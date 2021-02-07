@@ -30,6 +30,7 @@ section .buy_list_wrap .buy_list_table_wrap table tr .buy_th:nth-child(3), tr .i
 section .buy_list_wrap .buy_list_table_wrap table tr td { height: 55px; text-align: center; font-size: 14px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
 section .buy_list_wrap .buy_list_table_wrap table tr .code_td { width: 130px; border-right: 1px solid #E5E5E5; }
 section .buy_list_wrap .buy_list_table_wrap table tr .code_td a:hover, tr .item_td a:hover { text-decoration: underline; }
+section .buy_list_wrap .buy_list_table_wrap table tr .code_td span { display: block; font-size: 13px; }
 section .buy_list_wrap .buy_list_table_wrap table tr .item_td { text-align: left; padding: 0 8px; }
 section .buy_list_wrap .buy_list_table_wrap table tr .item_td img { width: 40px; height: 40px; text-align: left; vertical-align: middle; }
 section .buy_list_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
@@ -66,11 +67,11 @@ section .point_list_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 section .point_list_wrap>h3 { width: 100%; height: 40px; text-align: center; }
 section .point_list_wrap .point_list_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
 section .point_list_wrap .point_list_table_wrap table { width: 100%; margin: 0 auto; }
-section .point_list_wrap .point_list_table_wrap table tr .pointlist_th { height: 40px; text-align: center; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .point_list_wrap .point_list_table_wrap table tr .pointlist_th { height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
 section .point_list_wrap .point_list_table_wrap table tr .pointlist_th:nth-child(1), tr .pointlist_td:nth-child(1) { width: 300px; }
 section .point_list_wrap .point_list_table_wrap table tr .pointlist_th:nth-child(2), tr .pointlist_td:nth-child(2) { width: 400px; }
 section .point_list_wrap .point_list_table_wrap table tr .pointlist_th:nth-child(3), tr .pointlist_td:nth-child(3) { width: 300px; }
-section .point_list_wrap .point_list_table_wrap table tr .pointlist_td { height: 50px; text-align: center; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+section .point_list_wrap .point_list_table_wrap table tr .pointlist_td { height: 50px; text-align: center; font-size: 14px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
 section .point_list_wrap .point_list_table_wrap table tr .pointlist_td:nth-child(2) { text-align: right; }
 section .point_list_wrap .point_list_table_wrap table tr .pointlist_td input { width: 100px; height: 30px; border: 1px solid black; color: white; background: black; }
 section .point_list_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
@@ -100,59 +101,63 @@ section .point_detail_wrap .list_btn input { width: 150px; height: 40px; border:
 .AdminItemList_wrap>h3 { width: 100%; height: 40px; text-align: center; }
 .AdminItemList_wrap .AdminItemList_div { width: 1000px; min-height: 600px; margin: 0 auto; }
 .AdminItemList_wrap .AdminItemList_div table { margin: 0 auto; width: 100%; }
-.AdminItemList_wrap .AdminItemList_div table #list_Title td { width: 250px; height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
-.AdminItemList_wrap .AdminItemList_div table #list_Title td:nth-child(2) { width: 500px; }
-.AdminItemList_wrap .AdminItemList_div table td { height: 55px; text-align: center; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
-.AdminItemList_wrap .AdminItemList_div table td a:hover { text-decoration: underline; }
+.AdminItemList_wrap .AdminItemList_div table tr th { width: 250px; height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+.AdminItemList_wrap .AdminItemList_div table tr th:nth-child(2) { width: 500px; }
+.AdminItemList_wrap .AdminItemList_div table tr td { height: 55px; text-align: center; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+.AdminItemList_wrap .AdminItemList_div table tr td a:hover { text-decoration: underline; }
 .AdminItemList_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
 .AdminItemList_wrap .curr_div { font-weight: bold; color: red; }
 
 /* AdminItemDetail.jsp CSS */
 .AdminItemDetail_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 .AdminItemDetail_wrap>h3 { width: 100%; height: 40px; text-align: center; }
-.AdminItemDetail_wrap table { margin: 0 auto; border: 1px solid lightgray;  text-align: center; width: 600px; height: 350px;border: 1px solid gray;  }
-.AdminItemDetail_wrap table tr { border:1px solid lightgray; }
-.AdminItemDetail_wrap table tr th { width: 150px;  border: 1px solid lightgray; }
-.AdminItemDetail_wrap table tr td { width: 150px;  border: 1px solid lightgray; }
-.AdminItemDetail_wrap table tr td img  { width: 300px; height: 200px; text-align: center; vertical-align: middle; }
-.AdminItemDetail_wrap table .info_title { background: #F0EEEA; }
-.AdminItemDetail_wrap #List_btn { text-align: center; margin: 2px; }
-.AdminItemDetail_wrap #List_btn input { border: 2px solid gray; width: 130px; height: 50px; font-size: 20px; background: #F0EEEA; }
+.AdminItemDetail_wrap .AdminItemDetail_div { width: 1000px; min-height: 500px; margin: 0 auto; display: flex; justify-content: center; align-items: center; }
+.AdminItemDetail_wrap .AdminItemDetail_div .item_img_div { width: 500px; height: 100%; text-align: center; }
+.AdminItemDetail_wrap .AdminItemDetail_div .item_img_div img { width: 400px; height: 400px; vertical-align: middle; }
+.AdminItemDetail_wrap .AdminItemDetail_div .item_info_div { width: 500px; height: 100%; padding-left: 10px; }
+.AdminItemDetail_wrap .AdminItemDetail_div .item_info_div p { width: 100%; height: 60px; text-align: left; padding: 17px 0; }
+.AdminItemDetail_wrap .AdminItemDetail_div .item_info_div p label { display: inline-block; width: 150px; font-weight: bold; }
+.AdminItemDetail_wrap .AdminItemDetail_div .item_info_div p span { padding-left: 5px; }
+.AdminItemDetail_wrap #List_btn { width: 1000px; margin: 15px auto; text-align: center; }
+.AdminItemDetail_wrap #List_btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
 
 /* AdminMemberList.jsp CSS */
 .AdminUserList_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 .AdminUserList_wrap>h3 { width: 100%; height: 40px; text-align: center; }
 .AdminUserList_wrap .AdminUserList_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
-.AdminUserList_wrap .AdminUserList_table_wrap table { margin: 0 auto; border: 1px solid lightgray; text-align: center; width:800px; }
-.AdminUserList_wrap .AdminUserList_table_wrap table #info_title { height: 50px; background: #F0EEEA; }
-.AdminUserList_wrap .AdminUserList_table_wrap table #info_title td { border: 1px solid lightgray; }
-.AdminUserList_wrap .AdminUserList_table_wrap table #list_Info { height: 30px; }
-.AdminUserList_wrap .AdminUserList_table_wrap table #list_Info td { border: 1px solid lightgray; }
+.AdminUserList_wrap .AdminUserList_table_wrap table { margin: 0 auto; text-align: center; width:100%; }
+.AdminUserList_wrap .AdminUserList_table_wrap table tr th { height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+.AdminUserList_wrap .AdminUserList_table_wrap table tr td { width: 200px; height: 55px; text-align: center; font-size: 14px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+.AdminUserList_wrap .AdminUserList_table_wrap table tr td a span:hover { border-bottom: 1px solid black; }
 .AdminUserList_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
 .AdminUserList_wrap .curr_div { font-weight: bold; color: red; }
 
 /* AdminOneUserInfo.jsp CSS */
 .AdminOneUserList_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 .AdminOneUserList_wrap>h3 { width: 100%; height: 40px; text-align: center; }
-.AdminOneUserList_wrap table { width: 800px; margin: 0 auto; border: 1px solid lightgray; text-align: center; }
-.AdminOneUserList_wrap table .OneList_info { border: 1px solid lightgray; text-align: center; }
-.AdminOneUserList_wrap table .OneList_info th { border: 1px solid lightgray; background: #F0EEEA; width: 150px; height: 50px; }
-.AdminOneUserList_wrap table .OneList_info td { width: 400px; }
-.AdminOneUserList_wrap #List_btn { text-align: center; }
-.AdminOneUserList_wrap #List_btn input[type=button] { border: 2px solid gray; width: 150px; height: 50px; font-size: 20px; background: #F0EEEA; }
+.AdminOneUserList_wrap .AdminOneUserList_div { width: 1000px; min-height: 550px; margin: 0 auto; }
+.AdminOneUserList_wrap .AdminOneUserList_div table { width: 100%; margin: 0 auto; text-align: center; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+.AdminOneUserList_wrap .AdminOneUserList_div table tr { text-align: center; }
+.AdminOneUserList_wrap .AdminOneUserList_div table tr th { width: 400px; height: 55px; }
+.AdminOneUserList_wrap .AdminOneUserList_div table tr td { width: 600px; height: 55px; text-align: left; }
+.AdminOneUserList_wrap #List_btn { width: 1000px; margin: 15px auto; text-align: center; }
+.AdminOneUserList_wrap #List_btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
 
 /* AdminItemInsert.jsp CSS */
 .ItemInsert_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 .ItemInsert_wrap>h3 { width: 100%; height: 40px; text-align: center; }
-.ItemInsert_wrap form table { margin: 0 auto; text-align: center; width: 600px; height: 250px; border: 1px solid gray; }
-.ItemInsert_wrap form table tr { border: 1px solid gray; } 
-.ItemInsert_wrap form table tr th { border: 1px solid gray;  background: #F0EEEA; }
-.ItemInsert_wrap form table tr td { border: 1px solid gray; }
-.ItemInsert_wrap form table tr td .Item_input { width: 500px; height: 30px; } 
-.ItemInsert_wrap form table tr td select { width: 500px; height: 30px; }
+.ItemInsert_wrap form table { margin: 0 auto; width: 1000px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+.ItemInsert_wrap form table tr th { width: 400px; height: 60px; text-align: center; }
+.ItemInsert_wrap form table tr td { width: 600px; height: 60px; text-align: left; padding: 0 7px; }
+.ItemInsert_wrap form table tr td .Item_input { width: 500px; height: 40px; }
+.ItemInsert_wrap form table tr td .item_file, td .detail_file { display: inline-block; width: 100px; height: 40px; padding: 11px 0; text-align: center; background: #E5E5E5; border: 1px solid lightgray; color: black; font-size: 14px; cursor: pointer; vertical-align: middle; }
+.ItemInsert_wrap form table tr td .item_file:hover, td .detail_file:hover { background: lightgray; }
+.ItemInsert_wrap form table tr td .upload_name { width: 396px; height: 40px; padding: 0 5px; border: 1px solid lightgray; vertical-align: middle; }
+.ItemInsert_wrap form table tr td #itemMainImg, #detailFile { display: none; }
+.ItemInsert_wrap form table tr td select { width: 500px; height: 40px; }
 .ItemInsert_wrap form table tr td input[type=file] { width: 500px; text-align: left; }
-.ItemInsert_wrap form #Insert_Btn { text-align: center; margin: 20px; }
-.ItemInsert_wrap form #Insert_Btn input[type=button] { border: 2px solid gray; width: 130px; height: 50px; font-size: 20px; background: #F0EEEA; }
+.ItemInsert_wrap form #Insert_Btn { width: 1000px; margin: 15px auto; text-align: center; }
+.ItemInsert_wrap form #Insert_Btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black;  }
 
 
 

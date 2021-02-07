@@ -51,7 +51,9 @@
 								<td class="item_td"><c:out value="${no }"></c:out></td>
 								<td class="item_td">${bidto.i_name }</td>
 								<td class="item_td">${bidto.bi_cnt }개</td>
-								<td class="item_td"><fmt:formatNumber var="i_price" value="${bidto.i_price*bidto.bi_cnt }" pattern="#,###"/>${i_price }원</td>
+								<td class="item_td">
+									<fmt:formatNumber var="i_price" value="${bidto.i_price*bidto.bi_cnt }" pattern="#,###"/>${i_price }원
+								</td>
 								<td class="item_td bprice">
 									<c:if test="${bdto.b_price == 0}">
 										<fmt:formatNumber var="b_price" value="${bdto.b_price }"/>무료
@@ -77,7 +79,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="list_btn"><input type="button" value="목록" onclick="javascript:allBuyList(1);"></div>
+			<div class="list_btn"><input type="button" value="목록" onclick="javascript:allBuyList(${pageNum});"></div>
 		</div>
 	</section>
 </body>

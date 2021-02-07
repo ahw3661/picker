@@ -13,31 +13,28 @@
 			<h3>회원 정보</h3>
 			<div class="AdminUserList_table_wrap">
 				<table>
-					<tr id="info_title">
-						<td>아이디</td>
-						<td>전화번호</td>
-						<td>이메일</td>
-						<td>회원유형</td>
-						<td>가입일자</td>
+					<tr>
+						<th>아이디</th>
+						<th>전화번호</th>
+						<th>이메일</th>
+						<th>회원유형</th>
+						<th>가입일자</th>
 					</tr>
 					<c:forEach var="mdto" items="${mdto }">
-					<tr id="list_Info">
+					<tr>
 						<td>
-							<a href="javascript:goOneList('${mdto.m_id }');">${mdto.m_id }</a>
+							<a href="javascript:goOneList('${mdto.m_id }', ${pgdto.pageNum });"><span>${mdto.m_id }</span></a>
 						</td>
 						<td>${mdto.m_phone }</td>
 						<td>${mdto.m_email }</td>
 						<td>
-							<c:if test="${mdto.m_type == 1 }">
-								일반회원
-							</c:if>
-							<c:if test="${mdto.m_type == 2 }">
-								탈퇴회원
-							</c:if>
+							<c:if test="${mdto.m_type == 1 }">일반회원</c:if>
+							<c:if test="${mdto.m_type == 2 }">탈퇴회원</c:if>
 						</td>
-						<td><fmt:parseDate var="m_date" value="${mdto.m_date }" pattern="yyyy-mm-dd"/>
-						<fmt:formatDate var="mb_date" value="${m_date }" pattern="yyyy-mm-dd"/>
-						${mb_date }</td>
+						<td>
+							<fmt:parseDate var="m_date" value="${mdto.m_date }" pattern="yyyy-mm-dd"/>
+							<fmt:formatDate var="mb_date" value="${m_date }" pattern="yyyy-mm-dd"/>${mb_date }
+						</td>
 					</tr>
 					</c:forEach>
 				</table>
@@ -62,11 +59,11 @@
 	</section>
 </body>
 <script type="text/javascript">
-	function goOneList(id) {
+	function goOneList(id, pn) {
 		$.ajax({
 			url : "goOneList",
 			type : "post",
-			data : { "m_id" : id },
+			data : { "m_id" : id, "pageNum" : pn },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();
