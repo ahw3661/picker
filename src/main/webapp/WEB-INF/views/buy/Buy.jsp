@@ -183,6 +183,7 @@ $(function(){
 				$("#point").val($("#point_use").val());
 				$("#usePoint").val($("#point").val().toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"P");
 			}
+			$("#usePoint_hidden").val($("#point").val());
 			var tot_price = total-$("#point").val()+delivery;
 			$("#tot").val(tot_price);
 			$("#totalPrice").val(tot_price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원");

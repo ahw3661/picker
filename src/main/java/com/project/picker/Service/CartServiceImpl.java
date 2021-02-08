@@ -34,6 +34,9 @@ public class CartServiceImpl implements CartService {
 			if(cdao.cartCount(cdto) == 0) {
 				cdao.insertCart(cdto);
 			}else {
+				if(cdao.cartCnt(cdto) + cdto.getC_cnt() > 99) {
+					cdto.setC_cnt(99 - cdao.cartCnt(cdto));	
+				}
 				cdao.cartCntUpdate(cdto);
 			}
 			count = totalCartCount(m_id);
@@ -47,8 +50,13 @@ public class CartServiceImpl implements CartService {
 				list = (ArrayList<CartDTO>)session.getAttribute("sessionList");
 				for(int i=0;i<list.size();i++) {
 					if(cdto.getI_code().equals(list.get(i).getI_code())) {
+						if(list.get(i).getC_cnt() + cdto.getC_cnt() >99) {
+							cdto.setC_cnt(99 - list.get(i).getC_cnt());
+							list.get(i).setC_cnt(99);
+						} else {
+							list.get(i).setC_cnt(list.get(i).getC_cnt() + cdto.getC_cnt());
+						}
 						cdao.cartCntUpdate_Non(cdto.getC_cnt(), list.get(i).getC_num());
-						list.get(i).setC_cnt(list.get(i).getC_cnt() + cdto.getC_cnt());
 						update_Non = false;
 						break;
 					}

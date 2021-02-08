@@ -1,7 +1,11 @@
 @charset "UTF-8";
-#info_div { margin:0 auto; border: 1px solid gray; padding: 10px; margin: 5px; height: 94%; }
+#info_div { margin:0 auto; border: 1px solid gray; padding: 10px; margin: 5px; height: 550px; }
 #info_div h3 { text-align: center; }
 #info_div p { margin: 2px auto; }
 #info_msg_div { margin: 0 auto; padding: 20px 0px 20px 50px; box-sizing: border-box;}
 .info_label { display: inline-block; width: 80px; height: 40px; padding: 7px 0 5px 0; box-sizing: border-box; font-weight: bold; }
-.info_msg { border: none; width : 260px; height: 40px; font-size:16px; box-sizing: border-box; }    
+.info_msg { border: none; width : 260px; height: 40px; font-size:16px; box-sizing: border-box; }
+#btn_div{display: flex; justify-content: center;}
+#closebtn { background: black; color: white; cursor:pointer; width: 120px; height: 45px; border-radius: 2px; border: none; outline: none; text-align: center;}
+#pmsg { font-size: 12px; width: 390px; border: 1px solid red; padding:10px; box-sizing: border-box; margin-top: 10px;}
+#pmsg>span{ font-size: 14px; font-weight: bold; color: #f83d10;}

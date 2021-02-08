@@ -18,14 +18,12 @@
 	</div>
 	<script type="text/javascript">
 		var reg = /^\d+$/;
-		$(".iptAuthen").each(function(){
-			$(this).on("input", function(){
-				var txt = $(this).val();
-				if(!reg.test(txt) && reg != ""){
-					txt = txt.slice(0, txt.length - 1);
-					$(this).val(txt);
-				}	
-			})
+		$("input[name=b_code]").on("input", function(){
+			var txt = $(this).val();
+			if(!reg.test(txt) && reg != ""){
+				txt = txt.slice(0, txt.length - 1);
+				$(this).val(txt);
+			}
 		})
 	</script>
 </c:if>

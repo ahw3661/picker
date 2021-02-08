@@ -72,14 +72,29 @@
 	            // 우편번호와 주소 정보를 해당 필드에 넣는다.
 	            document.getElementById("zipCode").value = data.zonecode;	
 	            document.getElementById("roadAddress").value = roadAddr;
-	            document.getElementById("detailAddress").focus();
+	            
+	            if(document.getElementById("detailAddress").value == "") {
+                	document.getElementById("detailAddress").focus();
+                }else {
+                	document.getElementById("detailAddress").value = "";
+                	document.getElementById("detailAddress").focus();
+                }
 	        }
 	    }).open();
 	}
 	
 	$(function() {
+		var email = "";
+		var phone = "";
+		
 		$("#Pw").keyup(function() {
 			if($("#Pw").val() == "") {
+				$('#pwChk').empty();
+			}
+		});
+		
+		$("#Pw").blur(function() {
+			if($("#Pw").val() != "") {
 				$('#pwChk').empty();
 			}
 		});
@@ -124,8 +139,63 @@
 			}
 		});
 		
+		$("#Email").keyup(function() { // 전화번호 체크
+			$.ajax({
+				url:"emailChecking", // RequestMapping 값 입력
+				type:"GET", // 전송방식 GET, POST
+				data: {"m_email" : $("#Email").val()}, // controller에게 전달하는 파라미터 값
+				datatype:"json",
+				success:function(data){
+					
+					if(data == 0) {
+						$("#emailchk").text("사용 가능한 이메일입니다.");
+						$("#emailchk").css("color", "black");
+					}else {
+						$("#emailchk").text("이미 등록된 이메일입니다.");
+						$("#emailchk").css("color", "red");
+						email = $("#Email").val();
+					}
+					
+					if($("#Email").val() == "") {
+						$("#emailchk").empty();
+					}
+				},
+				error:function(){
+					alert("ajax 실패");
+				}
+			});
+		});
+		
+		$("#Phone").keyup(function() { // 전화번호 체크
+			$.ajax({
+				url:"phoneChecking", // RequestMapping 값 입력
+				type:"GET", // 전송방식 GET, POST
+				data: {"m_phone" : $("#Phone").val()}, // controller에게 전달하는 파라미터 값
+				datatype:"json",
+				success:function(data){
+					
+					if(data == 0) {
+						$("#phonechk").text("사용 가능한 전화번호입니다.");
+						$("#phonechk").css("color", "black");
+					}else {
+						$("#phonechk").text("이미 등록된 전화번호입니다.");
+						$("#phonechk").css("color", "red");
+						phone = $("#Phone").val();
+					}
+					
+					if($("#Phone").val() == "") {
+						$("#phonechk").empty();
+					}
+				},
+				error:function(){
+					alert("ajax 실패");
+				}
+			});
+		});
+		
 		$("#sbm_btn").click(function(event) {
 			event.preventDefault(); // 기존 submit 막기
+			var regpw = /^(?=.*[a-zA-Z])(?=.*[!@#*-])(?=.*[0-9]).{6,12}$/; // 영문자, 숫자, 특수기호(!@#*-) 조합 6~12자리
 			var frm = $("#miufrm").serialize(); // form 정보
 			
 			if($("#Pw").val() == "") {
@@ -136,9 +206,17 @@
 				$("#rePwChk").text("비밀번호 확인을 입력하세요.");
 				$('#rePwChk').css("color", "red");
 				return false;
+			}else if($("#newPw").val() != "" && !regpw.test($("#newPw").val())) { // 비밀번호 체크
+				$("#newPwChk").text("비밀번호를 확인하세요.");
+				$("#newPwChk").css("color", "red");
+				return false;
 			}else if($("#Email").val() == "") { // 이메일 체크
 				$("#emailchk").text("이메일을 입력하세요.");
 				$('#emailchk').css("color", "red");
+				return false;
+			}else if($("#Email").val() != "" && $("#Email").val() == email) { // 이메일 체크
+				$("#emailchk").text("이미 존재하는 이메일입니다.");
+				$("#emailchk").css("color", "red");
 				return false;
 			}else if($("#Name").val() == "") { // 이름 체크
 				$("#namechk").text("이름을 입력하세요.");
@@ -147,6 +225,10 @@
 			}else if($("#Phone").val() == "") { // 연락처 체크
 				$("#phonechk").text("전화번호를 입력하세요.");
 				$('#phonechk').css("color", "red");
+				return false;
+			}else if($("#Phone").val() != "" && $("#Phone").val() == phone) { // 연락처 체크
+				$("#phonechk").text("이미 존재하는 전화번호입니다.");
+				$("#phonechk").css("color", "red");
 				return false;
 			}else if($("#zipCode").val() == "" || $("#roadAddress").val() == "" || $("#detailAddress").val() == "") { // 주소 체크
 				$("#addresschk").text("주소를 입력하세요.");

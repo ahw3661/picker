@@ -1,5 +1,6 @@
 package com.project.picker.Controller;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -15,13 +16,17 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.project.picker.DTO.BuyDTO;
+import com.project.picker.DTO.CartDTO;
+import com.project.picker.Service.CartService;
 import com.project.picker.Service.KakaoPayService;
-
+@SuppressWarnings("unchecked")
 @Controller
 public class KakaoPayController {
 
 	@Inject
 	KakaoPayService kakaopay;
+	@Inject
+	CartService Cservice;
 
 	@ResponseBody
 	@RequestMapping(value="kakaoPay", method={RequestMethod.GET, RequestMethod.POST})
@@ -73,7 +78,19 @@ public class KakaoPayController {
 			for(int i=0; i<request_num.length;i++) {
 				c_num = Integer.valueOf(request_num[i].toString());
 				kakaopay.delCartItem(c_num);
-			}	
+			}
+		}else {
+			ArrayList<CartDTO> list;
+			list = (ArrayList<CartDTO>)session.getAttribute("sessionList");
+			
+				for(int i = 0; i < list.size(); i++) {
+					String [] num = request.getParameterValues("c_num");
+					int cnum = Integer.valueOf(num[i]);
+					if(list.get(i).getC_num() == cnum) {
+						list.remove(i);
+					}
+				}
+			session.setAttribute("sessionList", list);
 		}
 		
 		return "redirect:../section";

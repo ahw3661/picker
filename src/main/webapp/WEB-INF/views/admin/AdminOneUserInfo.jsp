@@ -80,6 +80,9 @@
 			type : "post",
 			data : { "pageNum" : pn },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove(); // 자식 노드 삭제
 				$(".menu_info").html(data);

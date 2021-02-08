@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html>
 <html lang="ko">
 <link rel="stylesheet" href="resources/css/ItemList.css">
 <head>
@@ -14,7 +15,7 @@
 	<div id="head_name">
 		<div id="info_div">
 			<a href="#" id="menuBtn">Home</a>&nbsp;&nbsp;》&nbsp;&nbsp;
-			<a><strong>${cateName.i_category }</strong></a>
+			<a><strong>${fn:toUpperCase(cateName.i_category)}</strong></a>
 		</div>	
 		<div id="select_div">
 			<select name="item_sort" id="item_sort" onchange="itemUp()">

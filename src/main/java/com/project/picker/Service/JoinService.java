@@ -7,4 +7,7 @@ public interface JoinService {
 	public void insertMember(MemberDTO mdto);
 	public void insertJoinPoint(String m_id, String p_history, int p_point);
 	public int idCheck(String id);
+	public int emailCheck(String m_email);
+	public int phoneCheck(String m_phone);
+	
 }

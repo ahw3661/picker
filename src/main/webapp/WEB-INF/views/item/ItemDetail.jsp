@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <!DOCTYPE html>
 <html lang="ko">
 <link rel="stylesheet" href="resources/css/ItemDetail.css">
@@ -14,7 +15,7 @@
 	<div class="wrap itemDetail_wrap">
 		<div id="head_name">
 			<a href="#" class="menuBtn">Home</a>&nbsp;&nbsp;》&nbsp;&nbsp;
-		    <a href="goList?i_category=${idto.i_category }" class="menuBtn">${idto.i_category }</a>&nbsp;&nbsp;》&nbsp;&nbsp;
+		    <a href="goList?i_category=${idto.i_category }" class="menuBtn">${fn:toUpperCase(idto.i_category)}</a>&nbsp;&nbsp;》&nbsp;&nbsp;
 			<strong>${idto.i_name }</strong>
 			<br><br> 
 			<hr>

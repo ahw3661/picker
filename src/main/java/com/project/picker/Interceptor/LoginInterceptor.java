@@ -41,6 +41,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				MemberDTO mdto = mservice.getSessionUser(sessionId); // 이전 로그인 여부 확인. 유효시간이 남은 사용자
 				
 				if(mdto != null) { // 사용자가 있는 경우 세션 생성
+					session.setAttribute("login", mdto);
 					session.setAttribute("u_id", mdto.getM_id());
 					session.setAttribute("u_name", mdto.getM_name());
 					session.setAttribute("u_type", mdto.getM_type());
@@ -48,8 +49,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 					return true;
 				}
 			}
+			logger.info("ajax : "+request.getHeader("ajax"));
 			
-			if(request.getHeader("ajax") != null && request.getHeader("ajax").equals("true")) {
+			if((request.getHeader("ajax") != null && request.getHeader("ajax").equals("true"))) {
 				logger.info(">>> ajax 관련 에러 메시지 화면으로 이동");
 				response.sendRedirect(request.getContextPath() + "/errorPage");
 				return false;

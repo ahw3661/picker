@@ -9,7 +9,6 @@
 	<section>
 		<div class="withdraw_wrap">
 			<h3>회원탈퇴</h3>
-			<!-- <form action="withdraw" method="post" name="wi" onsubmit="return wiSubmit();"> -->
 			<form action="withdraw" method="post" name="wi" id="wifrm">
 				<div class="withdraw_div">
 					<div class="p_div">

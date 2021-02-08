@@ -13,9 +13,6 @@
 			<h3>주문내역</h3>
 			<div class="search_div">
 				<div class="date_search_div">
-					<%-- <input type="hidden" name="s_date" value="${start_date }" id="start"><input type="hidden" name="e_date" value="${end_date }" id="end">
-					<fmt:parseDate var="startDate" value="${start_date }" pattern="yyyy-MM-dd HH:mm:ss"/><fmt:parseDate var="endDate" value="${end_date }" pattern="yyyy-MM-dd HH:mm:ss"/>
-					<fmt:formatDate var="start_date" value="${start_date }" pattern="yyyy-MM-dd"/><fmt:formatDate var="end_date" value="${end_date }" pattern="yyyy-MM-dd"/> --%>
 					<span>조회기간</span> <input type="text" name="start_date" value="${start_date }" id="from"> ~ <input type="text" name="end_date" value="${end_date }" id="to">
 					<input type="button" name="ds_btn" value="검색" id="dsBtn">
 				</div>
@@ -87,37 +84,31 @@
 	</section>	
 </body>
 <script type="text/javascript">
+	// 달력
 	$(function() {
 		var option = {
 			// datepicker 애니메이션 타입
-			// option 종류
-			showAnim : "fadeIn",
-			// 년 월이 셀렉트 박스로 표현 되어서 선택할 수 있다.
-			changeMonth: true,
+			showAnim : "fadeIn", // option 종류
+			changeMonth: true, // 년 월이 셀렉트 박스로 표현 되어서 선택할 수 있다.
 			changeYear: true,
-			// 데이터 포멧
-			dateFormat: "yy-mm-dd",
-			// 달력에서 좌우 선택시 이동할 개월 수
-			stepMonths: 1,
-			// 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
-			yearRange: "c-5:c+10",
-			// 선택 가능한 날짜(수 형식) - 현재 기준 -20일
-			//minDate: -20,
-			// 선택 가능한 최대 날짜(문자 형식) - 현재 기준 +1월 +20일
-			maxDate: "+12Y +12M +20D",
+			dateFormat: "yy-mm-dd", // 데이터 포멧
+			stepMonths: 1, // 달력에서 좌우 선택시 이동할 개월 수
+			yearRange: "c-5:c+10", // 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
+			//minDate: -20, // 선택 가능한 날짜(수 형식) - 현재 기준 -20일
+			maxDate: "0", // 선택 가능한 최대 날짜(문자 형식) - 현재 기준 +1월 +20일. 0은 현재날짜까지만 선택 가능
 		};
 		
-		var optionFrom = option;
+		var optionFrom = option; // 시작일자
 		$("#from").datepicker(optionFrom);
-		// 시작일이 선택이 되면 종료일은 시작일 보다 앞을 선택할 수 없다.
 		var from = $("#from").datepicker(optionFrom).on("change", function() {
+			// 시작일이 선택이 되면 종료일은 시작일 보다 앞을 선택할 수 없다.
 			to.datepicker("option", "minDate", getDate(this));
 		});
 		
-		var optionTo = option;
+		var optionTo = option; // 종료일자
 		$("#to").datepicker(optionTo);
-		// 종료일이 선택이 되면 시작일은 시작일 보다 앞을 선택할 수 없다.
 		var to = $("#to").datepicker(optionTo).on("change", function() {
+			// 종료일이 선택이 되면 시작일은 시작일 보다 앞을 선택할 수 없다.
 			from.datepicker("option", "maxDate", getDate(this));
 		});
 		
@@ -126,12 +117,16 @@
 		}
 	});
 	
+	// 검색
 	$("#dsBtn").click(function() {
 		$.ajax({
 			url : "buyInfo",
 			type : "post",
 			data : { "start_date" : $("#from").val(), "end_date" : $("#to").val() },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
@@ -176,6 +171,9 @@
 			type : "post",
 			data : { "b_code" : cd, "pageNum" : pn, "start_date" : sd, "end_date" : ed },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$('.menu_info').children().remove();
 				$('.menu_info').html(data);
@@ -195,6 +193,9 @@
 			type : "post",
 			data : { "pageNum" : pn, "start_date" : sd, "end_date" : ed },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);

@@ -95,6 +95,9 @@
 			type : "post",
 			data : { "s_type" : $("#searchType").val(), "m_keyword" : $("#mKeyword").val() },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
@@ -112,6 +115,9 @@
 			type : "post",
 			data : { "i_category" : $("#i_cg option:selected").val() },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
@@ -129,6 +135,9 @@
 			type : "post",
 			data : { "i_chk" : $("#i_Chk option:selected").val() },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
@@ -167,6 +176,9 @@
 			type : "post",
 			data : { "i_code" : cd, "pageNum" : pn },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
@@ -184,6 +196,9 @@
 			type : "post",
 			data : { "pageNum" : pn, "s_type" : st, "m_keyword" : kw, "i_category" : cg, "i_chk" : chk },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);

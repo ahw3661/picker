@@ -15,7 +15,7 @@
 #first_info>h3, #first_info>hr, #item_eval>h3, #item_qna>h3 { margin: 5px 0; }
 .item_info #title_info {  color: gray; }
 .item_info #cnt_info { width: 330px; height: 180px; margin-top: 20px; background: #F0EEEA; }
-.item_info #total_price { background: #F0EEEA; }
+.item_info #total_price { background: #F0EEEA; font-size: 16px; }
 .item_info #cnt_info .info_bottom>hr { margin: 10px 0; }
 #cnt_price_info { display: flex; justify-content: space-between; align-items: center; }
 #cnt_button  { display: flex; }

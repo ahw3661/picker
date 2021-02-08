@@ -33,7 +33,9 @@
 		<interceptor>
 			<mapping path="/myPage"/>
 			<mapping path="/buyInfo"/>
+			<mapping path="/buyInfoDetail"/>
 			<mapping path="/buyCancel"/>
+			<mapping path="/buyCancelDetail"/>
 			<mapping path="/myInfo"/>
 			<mapping path="/pointInfo"/>
 			<mapping path="/withdrawPage"/>
@@ -42,10 +44,20 @@
 			<mapping path="/qnaWriteProc"/>
 			<mapping path="/adminPage"/>
 			<mapping path="/allBuyList"/>
+			<mapping path="/buyDetail"/>
+			<mapping path="/allBuyCancel"/>
+			<mapping path="/oneBuyCancel"/>
 			<mapping path="/allPointList"/>
+			<mapping path="/pointDetail"/>
+			<mapping path="/allQnaList"/>
 			<mapping path="/goMemberList"/>
+			<mapping path="/goOneList"/>
 			<mapping path="/goItemList"/>
+			<mapping path="/goAdminItemDetail"/>
+			<mapping path="/itemUpdatePage"/>
+			<mapping path="/itemUpdate"/>
 			<mapping path="/goItemInsert"/>
+			<mapping path="/ItemInsert"/>
 			<beans:ref bean="loginInterceptor"/>
 		</interceptor>
 		<interceptor>
@@ -53,6 +65,7 @@
 			<mapping path="/allBuyList"/>
 			<mapping path="/allBuyCancel"/>
 			<mapping path="/allPointList"/>
+			<mapping path="/allQnaList"/>
 			<mapping path="/goMemberList"/>
 			<mapping path="/goItemList"/>
 			<mapping path="/goItemInsert"/>

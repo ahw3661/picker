@@ -89,7 +89,7 @@ public class MemberController {
 			session.setAttribute("u_type", mdto.getM_type());
 			int count = Cservice.totalCartCount(mdto.getM_id());
 			session.setAttribute("cnt", count);
-			session.setMaxInactiveInterval(10*1);
+			//session.setMaxInactiveInterval(10*1);
 			
 			if(log == true) { // 로그인 상태 유지에 체크를 한 경우 쿠키 생성
 				String sessionId = (String)session.getAttribute("u_id");
@@ -284,7 +284,6 @@ public class MemberController {
 	@RequestMapping(value="buyInfo", method= {RequestMethod.GET, RequestMethod.POST})
 	public String buyInfo(@RequestParam(required=false) String start_date, @RequestParam(required=false) String end_date, 
 			@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
-		
 		if(start_date == null && end_date == null) {
 			logger.info("주문조회 메뉴 클릭");
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");

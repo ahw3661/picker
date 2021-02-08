@@ -109,6 +109,9 @@
 			type : "post",
 			data : { "s_type" : $("#searchType").val(), "m_keyword" : $("#mKeyword").val() },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
@@ -126,6 +129,9 @@
 			type : "post",
 			data : { "m_type" : $("#mType option:selected").val() },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
@@ -157,6 +163,9 @@
 			type : "post",
 			data : { "m_id" : id, "pageNum" : pn },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
@@ -174,6 +183,9 @@
 			type : "post",
 			data : { "pageNum" : pn, "s_type" : st, "m_keyword" : kw, "m_type" : tp },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);

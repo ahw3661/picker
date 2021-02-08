@@ -10,7 +10,6 @@
 	<section>
 		<div class="wrap">
 			<div class="join_write_wrap">
-				<!-- <form action="joinSave" method="post" name="jw" onsubmit="return jwSubmit();"> -->
 				<form action="joinSave" method="post" name="jw" id="jwfrm">
 					<div class="input_div">
 						<p>아이디<span>⁎</span></p>
@@ -80,6 +79,10 @@
     }
 	
 	$(function() {
+		var id = "";
+		var email = "";
+		var phone = "";
+		
 		$("#Id").keyup(function() { // 아이디 체크
 			var regid = /^(?=.*[a-zA-Z])(?=.*[0-9]).{5,10}$/; // 영문자, 숫자 조합 5~10자리
 			
@@ -99,6 +102,7 @@
 						}else {
 							$("#idchk").text("이미 사용중인 아이디입니다.");
 							$("#idchk").css("color", "red");
+							id = $("#Id").val();
 						}
 					}
 					
@@ -106,8 +110,8 @@
 						$("#idchk").empty();
 					}
 				},
-				error:function(){
-					alert("ajax 실패");
+				error:function(request, status, error){
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 				}
 			});
 		});
@@ -142,10 +146,31 @@
 			}
 		});
 		
-		$("#Email").blur(function() { // 이메일 작성 후 메시지 비우기
-			if($("#Email").val() != "") {
-				$("#emailchk").empty();
-			}
+		$("#Email").keyup(function() { // 전화번호 체크
+			$.ajax({
+				url:"emailChecking", // RequestMapping 값 입력
+				type:"GET", // 전송방식 GET, POST
+				data: {"m_email" : $("#Email").val()}, // controller에게 전달하는 파라미터 값
+				datatype:"json",
+				success:function(data){
+					
+					if(data == 0) {
+						$("#emailchk").text("사용 가능한 이메일입니다.");
+						$("#emailchk").css("color", "black");
+					}else {
+						$("#emailchk").text("이미 등록된 이메일입니다.");
+						$("#emailchk").css("color", "red");
+						email = $("#Email").val();
+					}
+					
+					if($("#Email").val() == "") {
+						$("#emailchk").empty();
+					}
+				},
+				error:function(request, status, error){
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
 		});
 		
 		$("#Name").blur(function() { // 이름 작성 후 메시지 비우기
@@ -154,10 +179,31 @@
 			}
 		});
 		
-		$("#Phone").blur(function() { // 전화번호 작성 후 메시지 비우기
-			if($("#Phone").val() != "") {
-				$("#phonechk").empty();
-			}
+		$("#Phone").keyup(function() { // 전화번호 체크
+			$.ajax({
+				url:"phoneChecking", // RequestMapping 값 입력
+				type:"GET", // 전송방식 GET, POST
+				data: {"m_phone" : $("#Phone").val()}, // controller에게 전달하는 파라미터 값
+				datatype:"json",
+				success:function(data){
+					
+					if(data == 0) {
+						$("#phonechk").text("사용 가능한 전화번호입니다.");
+						$("#phonechk").css("color", "black");
+					}else {
+						$("#phonechk").text("이미 등록된 전화번호입니다.");
+						$("#phonechk").css("color", "red");
+						phone = $("#Phone").val();
+					}
+					
+					if($("#Phone").val() == "") {
+						$("#phonechk").empty();
+					}
+				},
+				error:function(request, status, error){
+					console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
 		});
 		
 		$("#detailAddress").blur(function() { // 주소 작성 후 메시지 비우기
@@ -180,6 +226,10 @@
 				$("#idchk").text("아이디를 확인하세요.");
 				$("#idchk").css("color", "red");
 				return false;
+			}else if($("#Id").val() != "" && $("#Id").val() == id) { // 아이디 체크
+				$("#idchk").text("이미 존재하는 아이디입니다.");
+				$("#idchk").css("color", "red");
+				return false;
 			}else if($("#Pw").val() == "") { // 비밀번호 체크
 				$("#pwchk").text("비밀번호를 입력하세요.");
 				$("#pwchk").css("color", "red");
@@ -196,12 +246,20 @@
 				$("#emailchk").text("이메일을 입력하세요.");
 				$("#emailchk").css("color", "red");
 				return false;
+			}else if($("#Email").val() != "" && $("#Email").val() == email) { // 이메일 체크
+				$("#emailchk").text("이미 존재하는 이메일입니다.");
+				$("#emailchk").css("color", "red");
+				return false;
 			}else if($("#Name").val() == "") { // 이름 체크
 				$("#namechk").text("이름을 입력하세요.");
 				$("#namechk").css("color", "red");
 				return false;
 			}else if($("#Phone").val() == "") { // 연락처 체크
 				$("#phonechk").text("전화번호를 입력하세요.");
+				$("#phonechk").css("color", "red");
+				return false;
+			}else if($("#Phone").val() != "" && $("#Phone").val() == phone) { // 전화번호 체크
+				$("#phonechk").text("이미 존재하는 전화번호입니다.");
 				$("#phonechk").css("color", "red");
 				return false;
 			}else if($("#zipCode").val() == "" || $("#roadAddress").val() == "" || $("#detailAddress").val() == "") { // 주소 체크

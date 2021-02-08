@@ -10,7 +10,7 @@
 <body>
 	<section>
 		<form id="searchForm" method="post">
-			<input type="text"  id="item_search"  name="item_search" placeholder="search" value="${item_search}">
+			<input type="text"  id="item_search"  name="item_search" placeholder="SEARCH" value="${item_search}">
 			<input type="image"  id="searchbtn" src="resources/image/icon/search.png" alt="검색" >
 		</form>
 		<div class="wrap">

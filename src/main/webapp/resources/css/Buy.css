@@ -47,7 +47,7 @@ h4 { margin-bottom: 15px; }
 #fixed_wrap #pay_wrap #totalP { margin-top: 15px; display: flex; justify-content: space-between; font-weight: bold; }
 #fixed_wrap #pay_wrap #totalPrice_span { font-size: 14px;}
 #fixed_wrap #pay_wrap #totalPrice{ width:100px; font-size: 17px; font-weight:bold; border:none; text-align: right;}
-#saving_point { border: none; font-size: 14px; width:40px; font-weight: bold; background: none; text-align: center; }
+#saving_point { border: none; font-size: 14px; width:60px; font-weight: bold; background: none; text-align: left; }
 #fixed_wrap #agree_div { margin:0; margin-top:10px; }
 #fixed_wrap #pay_btn { width:300px; background:black; font-size: 15px; font-weight:bold; text-align: center; color:white; }
 #fixed_wrap #pay_abtn { width:300px; height: 60px; background:black; border:1px solid black; color:white; font-size:16px; line-height: 60px; }

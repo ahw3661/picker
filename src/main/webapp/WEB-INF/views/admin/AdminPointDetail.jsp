@@ -63,6 +63,9 @@
 			type : "post",
 			data : { "listPageNum" : pn },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
@@ -80,6 +83,9 @@
 			type : "post",
 			data : { "m_id" : id, "pageNum" : pn, "listPageNum" : lipn },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);

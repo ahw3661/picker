@@ -1,7 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<!DOCTYPE html>
 <html lang="ko">
 <link rel="stylesheet" href="resources/css/ItemSearch.css">
 <head>
@@ -12,7 +13,7 @@
 <section>
 	<div  class="wrap item_wrap">
 	<form id="searchForm" method="post">
-			<input type="text"  id="item_search"  name="item_search" placeholder="search" value="${item_search}">
+			<input type="text"  id="item_search"  name="item_search" placeholder="SEARCH" value="${item_search}">
 			<input type="image"  id="searchbtn" src="resources/image/icon/search.png" alt="검색" >
 		</form>
 	<c:if test="${cnt > 0 }">
@@ -25,7 +26,7 @@
 						<img alt="img" src="resources/image/category_img/${idto.i_img }" onclick="location.href='goDetail?i_code=${idto.i_code}'">
 			 		</div>
 			 		<div id="category_info">
-				 		<p id="i_category">${ idto.i_category  }</p>
+				 		<p id="i_category">${fn:toUpperCase( idto.i_category)}</p>
 				 		<p class="info">${idto.i_name }</p>
 		  		 		<p class="info"><fmt:formatNumber value="${idto.i_price }" pattern="#,###" />원</p>	 
 	  		 		</div>

@@ -11,7 +11,8 @@
 <body>
 <div class="wrap">
 	<div id="info_div">
-		<h3> - 카카오페이 결제가 정상적으로 완료되었습니다. - </h3>
+		<h3> - 카카오페이 결제가 정상적으로 완료되었습니다. - </h3><br>
+		<p id="pmsg">※ 비회원은 <span>주문조회</span> 및 <span>구매평</span> 작성시 <span>주문번호</span>가 필요하오니 <span>주문번호</span>를 꼭 확인해 주세요.</p>
 		<div id="info_msg_div">
 			<c:set var="infoApprovedAt" value="${info.approved_at}" />
 			<fmt:formatDate var="approved_at_fmt" value="${infoApprovedAt}" pattern="yyyy-MM-dd HH:mm:ss"/>
@@ -24,8 +25,9 @@
             <fmt:formatNumber var="amount_total_fmt" value="${total }" pattern="#,##0원"/>
             <input type="hidden" name="amount_total" value="${info.amount.total}">  
 	            <p><label class="info_label">결제금액</label>: <input type="text" name="info_amount_total" class="info_msg" value="${amount_total_fmt }"></p>
-	            <p><label class="info_label">결제방법</label>: <input type="text" name="payment_method_type" class="info_msg" value="${info.payment_method_type}"></p>
+	            <p><label class="info_label">결제방법</label>: <input type="text" name="payment_method_type" class="info_msg" value="${info.payment_method_type}"></p><br>
 	    </div>
+		<div id="btn_div"><input type="button" id="closebtn" value="결제완료 / 닫기" onclick="close_window()"></div>
 	</div>
 </div>
 </body>
@@ -36,7 +38,6 @@
 	}
 	
 	$(function(){
-		setTimeout("close_window()", 5000);
 		window.opener.$("#payform").attr("action", "/picker/buy/insertBuyitems");
 		window.opener.$("#payform").submit();
 	});

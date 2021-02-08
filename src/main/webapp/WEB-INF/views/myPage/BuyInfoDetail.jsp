@@ -116,6 +116,9 @@
 			type : "post",
 			data : { "pageNum" : pn, "start_date" : sd, "end_date" : ed },
 			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);

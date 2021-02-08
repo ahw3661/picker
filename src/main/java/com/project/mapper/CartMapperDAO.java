@@ -27,11 +27,15 @@ public interface CartMapperDAO {
 	public void insertCart(CartDTO cdto); // 장바구니에 상품 삽입
 
 	@Select("SELECT count(*) FROM picker_cart WHERE i_code = #{i_code} AND m_id= #{m_id}")
-	public int cartCount(CartDTO cdto); // 회원별 코드가 같은 값의 카운트 출력
+	public int cartCount(CartDTO cdto); // 회원별 코드가 같은 값의 (ROW)카운트 출력
+	@Select("SELECT c_cnt FROM picker_cart WHERE i_code = #{i_code} AND m_id= #{m_id}")
+	public int cartCnt(CartDTO cdto); // 회원별 코드가 같은 값의 개수 출력
 	
 	@Update("UPDATE picker_cart SET c_cnt = #{c_cnt} + c_cnt WHERE i_code = #{i_code} AND m_id= #{m_id}")
 	public void cartCntUpdate(CartDTO cdto); // 코드가 같으면 장바구니 수량 업데이트
 	
+	@Select("SELECT c_cnt FROM picker_cart WHERE c_num = #{c_num}")
+	public Integer cartCnt_Non(CartDTO cdto); // 비회원 c_num이 같은 값의 개수 출력
 	@Update("UPDATE picker_cart SET c_cnt = #{c_cnt} + c_cnt WHERE c_num = #{c_num}")
 	public void cartCntUpdate_Non(@Param("c_cnt") int c_cnt, @Param("c_num") int c_num); // 코드가 같으면 장바구니 수량 업데이트
 	

@@ -51,6 +51,24 @@ public class JoinController {
 		return result;
 	}
 	
+	// 회원가입 이메일 사용 가능 여부 체크
+	@RequestMapping(value="emailChecking", method= {RequestMethod.GET, RequestMethod.POST}, produces="application/json; charset=utf-8")
+	@ResponseBody
+	public int emailChecking(@RequestParam String m_email) {
+		int result = jservice.emailCheck(m_email);
+		logger.info(">>> 이메일 사용 가능 여부 : "+result);
+		return result;
+	}
+	
+	// 회원가입 전화번호 사용 가능 여부 체크
+	@RequestMapping(value="phoneChecking", method= {RequestMethod.GET, RequestMethod.POST}, produces="application/json; charset=utf-8")
+	@ResponseBody
+	public int phoneChecking(@RequestParam String m_phone) {
+		int result = jservice.phoneCheck(m_phone);
+		logger.info(">>> 전화번호 사용 가능 여부 : "+result);
+		return result;
+	}
+	
 	// 회원가입 완료
 	@RequestMapping(value="joinSave", method= {RequestMethod.GET, RequestMethod.POST}, produces="application/json; charset=utf-8")
 	@ResponseBody

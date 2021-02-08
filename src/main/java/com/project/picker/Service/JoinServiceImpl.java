@@ -32,4 +32,14 @@ public class JoinServiceImpl implements JoinService {
 		return jmdao.idCheck(m_id);
 	}
 
+	@Override
+	public int emailCheck(String m_email) {
+		return jmdao.emailCheck(m_email);
+	}
+
+	@Override
+	public int phoneCheck(String m_phone) {
+		return jmdao.phoneCheck(m_phone);
+	}
+	
 }

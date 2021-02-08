@@ -135,11 +135,11 @@ function closePop(){
 	$("aside").remove();
 	$("body").css('overflow-y', 'auto');
 	if($(".qnaAdminList").length){
-		var pn = $(".qnaAdminList .pageBtnStd").html();
+		var pn = $(".qnaAdminList .pageBtnStd").length ? $(".qnaAdminList .pageBtnStd").html() : 1;
 		goQnaList(pn);
 	}
 	if($("#item_qna").length){
-		var pn = $("#item_qna .pageBtnStd").html();
+		var pn = $("#item_qna .pageBtnStd").length ? $("#item_qna .pageBtnStd").html() : 1;
 		getQnaList(pn);
 	}
 }
