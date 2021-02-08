@@ -262,6 +262,15 @@ public class MemberController {
 		return "Error";
 	}
 	
+	// 에러 메시지
+	@ResponseBody
+	@RequestMapping("ajaxErrorPage")
+	public Map<String, Object> ajaxErrorPage(){
+		Map<String, Object> json = new HashMap<>();
+		json.put("logError", true);
+		return json;
+	}
+	
 	// 마이페이지 화면
 	@RequestMapping(value="myPage", method= {RequestMethod.GET, RequestMethod.POST})
 	public String myPage(Model model, HttpSession session) {

@@ -51,10 +51,16 @@
 					type:"POST",
 					data: { "m_password" : $("#Pw").val() },
 					datatype:"json",
+					beforeSend : function(xmlHttpRequest) {
+						xmlHttpRequest.setRequestHeader("ajax", "json");
+					},
 					success:function(data){
 						if(data.msg == "fail") {
 							$("#pw_chk").text("비밀번호가 일치하지 않습니다.");
 							$('#pw_chk').css("color", "red");
+						}else if(data.logError != undefined && data.logError) {
+							alert("로그인 후 이용 가능합니다.");
+							location.href = "loginPage";
 						}else {
 							alert("탈퇴되었습니다.");
 							location.href="section";

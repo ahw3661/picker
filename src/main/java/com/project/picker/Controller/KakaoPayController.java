@@ -65,7 +65,7 @@ public class KakaoPayController {
 	@RequestMapping(value="buy/insertBuyitems", method={RequestMethod.GET, RequestMethod.POST})
 	public String insertBuyitems(HttpServletRequest request, HttpSession session, BuyDTO bdto, Model model) {
 		kakaopay.insertBuyitems(bdto, request, session, model);		
-		//BuyitemDTO bidto, PointDTO pdto, int sum_point, String id, String i_code,
+		
 		String m_id = (String)session.getAttribute("u_id");
 		String [] request_num = request.getParameterValues("c_num");
 		int c_num =0;
@@ -81,17 +81,24 @@ public class KakaoPayController {
 			}
 		}else {
 			ArrayList<CartDTO> list;
-			list = (ArrayList<CartDTO>)session.getAttribute("sessionList");
-			
-				for(int i = 0; i < list.size(); i++) {
-					String [] num = request.getParameterValues("c_num");
-					int cnum = Integer.valueOf(num[i]);
-					if(list.get(i).getC_num() == cnum) {
-						list.remove(i);
-					}
-				}
-			session.setAttribute("sessionList", list);
-		}
+	         if(session.getAttribute("sessionList")==null) {
+	            list = new ArrayList<>();
+	         }else {
+	            list = (ArrayList<CartDTO>)session.getAttribute("sessionList");
+	         }
+	         String [] num = request.getParameterValues("c_num");
+	         int cnum = 0;
+	         for(int i=0;i<num.length;i++) {
+	            cnum = Integer.valueOf(num[i]);
+	            for(int j = 0; j < list.size(); j++) {
+	               if(list.get(j).getC_num() == cnum) {
+	                  list.remove(j);
+	               }
+	            }
+	         }
+	            
+	         session.setAttribute("sessionList", list);
+	      }
 		
 		return "redirect:../section";
 	}

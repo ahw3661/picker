@@ -22,7 +22,7 @@ public interface MemberMapperDAO {
 	public MemberDTO viewMember(@Param("m_id") String m_id);
 	
 	// 로그인 체크
-	@Select("SELECT m_id, m_password, m_name, m_type FROM picker_member WHERE m_id = #{m_id} AND m_password = #{m_password}")
+	@Select("SELECT m_id, m_password, m_name, m_type FROM picker_member WHERE m_id = #{m_id} AND m_password = #{m_password} AND m_type IN (0, 1)")
 	public MemberDTO loginCheck(LoginDTO ldto);
 	
 	// 로그인 상태 유지 - 로그인 성공 후 세션 id 와 유효시간 테이블 세팅

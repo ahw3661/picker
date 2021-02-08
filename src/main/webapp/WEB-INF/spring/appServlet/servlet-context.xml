@@ -37,8 +37,10 @@
 			<mapping path="/buyCancel"/>
 			<mapping path="/buyCancelDetail"/>
 			<mapping path="/myInfo"/>
+			<mapping path="/myInfoUpdate"/>
 			<mapping path="/pointInfo"/>
 			<mapping path="/withdrawPage"/>
+			<mapping path="/withdraw"/>
 			<mapping path="/qnaMemberList"/>
 			<mapping path="/qnaWrite"/>
 			<mapping path="/qnaWriteProc"/>

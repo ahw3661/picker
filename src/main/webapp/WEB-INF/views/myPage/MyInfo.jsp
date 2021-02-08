@@ -240,10 +240,16 @@
 					type:"POST",
 					data: frm,
 					datatype:"json",
+					beforeSend : function(xmlHttpRequest) {
+						xmlHttpRequest.setRequestHeader("ajax", "json");
+					},
 					success:function(data){
 						if(data.msg == "fail") {
 							$("#pwChk").text("비밀번호가 일치하지 않습니다.");
 							$('#pwChk').css("color", "red");
+						}else if(data.logError != undefined && data.logError) {
+							alert("로그인 후 이용 가능합니다.");
+							location.href = "loginPage";
 						}else {
 							alert("수정되었습니다.");
 						}

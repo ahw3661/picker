@@ -55,6 +55,10 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				logger.info(">>> ajax 관련 에러 메시지 화면으로 이동");
 				response.sendRedirect(request.getContextPath() + "/errorPage");
 				return false;
+			}else if((request.getHeader("ajax") != null && request.getHeader("ajax").equals("json"))) {
+				logger.info(">>> ajax 관련 에러 메시지 화면으로 이동");
+				response.sendRedirect(request.getContextPath() + "/ajaxErrorPage");
+				return false;
 			}else {
 				logger.info(">>> 로그인 화면으로 이동");
 				response.sendRedirect(request.getContextPath() + "/loginPage");

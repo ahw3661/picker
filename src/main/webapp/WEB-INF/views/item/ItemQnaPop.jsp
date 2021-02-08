@@ -29,7 +29,12 @@
 					<div class="replyIcon"><img src="resources/image/icon/reply.png" alt="댓글표시" class="replyIcon"></div>
 					<div class="replyInner">
 						<p>
-							<label>${reply.m_id}</label>
+							<label>
+								<c:choose>
+									<c:when test="${reply.m_id ne null && reply.m_name ne '더피커'}">${reply.m_id}</c:when>
+									<c:otherwise>${reply.m_name}</c:otherwise>
+								</c:choose>
+							</label>
 							<span>${reply.r_date}</span>
 						</p>
 						<c:if test="${reply.r_chk == 0}">
