@@ -14,11 +14,56 @@ function getQnaPop(num){
 				$("body").css("overflow-y", "hidden");
 				setReplyPop();
 			}
+			$(".replySub").on("click", function(event){
+				replyWrite(event);
+			});
 		},
 		error:function(request,error){
 			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 		}
 	})
+}
+
+// 댓글 등록
+function replyWrite(event){
+	var fm = event.target.closest("form");
+	if($(fm).find("textarea[name=r_content]").val() != ""){
+		console.log(fm);
+		var formData = new FormData(fm);
+		formData.append("q_num", $("input[name=q_num]").val());
+		for(var pair of formData){
+			console.log(pair[0] + ": " + pair[1]);
+		}
+		$.ajax({
+			url : "replyWrite",
+			type : "post",
+			dataType : "json",
+			data : formData,
+			contentType : false, 
+			processData : false,
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "json");
+				xmlHttpRequest.setRequestHeader("admin", "accessible");
+			},
+			success : function(json){
+				if(json.chk){
+					var qnum = $("input[name=q_num]").val();
+					window.alert("댓글이 등록되었습니다.");
+					$("aside").remove();
+					getQnaPop(qnum);
+				} else if(json.logError != undefined && json.logError) {
+					window.alert("[세션종료] 댓글은 작성자 본인 또는 관리자만 작성할 수 있습니다.");
+				} else {
+					window.alert("[오류] 댓글 작성 실패하였습니다.");
+				}
+			},
+			error:function(request,error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		})
+	} else {
+		window.alert("내용을 입력해주세요.");
+	}
 }
 
 // 댓글 파트 기능
@@ -33,44 +78,9 @@ function setReplyPop(){
 						+ "<textarea rows='5' cols='100' maxlength='500' placeholder='댓글' name='r_content'></textarea>"
 						+ "<div class='rightBtnDiv'><input type='button' value='등록' class='btnBlack replySub'></div></form>"
 				$(this).parent().after(ele);
-				$(this).find(".replySub").on("click", function(){
-					if($(this).find("textarea[name=r_content]").val() != ""){
-						var formData = new FormData($(this).find(".popWriteReply")[0]);
-						formData.append("q_num", $("input[name=q_num]").val());
-						for(var pair of formData){
-							console.log(pair[0] + " : " + pair[1]);
-						}
-						console.log("실행");
-						$.ajax({
-							url : "replyWrite",
-							type : "post",
-							dataType : "json",
-							data : formData,
-							contentType : false, 
-							processData : false,
-							beforeSend : function(xmlHttpRequest) {
-								xmlHttpRequest.setRequestHeader("ajax", "json");
-								xmlHttpRequest.setRequestHeader("admin", "accessible");
-							},
-							success : function(json){
-								if(json.chk){
-									var qnum = $("input[name=q_num]").val();
-									window.alert("댓글이 등록되었습니다.");
-									$("aside").remove();
-									getQnaPop(qnum);
-								} else if(json.logError != undefined && json.logError) {
-									window.alert("[세션종료] 댓글은 작성자 본인 또는 관리자만 작성할 수 있습니다.");
-								} else {
-									window.alert("[오류] 댓글 작성 실패하였습니다.");
-								}
-							},
-							error:function(request,error){
-								console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-							}
-						})
-					} else {
-						window.alert("내용을 입력해주세요.");
-					}
+				console.log($(this).parent().next().find(".replySub"));
+				$(this).parent().next().find(".replySub").on("click", function(event){
+					replyWrite(event);
 				});
 				$(this).data("pop", false);
 			} else {
@@ -119,43 +129,6 @@ function setReplyPop(){
 		})
 	})
 }
-
-// 댓글 등록
-$(document).on("click", ".replySub", function(event){
-	var formData = new FormData(event.target.closest("form"));
-	formData.append("q_num", $("input[name=q_num]").val());
-	for(var pair of formData){
-		console.log(pair[0] + " : " + pair[1]);
-	}
-	console.log("실행");
-	$.ajax({
-		url : "replyWrite",
-		type : "post",
-		dataType : "json",
-		data : formData,
-		contentType : false, 
-		processData : false,
-		beforeSend : function(xmlHttpRequest) {
-			xmlHttpRequest.setRequestHeader("ajax", "json");
-			xmlHttpRequest.setRequestHeader("admin", "accessible");
-		},
-		success : function(json){
-			if(json.chk){
-				var qnum = $("input[name=q_num]").val();
-				window.alert("댓글이 등록되었습니다.");
-				$("aside").remove();
-				getQnaPop(qnum);
-			} else if(json.logError != undefined && json.logError) {
-				window.alert("[세션종료] 댓글은 작성자 본인 또는 관리자만 작성할 수 있습니다.");
-			} else {
-				window.alert("[오류] 댓글 작성 실패하였습니다.");
-			}
-		},
-		error:function(request,error){
-			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
-		}
-	})
-})
 
 // 글 내용 닫기
 function closePop(){

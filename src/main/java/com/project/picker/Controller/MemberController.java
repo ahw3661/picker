@@ -1,7 +1,6 @@
 package com.project.picker.Controller;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
@@ -50,18 +49,23 @@ public class MemberController {
 	@RequestMapping(value="loginPage", method= {RequestMethod.GET, RequestMethod.POST})
 	public String loginPage(HttpSession session, Model model, HttpServletRequest request) {
     	String referrer = request.getHeader("referer");
-    	
+    	logger.info("referrer : "+referrer);
+    	logger.info("url : "+session.getAttribute("url"));
     	if(referrer == null) {
     		model.addAttribute("msg", "잘못된 접근입니다.");
     	}else {
-    		
+    		// referrer 제외 페이지
     		if(referrer.equals("http://localhost:8090/picker/loginPage") || referrer.equals("http://localhost:8090/picker/logout")
     				|| referrer.equals("http://localhost:8090/picker/joinAgree") || referrer.equals("http://localhost:8090/picker/joinWrite") 
     				|| referrer.equals("http://localhost:8090/picker/findIdPw") || referrer.equals("http://localhost:8090/picker/gobuyPage_FromDetail") 
-    				|| referrer.equals("http://localhost:8090/picker/gobuyPage_FromCart")) {
+    				|| referrer.equals("http://localhost:8090/picker/gobuyPage_FromCart") || referrer.equals("http://localhost:8090/picker/wrongAccess")
+    				|| referrer.equals("http://localhost:8090/picker/errorPage")) {
+        		session.setAttribute("url", null);
+        	}else if((referrer.equals("http://localhost:8090/picker/wrongAccess") && (String)session.getAttribute("url") != null)
+    				|| (referrer.equals("http://localhost:8090/picker/errorPage") && (String)session.getAttribute("url") != null)) {
         		session.setAttribute("url", null);
         	}else {
-        		session.setAttribute("url", referrer);
+        		session.setAttribute("url", referrer); // 제외되지 않은 페이지
         	}
     	}
 		model.addAttribute("section", "login/Login.jsp");
@@ -85,7 +89,7 @@ public class MemberController {
 			session.setAttribute("u_type", mdto.getM_type());
 			int count = Cservice.totalCartCount(mdto.getM_id());
 			session.setAttribute("cnt", count);
-			//session.setMaxInactiveInterval(10*2);
+			session.setMaxInactiveInterval(10*1);
 			
 			if(log == true) { // 로그인 상태 유지에 체크를 한 경우 쿠키 생성
 				String sessionId = (String)session.getAttribute("u_id");
@@ -222,10 +226,10 @@ public class MemberController {
 		String nowday = dtf.format(now);
 		String bdate = bdto.getB_date();
 		String b_date = bdate.substring(2, 10);
-		int chk = -1;
+		int chk = -1; // 날짜 비교 체크키
 
 		if(b_date.equals(preday) || b_date.equals(nowday)) {
-			chk = 1;
+			chk = 1; // 날짜가 같을 때
 		}
 		model.addAttribute("bdto", bdto);
 		model.addAttribute("bidto", bidto);
@@ -246,15 +250,13 @@ public class MemberController {
 	
 	// 잘못된 접근
 	@RequestMapping(value="wrongAccess", method= {RequestMethod.GET, RequestMethod.POST})
-	public String wrongAccess(Model model) {
-		model.addAttribute("msg", "잘못된 접근입니다.");
-		model.addAttribute("loc", 3);
-		return "Error";
+	public String wrongAccess(Model model, HttpSession session) {
+		return "redirect:myPage";
 	}
 	
 	// 에러 메시지
 	@RequestMapping(value="errorPage", method= {RequestMethod.GET, RequestMethod.POST})
-	public String errorPage(Model model) {
+	public String errorPage(Model model, HttpSession session) {
 		model.addAttribute("msg", "로그인 후 이용 가능합니다.");
 		model.addAttribute("loc", 1);
 		return "Error";
@@ -264,11 +266,18 @@ public class MemberController {
 	@RequestMapping(value="myPage", method= {RequestMethod.GET, RequestMethod.POST})
 	public String myPage(Model model, HttpSession session) {
 		String m_id = (String)session.getAttribute("u_id");
-		int point = mservice.onePoint(m_id);
-		logger.info(">>> 회원 포인트 : "+point);
-		model.addAttribute("point", point);
-		model.addAttribute("section", "myPage/MyPage.jsp");
-		return "Index";
+		
+		if((int)session.getAttribute("u_type") == 0) { // 관리자가 로그인 후 일반회원 페이지에 접근하려는 경우
+			logger.info("관리자 마이페이지 접근 불가");
+			return "redirect:adminPage";
+		}else {
+			int point = mservice.onePoint(m_id);
+			logger.info(">>> 회원 포인트 : "+point);
+			model.addAttribute("point", point);
+			model.addAttribute("section", "myPage/MyPage.jsp");
+			return "Index";
+		}
+		
 	}
 	
 	// 회원별 주문 목록
@@ -343,6 +352,7 @@ public class MemberController {
 				LocalDate preMonth = now.minusMonths(3);
 				start_date = dtf.format(preMonth);
 				end_date = dtf.format(now);
+				logger.info("기본 날짜 3개월 범위 표기");
 			}
 			int cnt = mservice.getBuyCancelCount(m_id, start_date, end_date);
 			

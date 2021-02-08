@@ -105,10 +105,6 @@
 			//minDate: -20,
 			// 선택 가능한 최대 날짜(문자 형식) - 현재 기준 +1월 +20일
 			maxDate: "+12Y +12M +20D",
-			// timepicker 설정
-			//timeFormat: "HH:mm:ss",
-			//controlType: "select",
-	        //oneLine:true,
 		};
 		
 		var optionFrom = option;

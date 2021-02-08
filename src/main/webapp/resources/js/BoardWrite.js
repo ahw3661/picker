@@ -35,6 +35,17 @@ function fillOutCheck(){
 	}
 }
 
+function noticeFillOutCheck(){
+	if($("input[name=n_title]").val() == null || $("input[name=n_title]").val() == ""){
+		window.alert("제목을 입력해주세요.");
+		return false;
+	} else if($("textarea[name=n_content]").val() == null || $("textarea[name=n_content]").val() == ""){
+		window.alert("내용을 입력해주세요.");
+		return false;
+	} else {
+		return true;
+	}
+}
 $('#writeBtn').click(function(){
 	if(fillOutCheck()){
 		$.ajax({
@@ -93,7 +104,7 @@ $('#modifyBtn').click(function(){
 
 
 $('#noticeWriteBtn').click(function(){
-	if(fillOutCheck()){
+	if(noticeFillOutCheck()){
 		$.ajax({
 			url : 'noticeWriteProc',
 			type : 'post',
@@ -121,7 +132,7 @@ $('#noticeWriteBtn').click(function(){
 })
 
 $('#noticeModifyBtn').click(function(){
-	if(fillOutCheck()){
+	if(noticeFillOutCheck()){
 		$.ajax({
 			url : 'noticeModifyProc',
 			type : 'post',

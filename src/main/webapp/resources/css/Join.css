@@ -19,8 +19,8 @@ section .join_write_wrap div { width: 400px; margin: 10px auto; }
 section .join_write_wrap div p { margin-bottom: 0; }
 section .join_write_wrap div p>span { font-size: 11px; vertical-align: top; color: red; }
 section .join_write_wrap div>span { display: block; height: 10px; font-size: 11px; }
-section .join_write_wrap .input_div input { width: 400px; height: 35px; }
-section .join_write_wrap .zipcode_div input { margin: 2px 0; }
+section .join_write_wrap .input_div input { width: 400px; height: 35px; padding: 0 5px; }
+section .join_write_wrap .zipcode_div input { margin: 2px 0; padding: 0 5px; }
 section .join_write_wrap .zipcode_div #zipCode { width: 195px; height: 35px; }
 section .join_write_wrap .zipcode_div .zipbtn { width: 200px; height: 35px; vertical-align: middle; border: 1px solid black; color: white; background: black; }
 section .join_write_wrap .zipcode_div #roadAddress, .zipcode_div #detailAddress { width: 400px; height: 35px; }

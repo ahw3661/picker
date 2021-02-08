@@ -33,6 +33,7 @@
 		<interceptor>
 			<mapping path="/myPage"/>
 			<mapping path="/buyInfo"/>
+			<mapping path="/buyCancel"/>
 			<mapping path="/myInfo"/>
 			<mapping path="/pointInfo"/>
 			<mapping path="/withdrawPage"/>
@@ -50,6 +51,7 @@
 		<interceptor>
 			<mapping path="/adminPage"/>
 			<mapping path="/allBuyList"/>
+			<mapping path="/allBuyCancel"/>
 			<mapping path="/allPointList"/>
 			<mapping path="/goMemberList"/>
 			<mapping path="/goItemList"/>

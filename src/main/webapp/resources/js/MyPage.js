@@ -16,6 +16,7 @@ function buyInfo() {
 			xmlHttpRequest.setRequestHeader("ajax", "true");
 		},
 		success : function(data) {
+			//if(data = "")
 			$(".menu_info").children().remove();
 			$(".menu_info").html(data);
 		},

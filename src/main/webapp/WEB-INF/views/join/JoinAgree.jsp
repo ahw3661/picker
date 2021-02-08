@@ -173,7 +173,7 @@
 							</p>
 						</div>
 					</div>
-					<div class="btns"><input type="button" value="취소">&nbsp;&nbsp;<input type="submit" value="가입하기"></div>
+					<div class="btns"><input type="button" value="취소" onclick="location.href='section'">&nbsp;&nbsp;<input type="submit" value="가입하기"></div>
 				</form>
 			</div>
 		</div>
@@ -205,7 +205,9 @@
 	});
 	
 	function fmSubmit() { // 가입하기 버튼 예외처리
-		if($("input[id='allAgree']").is(":checked") == false || $("input[id='termsAgree']").is(":checked") == false || $("input[id='personalAgree']").is(":checked") == false) {
+		if($("input[id='allAgree']").is(":checked") == false 
+				|| $("input[id='termsAgree']").is(":checked") == false 
+				|| $("input[id='personalAgree']").is(":checked") == false) {
 			alert("이용약관 및 개인정보 처리방침에 동의해야 가입이 가능합니다.");
 			return false;
 		}else {

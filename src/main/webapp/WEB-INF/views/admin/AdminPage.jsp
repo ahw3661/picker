@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title>Insert title here</title>
 <link rel="stylesheet" href="resources/css/AdminPage.css" type="text/css">
+<link rel="stylesheet" href="resources/css/QnaPop.css" type="text/css">
 </head>
 <body>
 	<section>
@@ -63,4 +64,5 @@
 	}	
 </script>
 <script type="text/javascript" src="resources/js/AdminPage.js"></script>
+<script type="text/javascript" src="resources/js/QnaPop.js"></script>
 </html>

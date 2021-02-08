@@ -52,7 +52,7 @@
 	var url = ${not empty url} ? "${url}" : null;
 	
 	if(${not empty msg}) {
-		alert("${msg}");
+		alert("${msg}"); // 잘못된 접근
 		history.back();
 	}else {
 		$(function() {
@@ -64,6 +64,7 @@
 				$("#pwchk").empty();
 			});
 			
+			// 로그인
 			$("#login_btn").click(function() {
 				event.preventDefault(); // 기존 submit 막기
 				var log = $("input[id='logchk']").is(":checked"); // 로그인 사용 유지 체크 여부 true/false
@@ -93,7 +94,6 @@
 								$("#pwchk").text("아이디 또는 비밀번호를 확인하세요.");
 								$('#pwchk').css("color", "red");
 							}else {
-								//location.href = (url != null ? url : document.referrer);
 								location.href = (url != null ? url : "section");
 							}
 						},
@@ -127,6 +127,7 @@
 			$("#phoneChk").empty();
 		});
 		
+		// 비회원 주문 조회
 		$("#none_search").click(function() {
 			if($("#buy_code").val() == "") {
 				$("#codeChk").text("주문번호를 입력하세요.");

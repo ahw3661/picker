@@ -39,16 +39,16 @@
 					</div>
 					<div class="input_div">
 						<p>연락처<span>⁎</span></p>
-						<input type="text" name="m_phone" placeholder="연락처" id="Phone">
+						<input type="text" name="m_phone" placeholder="000-0000-0000" id="Phone">
 						<span id="phonechk"></span>
 					</div>
 					<div class="zipcode_div">
 						<p>주소<span>⁎</span></p>
-						<input type="text" name="m_zipcode" id="zipCode" readonly="readonly">
+						<input type="text" name="m_zipcode" id="zipCode" placeholder="우편번호" readonly="readonly">
 						<input type="button" value="우편번호 찾기" class="zipbtn" onclick="postcode();">
 						<br>
-						<input type="text" name="m_roadaddr" id="roadAddress" readonly="readonly">
-						<input type="text" name="m_detailaddr" id="detailAddress">
+						<input type="text" name="m_roadaddr" id="roadAddress" placeholder="기본주소" readonly="readonly">
+						<input type="text" name="m_detailaddr" id="detailAddress" placeholder="상세주소">
 						<span id="addresschk"></span>
 					</div>
 					<input type="hidden" name="m_terms" value="${mdto.m_terms }">
@@ -67,12 +67,19 @@
                 // 우편번호와 주소 정보를 해당 필드에 넣는다.
                 document.getElementById("zipCode").value = data.zonecode;	
                 document.getElementById("roadAddress").value = roadAddr;
-                document.getElementById("detailAddress").focus();
+                
+                if(document.getElementById("detailAddress").value == "") {
+                	document.getElementById("detailAddress").focus();
+                }else {
+                	document.getElementById("detailAddress").value = "";
+                	document.getElementById("detailAddress").focus();
+                }
+                
             }
         }).open();
     }
-	 
-	$(function() {		
+	
+	$(function() {
 		$("#Id").keyup(function() { // 아이디 체크
 			var regid = /^(?=.*[a-zA-Z])(?=.*[0-9]).{5,10}$/; // 영문자, 숫자 조합 5~10자리
 			
@@ -161,17 +168,27 @@
 		
 		$("#joinbtn").click(function(event) {
 			event.preventDefault(); // 기존 submit 막기
+			var regid = /^(?=.*[a-zA-Z])(?=.*[0-9]).{5,10}$/; // 영문자, 숫자 조합 5~10자리
+			var regpw = /^(?=.*[a-zA-Z])(?=.*[!@#*-])(?=.*[0-9]).{6,12}$/; // 영문자, 숫자, 특수기호(!@#*-) 조합 6~12자리
 			var frm = $("#jwfrm").serialize(); // form 정보
 			
-			if($("#Id").val() == "") {
+			if($("#Id").val() == "") { // 아이디 체크
 				$("#idchk").text("아이디를 입력하세요.");
 				$("#idchk").css("color", "red");
 				return false;
-			}else if($("#Pw").val() == "") {
+			}else if($("#Id").val() != "" && !regid.test($("#Id").val())) { // 아이디 체크
+				$("#idchk").text("아이디를 확인하세요.");
+				$("#idchk").css("color", "red");
+				return false;
+			}else if($("#Pw").val() == "") { // 비밀번호 체크
 				$("#pwchk").text("비밀번호를 입력하세요.");
 				$("#pwchk").css("color", "red");
 				return false;
-			}else if($("#Repw").val() == "") {
+			}else if($("#Pw").val() != "" && !regpw.test($("#Pw").val())) { // 비밀번호 체크
+				$("#pwchk").text("비밀번호를 확인하세요.");
+				$("#pwchk").css("color", "red");
+				return false;
+			}else if($("#Repw").val() == "") { // 비밀번호 확인 체크
 				$("#repwchk").text("비밀번호 확인을 입력하세요.");
 				$("#repwchk").css("color", "red");
 				return false;

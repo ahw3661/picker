@@ -126,20 +126,6 @@
 				reader.readAsDataURL(this.files[0]);
 			}
 		});
-		
-		/* var itemFile = $("#itemMainImg");
-		
-		itemFile.on("change", function() { // 값이 변경되면
-			var fileName = this.files[0].name; // file 객체 배열 형태. 파일 1개의 파일명 추출
-			$(this).siblings(".upload_name").val(fileName); // 추출한 파일명 삽입
-		});
-		
-		var detailFile = $("#detailFile");
-		
-		detailFile.on("change", function() { // 값이 변경되면
-			var fileName = this.files[0].name; // file 객체  배열 형태. 파일 1개의 파일명 추출
-			$(this).siblings(".upload_name").val(fileName); // 추출한 파일명 삽입
-		}); */
 	});
 	
 	// 상품수정
@@ -165,6 +151,7 @@
 		});
 	}
 	
+	// 수정 취소
 	function goItemList(pn) {
 		$.ajax({
 			url : "goItemList",

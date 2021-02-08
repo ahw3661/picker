@@ -22,9 +22,6 @@
          case 2:
             location.href=history.go(-2);
             break;
-         case 3:
-            location.href = history.back();
-            break;
          }
       </script>
    </c:if>

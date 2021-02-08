@@ -229,6 +229,7 @@ public class AdminServicelmpl implements AdminService {
 			if(!mainDir.exists()) {
 				mainDir.mkdirs();
 			}
+			
 			if(!detailDir.exists()) {
 				detailDir.mkdirs();
 			}
@@ -258,7 +259,6 @@ public class AdminServicelmpl implements AdminService {
 			e.printStackTrace();
 		}
 		amdao.itemUpdate(idto);
-		
 		
 	}
 

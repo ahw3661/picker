@@ -26,9 +26,9 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 			throws Exception {
 		logger.info(">>> pre");
 		HttpSession session = request.getSession();
-		//MemberDTO login = (MemberDTO)session.getAttribute("login");
+		MemberDTO login = (MemberDTO)session.getAttribute("login");
 		
-		if(session.getAttribute("u_id") != null) {
+		if(login != null) {
 			logger.info(">>> 세션 아이디 존재");
 			return true;
 		}else {
@@ -49,7 +49,7 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				}
 			}
 			
-			if(isAjaxRequest(request)) {
+			if(request.getHeader("ajax") != null && request.getHeader("ajax").equals("true")) {
 				logger.info(">>> ajax 관련 에러 메시지 화면으로 이동");
 				response.sendRedirect(request.getContextPath() + "/errorPage");
 				return false;
@@ -58,17 +58,6 @@ public class LoginInterceptor extends HandlerInterceptorAdapter {
 				response.sendRedirect(request.getContextPath() + "/loginPage");
 				return false;
 			}
-		}
-	}
-	
-	// ajax
-	private boolean isAjaxRequest(HttpServletRequest request) {
-		String header = request.getHeader("ajax");
-		logger.info(">>> ajax에서 넘어온 정보");
-		if("true".equals(header)) { // ajax일 경우
-			return true;
-		}else {
-			return false;
 		}
 	}
 	

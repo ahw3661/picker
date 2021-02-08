@@ -29,11 +29,6 @@ public class MemberServiceImpl implements MemberService {
 	@Inject
 	PointDAO pdao;
 	
-	//@Override
-	//public ArrayList<MemberDTO> memberList() {
-	//	return mmdao.memberList();
-	//}
-
 	@Override
 	public MemberDTO viewMember(String m_id) {
 		return mmdao.viewMember(m_id);

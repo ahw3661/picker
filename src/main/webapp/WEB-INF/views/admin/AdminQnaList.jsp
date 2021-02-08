@@ -54,7 +54,7 @@
 								</td>
 								<td class="celItem">
 									<div class="centerBlock">
-										<c:if test="${qna.i_img != null}"><a href="" class="centerInline"><img 
+										<c:if test="${qna.i_img != null}"><a href="goDetail?i_code=${qna.i_code}" class="centerInline"><img 
 										title="${qna.i_name}" src="resources/image/category_img/${qna.i_img}" alt="관련 상품"></a></c:if>
 										<c:if test="${qna.i_img == null}"><img src="resources/image/icon/user_round.png" alt="관련 상품"></c:if>
 									</div>
@@ -122,6 +122,5 @@
 			qnaChangeOpt(1);
 		});
 	</script>
-	<script type="text/javascript" src="resources/js/QnaPop.js"></script>
 </body>
 </html>
