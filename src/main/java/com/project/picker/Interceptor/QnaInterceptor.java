@@ -27,6 +27,7 @@ public class QnaInterceptor extends HandlerInterceptorAdapter {
 			int q_num = Integer.parseInt(request.getParameter("q_num"));
 			if(request.getHeader("admin") != null && request.getHeader("admin").equals("accessible") && (int)session.getAttribute("u_type") == 0 || 
 				((String)session.getAttribute("u_id")).equals(dao.getWriter(q_num))) {
+				logger.info("qnaInterceptor Åë°ú");
 				return true;
 			}
 		}

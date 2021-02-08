@@ -2,16 +2,18 @@ package com.project.picker.DTO;
 
 public class EvalDTO {
 	
-	private int e_num, e_level, e_chk;
-	private String e_content, m_id, e_date, i_code;
+	private int e_num, b_code, e_level, e_chk;
+	private String e_content, m_id, m_name, e_date, i_code;
 	
 	public EvalDTO() { }
-	public EvalDTO(int e_num, int e_level, int e_chk, String e_content, String m_id, String e_date, String i_code) {
+	public EvalDTO(int e_num, int b_code, int e_level, int e_chk, String e_content, String m_id, String m_name, String e_date, String i_code) {
 		this.e_num = e_num;
+		this.b_code = b_code;
 		this.e_level = e_level;
 		this.e_chk = e_chk;
 		this.e_content = e_content;
 		this.m_id = m_id;
+		this.m_name = m_name;
 		this.e_date = e_date;
 		this.i_code = i_code;
 	}
@@ -21,6 +23,12 @@ public class EvalDTO {
 	}
 	public void setE_num(int e_num) {
 		this.e_num = e_num;
+	}
+	public int getB_code() {
+		return b_code;
+	}
+	public void setB_code(int b_code) {
+		this.b_code = b_code;
 	}
 	public int getE_level() {
 		return e_level;
@@ -45,6 +53,12 @@ public class EvalDTO {
 	}
 	public void setM_id(String m_id) {
 		this.m_id = m_id;
+	}
+	public String getM_name() {
+		return m_name;
+	}
+	public void setM_name(String m_name) {
+		this.m_name = m_name;
 	}
 	public String getE_date() {
 		return e_date;

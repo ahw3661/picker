@@ -61,3 +61,4 @@
 <div class="rightBtnDiv">
 	<input type="button" value="상품문의" class="btnBlack" onclick="location.href='qnaWrite?code=${code}'">
 </div>
+<script type="text/javascript" src="resources/js/QnaPop.js"></script>																	 

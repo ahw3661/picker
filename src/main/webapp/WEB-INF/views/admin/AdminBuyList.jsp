@@ -35,8 +35,8 @@
 										</td>
 										<td class="code_td">
 											<a href="javascript:buyDetail('${item.b_code }', ${pgdto.pageNum });">${item.b_code }</a>
-											<c:if test="${list.m_id == 'nonmember' }"><span>비회원</span></c:if>
-											<c:if test="${list.m_id != 'nonmember' }"><span>회원</span></c:if>
+											<c:if test="${list.m_id == 'none' }"><span>비회원</span></c:if>
+											<c:if test="${list.m_id != 'none' }"><span>회원</span></c:if>
 										</td>
 										<td class="item_td">
 											<img alt="img" src="resources/image/category_img/${item.i_img }">&nbsp;

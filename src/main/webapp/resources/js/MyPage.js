@@ -7,11 +7,10 @@ $(".my_a").click(function() {
 });
 
 // 주문조회
-function buyInfo(pn) {
+function buyInfo() {
 	$.ajax({
 		url : "buyInfo",
 		type : "post",
-		data : { "pageNum" : pn },
 		datatype : "html",
 		beforeSend : function(xmlHttpRequest) {
 			xmlHttpRequest.setRequestHeader("ajax", "true");
@@ -27,11 +26,10 @@ function buyInfo(pn) {
 }
 
 //주문취소
-function buyCancel(pn) {
+function buyCancel() {
 	$.ajax({
 		url : "buyCancel",
 		type : "post",
-		data : { "pageNum" : pn },
 		datatype : "html",
 		beforeSend : function(xmlHttpRequest) {
 			xmlHttpRequest.setRequestHeader("ajax", "true");
@@ -47,11 +45,10 @@ function buyCancel(pn) {
 }
 
 // 포인트
-function pointInfo(pn) {
+function pointInfo() {
 	$.ajax({
 		url : "pointInfo",
 		type : "post",
-		data : { "pageNum" : pn },
 		datatype : "html",
 		beforeSend : function(xmlHttpRequest) {
 			xmlHttpRequest.setRequestHeader("ajax", "true");
@@ -164,30 +161,35 @@ function replyPop(qna, reply){
 
 // 댓글 쓰기
 function replyWrite(){
-	$.ajax({
-		url : 'replyWrite',
-		type : 'post',
-		dataType : 'json',
-		data : $('#replyPop').serialize(),
-		beforeSend : function(xmlHttpRequest) {
-			xmlHttpRequest.setRequestHeader('ajax', 'json');
-							  
-		},
-		success : function(json){
-			if(json.chk){
-				var row = $('input[name=row]').val();
-				replyCancel();
-				qnaInfo(row);
-			} else if(json.logError != undefined && json.logError) {
-				window.alert('[세션종료] 글쓴이 본인만 댓글 작성 가능합니다.');
-			} else {
-				window.alert('[오류] 댓글 작성 실패하였습니다.');
+	if($("textarea[name=r_content]").val() != ""){
+		$.ajax({
+			url : 'replyWrite',
+			type : 'post',
+			dataType : 'json',
+			data : $('#replyPop').serialize(),
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader('ajax', 'json');
+								  
+			},
+			success : function(json){
+				if(json.chk){
+					var row = $('input[name=row]').val();
+					replyCancel();
+					qnaInfo(row);
+				} else if(json.logError != undefined && json.logError) {
+					window.alert('[세션종료] 글쓴이 본인만 댓글 작성 가능합니다.');
+				} else {
+					window.alert('[오류] 댓글 작성 실패하였습니다.');
+				}
+			},
+			error : function(data, error) {
+				alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+error);
 			}
-		},
-		error : function(data, error) {
-			alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+error);
-		}
-	})
+		})
+	} else {
+		window.alert("내용을 입력해주세요.");
+	}
+
 }
 
 function replyCancel(){
@@ -200,7 +202,6 @@ function replyModPop(num){
 		url : "replyGetContent?r_num=" + num,
 		type : "get",
 		datatype : "html",
-		data : {"num" : num},
 		success : function(text){
 			var ele = "<aside><form id='replyPop'><h4 class='stretchBlock'><span>댓글 수정</span>"
 					+ "<a href='javascript:replyCancel()'><img alt='취소' src='resources/image/icon/closeBtn.svg'></a></h4>"
@@ -214,29 +215,34 @@ function replyModPop(num){
 }
 
 function replyModify(){
-	$.ajax({
-		url : 'replyModify',
-		type : 'post',
-		datatype : 'json',
-		data : $('#replyPop').serialize(),
-		beforeSend : function(xmlHttpRequest) {
-			xmlHttpRequest.setRequestHeader("ajax", "json");
-							  
-		},
-		success : function(json){
-			if(json.chk){
-				replyCancel();
-				qnaInfo($("input[name=row]").val());
-			} else if(json.logError != undefined && json.logError) {
-				window.alert("[세션종료] 작성자 본인만 수정 가능합니다.");
-			} else {
-				window.alert("[오류] 댓글 수정 실패하였습니다.");
+	if($("textarea[name=r_content]").val() != ""){
+		$.ajax({
+			url : 'replyModify',
+			type : 'post',
+			datatype : 'json',
+			data : $('#replyPop').serialize(),
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "json");
+		 
+			},
+			success : function(json){
+				if(json.chk){
+					replyCancel();
+					qnaInfo($("input[name=row]").val());
+				} else if(json.logError != undefined && json.logError) {
+					window.alert("[세션종료] 작성자 본인만 수정 가능합니다.");
+				} else {
+					window.alert("[오류] 댓글 수정 실패하였습니다.");
+				}
+			},
+			error : function(data, error) {
+				alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+error);
 			}
-		},
-		error : function(data, error) {
-			alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+error);
-		}
-	})
+		})
+	} else {
+		window.alert("내용을 입력해주세요.");
+	}
+   
 }
 
 function replyDelete(num){

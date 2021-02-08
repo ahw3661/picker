@@ -11,7 +11,27 @@
 <body>
 	<section>
 		<div class="AdminUserList_wrap">
-			<h3>회원 정보</h3>
+			<div class="search_div">
+				<div class="select_input_div">
+					<input type="hidden" name="stype" value="${s_type }" id="sType">
+					<select name="s_type" id="searchType">
+						<option value="m_id">아이디</option>
+						<option value="m_phone">전화번호</option>
+						<option value="m_email">이메일</option>
+					</select>
+					<input type="text" name="m_keyword" value="${m_keyword}" id="mKeyword">
+					<input type="button" name="s_btn" value="검색" id="sBtn">
+				</div>
+				<h3>회원정보</h3>
+				<div class="select_div">
+					<input type="hidden" name="mtype" value="${m_type }" id="m_Type">
+					<select name="m_type" id="mType" onchange="changeType();">
+						<option value="-1">- 전체 -</option>
+						<option value="1">일반회원</option>
+						<option value="2">탈퇴회원</option>
+					</select>
+				</div>
+			</div>
 			<div class="AdminUserList_table_wrap">
 				<table>
 					<tr>
@@ -54,24 +74,72 @@
 			</div>
 			<div class="centerBlock">
 	 			<c:if test="${pgdto.startPage > 1}">
-	 				<div class="prev_div"><a href="javascript:goMemberList(${pgdto.startPage - pgdto.pageSize});"><b>《</b></a></div>
+	 				<div class="prev_div"><a href="javascript:goMemberList(${pgdto.startPage - pgdto.pageSize}, '${s_type }', '${m_keyword}');"><b>《</b></a></div>
 	 			</c:if>
 				<c:forEach var="page" begin="${pgdto.startPage}" end="${pgdto.endPage}">
 					<c:if test="${page != pgdto.pageNum}">
-						<div class="page_div"><a href="javascript:goMemberList(${page})">${page}</a></div>
+						<div class="page_div"><a href="javascript:goMemberList(${page}, '${s_type }', '${m_keyword}')">${page}</a></div>
 					</c:if>
 					<c:if test="${page == pgdto.pageNum}">
-						<div class="curr_div"><a href="javascript:goMemberList(${page})">${page}</a></div>
+						<div class="curr_div"><a href="javascript:goMemberList(${page}, '${s_type }', '${m_keyword}')">${page}</a></div>
 					</c:if>
 				</c:forEach>
 	 			<c:if test="${pgdto.endPage < pgdto.pageCount}">
-	 				<div class="next_div"><a href="javascript:goMemberList(${pgdto.startPage + pgdto.pageSize });"><b>》</b></a></div>
+	 				<div class="next_div"><a href="javascript:goMemberList(${pgdto.startPage + pgdto.pageSize }, '${s_type }', '${m_keyword}');"><b>》</b></a></div>
 	 			</c:if>
 			</div>
 		</div>
 	</section>
 </body>
 <script type="text/javascript">
+	// 검색
+	$("#sBtn").click(function() {
+		$.ajax({
+			url : "goMemberList",
+			type : "post",
+			data : { "s_type" : $("#searchType").val(), "m_keyword" : $("#mKeyword").val() },
+			datatype : "html",
+			success : function(data) {
+				$(".menu_info").children().remove();
+				$(".menu_info").html(data);
+			},
+			error : function(data, error) {
+				alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+error);
+			}
+		});
+	});
+	
+	// 회원유형 검색
+	function changeType() {
+		$.ajax({
+			url : "goMemberList",
+			type : "post",
+			data : { "m_type" : $("#mType option:selected").val() },
+			datatype : "html",
+			success : function(data) {
+				$(".menu_info").children().remove();
+				$(".menu_info").html(data);
+			},
+			error : function(data, error) {
+				alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+error);
+			}
+		});
+	}
+	
+	// 검색 select box
+	$("#searchType option").each(function() {
+		if($("#sType").val() == $(this).val()) {
+			$(this).prop("selected", true);
+		}
+	});
+	
+	// 회원유형 검색 select box
+	$("#mType option").each(function() {
+		if($("#m_Type").val() == $(this).val()) {
+			$(this).prop("selected", true);
+		}
+	});
+	
 	// 회원정보 상세
 	function goOneList(id, pn) {
 		$.ajax({
@@ -83,25 +151,25 @@
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
 			},
-			error : function(data) {
-				alert("ajax 실패");
+			error : function(data, error) {
+				alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+error);
 			}
 		});
 	}
 	
 	// 페이징
-	function goMemberList(pn) {
+	function goMemberList(pn, st, kw) {
 		$.ajax({
 			url : "goMemberList",
 			type : "post",
-			data : { "pageNum" : pn },
+			data : { "pageNum" : pn, "s_type" : st, "m_keyword" : kw },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
 			},
-			error : function(data) {
-				alert("ajax 실패");
+			error : function(data, error) {
+				alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+error);
 			}
 		});
 	}

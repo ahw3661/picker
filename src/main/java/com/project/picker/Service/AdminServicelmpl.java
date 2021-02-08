@@ -9,6 +9,8 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.project.mapper.AdminMapperDAO;
@@ -18,11 +20,14 @@ import com.project.picker.DTO.BuyDTO;
 import com.project.picker.DTO.BuyitemDTO;
 import com.project.picker.DTO.ItemDTO;
 import com.project.picker.DTO.ItemInsertDTO;
+import com.project.picker.DTO.ItemQnaDTO;										 
 import com.project.picker.DTO.MemberDTO;
 import com.project.picker.DTO.PointDTO;
 
 @Service
 public class AdminServicelmpl implements AdminService {
+	
+	private static final Logger logger = LoggerFactory.getLogger(AdminServicelmpl.class);
 
 	@Inject
 	AdminMapperDAO adao;
@@ -35,8 +40,8 @@ public class AdminServicelmpl implements AdminService {
 	
 	// 회원정보를 불러오는 함수
 	@Override
-	public List<MemberDTO> memberList(int startRow, int endRow) {
-		return amdao.memberList(startRow, endRow);
+	public List<MemberDTO> memberList(String s_type, String m_keyword, int m_type, int startRow, int endRow) {
+		return amdao.memberList(s_type, m_keyword, m_type, startRow, endRow);
 	}
 	
 	//한 명의 회원정보를 불러오는 함수
@@ -184,5 +189,100 @@ public class AdminServicelmpl implements AdminService {
 	public BuyDTO oneBuyCancel(int b_code) {
 		return adao.oneBuyCancel(b_code);
 	}
+
+	@Override
+	public void itemUpdate(ItemInsertDTO idto, HttpSession session) {
+		String imgName = idto.getMainFile().getOriginalFilename();
+		String detailImgName = idto.getDetailFile().getOriginalFilename();
+		
+		try {
+			String mainPath = session.getServletContext().getRealPath("/resources/image/category_img/");
+			String detailPath = session.getServletContext().getRealPath("/resources/image/detail_img/");
+			
+			File mainDir = new File(mainPath);
+			File detailDir = new File(detailPath);
+			
+			if(imgName != null && !imgName.equals("")) {
+				if(detailImgName != null && !detailImgName.equals("")) {
+					logger.info("새로운 상품 및 상품상세의 이미지 등록");
+					// update를 위한 이미지 값 세팅
+					idto.setI_img(imgName);
+					idto.setI_detailimg(detailImgName);
+				}else {
+					logger.info("새로운 상품 이미지 등록");
+					idto.setI_img(imgName); // 새로운 상품 이미지 등록
+					idto.setI_detailimg(idto.getI_detailimg()); // 기존 상품상세 이미지 재등록
+				}
+			}else {
+				if(detailImgName != null && !detailImgName.equals("")) {
+					logger.info("새로운 상품상세 이미지 등록");
+					idto.setI_img(idto.getI_img()); // 기존 상품 이미지 재등록
+					idto.setI_detailimg(detailImgName);// 새로운 상품상세 이미지 등록
+				}else {
+					logger.info("기존 상품 및 상품상세 이미지 유지");
+					// 기존 상품 및 상품상세 이미지 유지
+					idto.setI_img(idto.getI_img());
+					idto.setI_detailimg(idto.getI_detailimg());
+				}
+			}
+			
+			if(!mainDir.exists()) {
+				mainDir.mkdirs();
+			}
+			if(!detailDir.exists()) {
+				detailDir.mkdirs();
+			}
+			
+			if(imgName != null && !imgName.equals("")) {
+				if(detailImgName == null || detailImgName.equals("")) {
+					logger.info("새로운 상품 이미지 등록");
+					idto.getMainFile().transferTo(new File(mainPath + imgName)); // 새로운 상품 이미지 등록
+				}
+			}
+			
+			if(detailImgName != null && !detailImgName.equals("")) {
+				if(imgName == null || imgName.equals("")) {
+					logger.info("새로운 상품상세 이미지 등록");
+					idto.getDetailFile().transferTo(new File(detailPath + detailImgName)); // 새로운 상품상세 이미지 등록
+				}
+			}
+			
+			if((imgName != null && !imgName.equals("")) && (detailImgName != null && !detailImgName.equals(""))) { // 새로운 상품 및 상품상세 이미지 등록
+				logger.info("새로운 상품 및 상품상세 이미지 등록");
+				idto.getMainFile().transferTo(new File(mainPath + imgName));
+				idto.getDetailFile().transferTo(new File(detailPath + detailImgName));
+			}
+		} catch (IllegalStateException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		amdao.itemUpdate(idto);
+		
+		
+	}
+
+	@Override
+	public int getAllMemberCount(String s_type, String m_keyword, int m_type) {
+		return amdao.getAllMemberCount(s_type, m_keyword, m_type);
+	}
+
+	@Override
+	public int qnaCount(String column, String keyword, String code, int rchk) {
+		return amdao.qnaCount(column, keyword, code, rchk);
+	}
 	
+	@Override
+	public List<ItemQnaDTO> qnaList(String column, String keyword, String code, int rchk, int startRow, int endRow) {
+		List<ItemQnaDTO> list = amdao.qnaList(column, keyword, code, rchk, startRow, endRow);
+		for(ItemQnaDTO dto : list) {
+			dto.setQ_date(dto.getQ_date().substring(0, 16));
+		}
+		return list;
+	}
+	
+	@Override
+	public ArrayList<ItemDTO> getItemNameList() {
+		return adao.getItemNameList();
+	}
 }

@@ -11,7 +11,6 @@ import com.project.picker.DTO.BuyDTO;
 import com.project.picker.DTO.BuyitemDTO;
 import com.project.picker.DTO.ItemDTO;
 import com.project.picker.DTO.MemberDTO;
-import com.project.picker.DTO.PointDTO;
 
 @Repository 
 public interface AdminMapperDAO {
@@ -59,6 +58,10 @@ public interface AdminMapperDAO {
 	// 전체 회원 카운트
 	@Select("SELECT COUNT(*) FROM picker_member WHERE m_type IN (1, 2)")
 	public int getAllMemberCount();
+	
+	// 전체 회원 검색 카운트
+	//@Select("SELECT COUNT(*) FROM picker_member WHERE m_type = #{m_keyword}")
+	//public int getAllMemberCount(@Param("m_keyword") String m_keyword);
 
 	// 전체 회원 및 비회원 구매 카운트
 	@Select("SELECT COUNT(*) FROM picker_buy WHERE b_chk = 0")
@@ -92,4 +95,7 @@ public interface AdminMapperDAO {
 	@Select("SELECT * FROM picker_buy WHERE b_code = #{b_code} AND b_chk = 1")
 	public BuyDTO oneBuyCancel(@Param("b_code") int b_code);
 	
+	// 전체 상품코드 및 상품명 목록
+	@Select("SELECT i_code, i_name FROM picker_item ORDER BY i_code ASC")
+	public ArrayList<ItemDTO> getItemNameList();
 }

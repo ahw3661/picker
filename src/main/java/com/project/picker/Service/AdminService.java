@@ -9,12 +9,13 @@ import com.project.picker.DTO.BuyDTO;
 import com.project.picker.DTO.BuyitemDTO;
 import com.project.picker.DTO.ItemDTO;
 import com.project.picker.DTO.ItemInsertDTO;
+import com.project.picker.DTO.ItemQnaDTO;
 import com.project.picker.DTO.MemberDTO;
 import com.project.picker.DTO.PointDTO;
 
 public interface AdminService {
 
-	public List<MemberDTO> memberList(int startRow, int endRow);
+	public List<MemberDTO> memberList(String s_type, String m_keyword, int m_type, int startRow, int endRow);
 	public MemberDTO oneList(String m_id);
 	public ArrayList<ItemDTO> itemList(int startRow, int endRow);
 	public int itemListCount();
@@ -38,5 +39,10 @@ public interface AdminService {
 	public int getAllBuyCancelCount();
 	public List<BuyDTO> allBuyCancel(int startRow, int endRow);
 	public BuyDTO oneBuyCancel(int b_code);
+	public void itemUpdate(ItemInsertDTO idto, HttpSession session);
+	public int getAllMemberCount(String s_type, String m_keyword, int m_type);
+	public int qnaCount(String column, String keyword, String code, int rchk);
+	public List<ItemQnaDTO> qnaList(String column, String keyword, String code, int rchk, int startRow, int endRow);
+	public ArrayList<ItemDTO> getItemNameList();
 	
 }

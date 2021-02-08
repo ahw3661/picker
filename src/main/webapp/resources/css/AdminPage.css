@@ -138,6 +138,32 @@ section .point_detail_wrap .curr_div { font-weight: bold; color: red; }
 section .point_detail_wrap .list_btn { width: 1000px; margin: 15px auto; text-align: center; }
 section .point_detail_wrap .list_btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
 
+/* AdminQnaList.jsp */
+.qnaAdminList { width: 1000px; height: 100%; margin: 0 auto; padding: 50px 0; }
+.qnaAdminList>h3 { width: 100%; height: 40px; text-align: center; }
+.qnaAdminList #qnaAdminCount { margin: 10px 0; }
+.qnaAdminList select { height: 36px; border: 1px solid #c3c3c3; padding-left: 8px; }
+.qnaAdminList #srhBox { width: 235px; height: 36px; border-bottom: 1px solid #c3c3c3; margin-left: 10px; }
+.qnaAdminList #srhInput { width: 200px; height: 35px; border: none; padding: 5px 10px; background-color: transparent; color: #222222; font-size: 15px; }
+.qnaAdminList #srhIcon { width: 35px; height: 35px; padding: 10px; }
+.qnaAdminList #srhIcon img { width: 15px; height: 15px; }
+.qnaAdminList #qnaTable { min-height: 600px; padding: 20px 0; }
+.qnaAdminList th, .qnaAdminList td { padding: 5px; }
+.qnaAdminList thead th { height: 52px; border-top: 1px solid #525252; border-bottom: 1px solid #525252; }
+.qnaAdminList tbody td { height: 51px; border-bottom: 1px solid #c3c3c3; text-align: center; }
+.qnaAdminList .celRchk { width: 100px; }
+.qnaAdminList .celItem { width: 150px; }
+.qnaAdminList .celItem a { width: 40px; height: 40px; }
+.qnaAdminList .celItem img { width: 40px; height: 40px; }
+.qnaAdminList .celTitle { width: 350px; }
+.qnaAdminList .celTitle>a { width: 100%; height: 100%; display: inline-flex; justify-content: flex-start; align-items: center; }
+.qnaAdminList .celTitle span { display: inline-block; height: 16px; margin-left: 15px; font-weight: 700; color: #ff472d; }
+.qnaAdminList tbody .celTitle { text-align: left; }
+.qnaAdminList .celId { width: 150px; }
+.qnaAdminList .celDate { width: 250px; }
+.btnBlack { width: 90px; height: 36px; border: none; border-radius: 3px; color: #ffffff; background-color: #222222; font-size: 14px; }
+.nonlist { height: 300px; margin: 20px 0; }
+
 /* AdminItemList.jsp CSS */
 .AdminItemList_wrap { width: 1000px; height: 100%; margin: 0 auto;  }
 .AdminItemList_wrap>h3 { width: 100%; height: 40px; text-align: center; }
@@ -153,7 +179,7 @@ section .point_detail_wrap .list_btn input { width: 150px; height: 40px; border:
 /* AdminItemDetail.jsp CSS */
 .AdminItemDetail_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 .AdminItemDetail_wrap>h3 { width: 100%; height: 40px; text-align: center; }
-.AdminItemDetail_wrap .AdminItemDetail_div { width: 1000px; min-height: 500px; margin: 0 auto; display: flex; justify-content: center; align-items: center; }
+.AdminItemDetail_wrap .AdminItemDetail_div { width: 1000px; min-height: 500px; margin: 0 auto; display: flex; justify-content: center; align-items: center; border-top: 1px solid gray; border-bottom: 1px solid gray; }
 .AdminItemDetail_wrap .AdminItemDetail_div .item_img_div { width: 500px; height: 100%; text-align: center; }
 .AdminItemDetail_wrap .AdminItemDetail_div .item_img_div img { width: 400px; height: 400px; vertical-align: middle; }
 .AdminItemDetail_wrap .AdminItemDetail_div .item_info_div { width: 500px; height: 100%; padding-left: 10px; }
@@ -164,15 +190,23 @@ section .point_detail_wrap .list_btn input { width: 150px; height: 40px; border:
 .AdminItemDetail_wrap #List_btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
 
 /* AdminMemberList.jsp CSS */
-.AdminUserList_wrap { width: 1000px; height: 100%; margin: 0 auto; }
-.AdminUserList_wrap>h3 { width: 100%; height: 40px; text-align: center; }
-.AdminUserList_wrap .AdminUserList_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
-.AdminUserList_wrap .AdminUserList_table_wrap table { margin: 0 auto; text-align: center; width:100%; }
-.AdminUserList_wrap .AdminUserList_table_wrap table tr th { width: 250px; height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
-.AdminUserList_wrap .AdminUserList_table_wrap table tr td { width: 250px; height: 55px; text-align: center; font-size: 14px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
-.AdminUserList_wrap .AdminUserList_table_wrap table tr td a span:hover { border-bottom: 1px solid black; }
-.AdminUserList_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
-.AdminUserList_wrap .curr_div { font-weight: bold; color: red; }
+section .AdminUserList_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+section .AdminUserList_wrap .search_div { display: flex; width: 100%; height: 40px; }
+section .AdminUserList_wrap .search_div .select_input_div, .search_div .select_div { width: 300px; }
+section .AdminUserList_wrap .search_div h3 { width: 400px; text-align: center; }
+section .AdminUserList_wrap .search_div .select_input_div select { width: 80px; height: 30px; }
+section .AdminUserList_wrap .search_div .select_input_div input[type=text] { width: 150px; height: 30px; }
+section .AdminUserList_wrap .search_div .select_input_div input[type=button] { width: 60px; height: 30px; vertical-align: middle; border: 1px solid lightgray; }
+section .AdminUserList_wrap .search_div .select_input_div input[type=button]:hover { background: lightgray; }
+section .AdminUserList_wrap .search_div .select_div { text-align: right; }
+section .AdminUserList_wrap .search_div .select_div select { width: 100px; height: 30px; padding-left: 10px; }
+section .AdminUserList_wrap .AdminUserList_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
+section .AdminUserList_wrap .AdminUserList_table_wrap table { margin: 0 auto; text-align: center; width:100%; }
+section .AdminUserList_wrap .AdminUserList_table_wrap table tr th { width: 250px; height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .AdminUserList_wrap .AdminUserList_table_wrap table tr td { width: 250px; height: 55px; text-align: center; font-size: 14px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
+section .AdminUserList_wrap .AdminUserList_table_wrap table tr td a span:hover { border-bottom: 1px solid black; }
+section .AdminUserList_wrap .prev_div, .page_div, .curr_div, .next_div { width: 30px; height: 30px; text-align: center; padding: 6px 0; border: 1px solid lightgray; margin: 10px 2px; }
+section .AdminUserList_wrap .curr_div { font-weight: bold; color: red; }
 
 /* AdminOneUserInfo.jsp CSS */
 .AdminOneUserList_wrap { width: 1000px; height: 100%; margin: 0 auto; }
@@ -200,6 +234,25 @@ section .point_detail_wrap .list_btn input { width: 150px; height: 40px; border:
 .ItemInsert_wrap form table tr td input[type=file] { width: 500px; text-align: left; }
 .ItemInsert_wrap form #Insert_Btn { width: 1000px; margin: 15px auto; text-align: center; }
 .ItemInsert_wrap form #Insert_Btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black;  }
+
+/* AdminItemUpdate.jsp CSS */
+section .item_update_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+section .item_update_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+section .item_update_wrap form .item_update_div { width: 1000px; min-height: 600px; margin: 0 auto; }
+section .item_update_wrap form .item_update_div table { margin: 0 auto; width: 1000px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .item_update_wrap form .item_update_div table tr th { width: 400px; height: 60px; text-align: center; }
+section .item_update_wrap form .item_update_div table tr td { width: 600px; height: 60px; text-align: left; padding: 0 7px; }
+section .item_update_wrap form .item_update_div table tr td .Item_input { width: 500px; height: 40px; }
+section .item_update_wrap form .item_update_div table tr td .item_file, td .detail_file { display: inline-block; width: 100px; height: 40px; padding: 11px 0; text-align: center; background: #E5E5E5; border: 1px solid lightgray; color: black; font-size: 14px; cursor: pointer; vertical-align: middle; }
+section .item_update_wrap form .item_update_div table tr td .item_file:hover, td .detail_file:hover { background: lightgray; }
+section .item_update_wrap form .item_update_div table tr td .upload_name { width: 396px; height: 40px; padding: 0 5px; border: 1px solid lightgray; vertical-align: middle; }
+section .item_update_wrap form .item_update_div table tr td #itemMainImg, #detailFile { display: none; }
+section .item_update_wrap form .item_update_div table tr td .itemMainImg_div, td .detailFile_div { width: 100%; padding: 5px 0; }
+section .item_update_wrap form .item_update_div table tr td .itemMainImg_div img, td .detailFile_div img { width: 150px; height: 150px; vertical-align: middle; }
+section .item_update_wrap form .item_update_div table tr td select { width: 500px; height: 40px; }
+section .item_update_wrap form .item_update_div table tr td input[type=file] { width: 500px; text-align: left; }
+section .item_update_wrap form #Update_Btn { width: 1000px; margin: 15px auto; text-align: center; }
+section .item_update_wrap form #Update_Btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
 
 
 

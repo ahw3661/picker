@@ -74,7 +74,7 @@
 	 
 	$(function() {		
 		$("#Id").keyup(function() { // 아이디 체크
-			var regid = /^[A-za-z0-9]{5,10}/g; // 영문자, 숫자 조합 5~10자리
+			var regid = /^(?=.*[a-zA-Z])(?=.*[0-9]).{5,10}$/; // 영문자, 숫자 조합 5~10자리
 			
 			$.ajax({
 				url:"idChecking", // RequestMapping 값 입력

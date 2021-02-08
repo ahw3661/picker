@@ -1,6 +1,5 @@
 package com.project.picker.Controller;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -31,17 +30,17 @@ public class NoticeController {
 	@RequestMapping("noticeList")
 	public String noticeList(@RequestParam(required=false, defaultValue="") String keyword, 
 		@RequestParam(required=false, defaultValue="1") int num, Model model) {
+		logger.info("리스트 출력");
 		model.addAttribute("section", "board/NoticeList.jsp");
 		model.addAttribute("keyword", keyword);
-		logger.info("리스트 출력");
+		
 		keyword = "%" + keyword + "%";
 		int cnt = service.getNoticeCount(keyword);
 		model.addAttribute("noticecnt", cnt);
 		if(cnt > 0) {
 			PagingDTO paging = new PagingDTO(num, cnt, 20, 5);
 			model.addAttribute("paging", paging);
-			ArrayList<NoticeDTO> list = service.getNoticeList(keyword, paging.getStartRow(), paging.getEndRow());
-			model.addAttribute("noticelist", list);
+			model.addAttribute("noticelist", service.getNoticeList(keyword, paging.getStartRow(), paging.getEndRow()));
 		}
 		return "Index";
 	}

@@ -73,7 +73,7 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		if(session.getAttribute("u_id") != null){
 			m_id = (String) session.getAttribute("u_id");
 		}else{
-			m_id = "nonmember";
+			m_id = "none";
 		}
 
 	    tot = request.getParameter("tot");
@@ -146,7 +146,7 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		if(session.getAttribute("u_id") != null){
 			m_id = (String) session.getAttribute("u_id");
 		}else{
-			m_id = "nonmember";
+			m_id = "none";
 		}
 		
 		RestTemplate restTemplate = new RestTemplate();

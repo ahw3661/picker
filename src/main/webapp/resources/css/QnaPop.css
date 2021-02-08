@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+/* 문의글 팝업 */
+#qnaPop{width: 900px; max-height: 70%; margin: 10% auto; overflow-y: scroll; background-color: #ffffff; }
+#qnaPop>*{width: 100%; padding: 15px;}
+#qnaPop .popTop{height: 70px;}
+#qnaPop .popPortrait, .popClose{width: 40px; height: 40px;}
+#qnaPop .popInfo{width: 750px; color: #222222;}
+#qnaPop .popTitle{font-weight: 500;}
+#qnaPop .popInfo>p>*{margin-right: 10px;}
+#qnaPop .popInfo span{color: #777777;}
+#qnaPop .popPortrait img{height: 40px;}
+#qnaPop .popClose img{height: 16px;}
+#qnaPop .popContent{min-height: 150px; border-top: 1px solid #c3c3c3;}
+#qnaPop .popReCnt{height: 55px; border-bottom: 1px solid #c3c3c3; display: flex; justify-content: flex-start; align-items: center;}
+#qnaPop .popReCnt img{height: 24px; margin: 0 8px;}
+#qnaPop .popReCnt span{line-height: 24px; color: #444444; font-size: 16px;}
+#qnaPop .replyOuter { display: flex; justify-content: flex-start; align-items: flex-start; border-top: 1px solid #e5e5e5; margin-top: 15px; padding-top: 10px; font-size: 14px }
+#qnaPop .replyIcon { width: 16px; height: 16px; margin: 2px;}
+#qnaPop .replyInner { padding-left: 10px; }
+#qnaPop .replyInner .popWriteReply { margin: 10px 10px 0 0; }
+#qnaPop .replyContent { width: 100%; margin-right: 10px; padding: 10px 0; }
+#qnaPop .replyModifyArea { width: 100%; height: 80px; border: 1px solid #c3c3c3; padding: 8px; color: #222222; resize: none; }
+#qnaPop .popWriteReply{border: 1px solid #c3c3c3; padding: 10px;}
+#qnaPop .popWriteReply textarea{width: 100%; min-height: 100px; border: none; margin: 5px 0; font-size: 16px; line-height: 20px; resize: none;}
+#qnaPop .btnBlackSmall{width: 56px; height: 24px; border: none; border-radius: 3px; color: #ffffff; background-color: #222222; font-size: 13px;}
+#qnaPop .btnWhiteSmall{width: 56px; height: 24px; border: 1px solid #222222; border-radius: 3px; color: #222222; background-color: #ffffff; font-size: 13px;}					  

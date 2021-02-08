@@ -26,7 +26,7 @@
 				<textarea id="contentEditor" name="q_content"></textarea>
 			</div>
 			<div class="rightBtnDiv">
-				<input type="reset" value="취소" class="btnWhite"><input type="button" value="작성" id="writeBtn" class="btnBlack">
+				<input type="reset" value="취소" id="resetBtn" class="btnWhite"><input type="button" value="작성" id="writeBtn" class="btnBlack">
 			</div>
 		</form>
 	</section>

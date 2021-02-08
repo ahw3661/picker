@@ -51,7 +51,7 @@ public class AdminController {
 	
 	// 전체 회원 및 비회원 구매 목록
 	@RequestMapping(value="allBuyList", method={RequestMethod.GET, RequestMethod.POST})
-	public String allBuyList(@RequestParam int pageNum, Model model) {
+	public String allBuyList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
 		ArrayList<BuyitemDTO> buyItem = aservice.allBuyItem();
 		int cnt = aservice.getAllBuyCount();
 		
@@ -80,10 +80,10 @@ public class AdminController {
 	
 	// 회원별 구매취소 완료된 목록
 	@RequestMapping(value="allBuyCancel", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyCancel(@RequestParam int pageNum, Model model) {
+	public String buyCancel(@RequestParam(defaultValue = "1") int pageNum, Model model) {
 		ArrayList<BuyitemDTO> buyitem = aservice.buyItemList();
 		logger.info(">>> pageNum : "+pageNum);
-		int cnt = aservice.getAllBuyCancelCount();
+		int	cnt = aservice.getAllBuyCancelCount();
 		
 		if(cnt > 0) {
 			PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5);
@@ -119,7 +119,7 @@ public class AdminController {
 	
 	// 전체 회원 포인트 목록
 	@RequestMapping(value="allPointList", method={RequestMethod.GET, RequestMethod.POST})
-	public String allPointList(@RequestParam int pageNum, Model model) {
+	public String allPointList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
 		int cnt = aservice.getAllPointCount();
 		
 		if(cnt > 0) {
@@ -128,13 +128,12 @@ public class AdminController {
 			List<PointDTO> pdto = aservice.allPointList(pgdto.getStartRow(), pgdto.getEndRow());
 			model.addAttribute("pdto", pdto);
 		}
-		model.addAttribute("pageNum", pageNum);
 		return "admin/AdminPointList";
 	}
 	
 	// 회원별 포인트 목록
 	@RequestMapping(value="pointDetail", method= {RequestMethod.GET, RequestMethod.POST})
-	public String pointDetail(@RequestParam String m_id, @RequestParam int pageNum, Model model) {
+	public String pointDetail(@RequestParam String m_id, @RequestParam(defaultValue = "1") int pageNum, @RequestParam int listPageNum, Model model) {
 		int cnt = aservice.getOnePointCount(m_id);
 		
 		if(cnt > 0) {
@@ -144,19 +143,24 @@ public class AdminController {
 			model.addAttribute("m_id", m_id);
 			model.addAttribute("list", list);
 		}
-		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("listPageNum", listPageNum);
 		return "admin/AdminPointDetail";
 	}
 	
 	// 사용자 정보 리스트 보이는 맵핑
 	@RequestMapping(value="goMemberList", method={RequestMethod.GET, RequestMethod.POST})
-	public String goList(@RequestParam int pageNum, Model model) {
-		int cnt = aservice.getAllMemberCount();
+	public String goList(@RequestParam(required=false, defaultValue="") String s_type, @RequestParam(required=false, defaultValue="") String m_keyword, 
+			@RequestParam(defaultValue="-1") int m_type, @RequestParam(defaultValue = "1") int pageNum, Model model) {
+		model.addAttribute("s_type", s_type);
+		model.addAttribute("m_keyword", m_keyword);
+		model.addAttribute("m_type", m_type);
+		m_keyword = "%" + m_keyword + "%";
+		int cnt = aservice.getAllMemberCount(s_type, m_keyword, m_type);
 		
 		if(cnt > 0) {
 			PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5);
 			model.addAttribute("pgdto", pgdto);
-			List<MemberDTO> mdto = aservice.memberList(pgdto.getStartRow(), pgdto.getEndRow());
+			List<MemberDTO> mdto = aservice.memberList(s_type, m_keyword, m_type, pgdto.getStartRow(), pgdto.getEndRow());
 			model.addAttribute("mdto", mdto);
 		}
 		return "admin/AdminMemberList";
@@ -187,7 +191,7 @@ public class AdminController {
 	
 	// 상품 전체 리스트 보는 맵핑
 	@RequestMapping(value="goItemList", method={RequestMethod.GET, RequestMethod.POST})
-	public String goItemList(@RequestParam int pageNum, Model model) {
+	public String goItemList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
 		int cnt = aservice.itemListCount();
 		
 		if(cnt>0){
@@ -208,6 +212,25 @@ public class AdminController {
 		return "admin/AdminItemDetail";
 	}
 	
+	// 상품정보 수정 화면
+	@RequestMapping(value="itemUpdatePage", method= {RequestMethod.GET, RequestMethod.POST})
+	public String itemUpdatePage(@RequestParam String i_code, @RequestParam int pageNum, Model model) {
+		ItemDTO idto = aservice.oneItemList(i_code);
+		model.addAttribute("idto", idto);
+		model.addAttribute("pageNum", pageNum);
+		return "admin/AdminItemUpdate";
+	}
+	
+	// 상품정보 수정
+	@RequestMapping(value="itemUpdate", method= {RequestMethod.GET, RequestMethod.POST})
+	public String itemUpdate(ItemInsertDTO idto, HttpSession session, Model model, @RequestParam int pageNum) {
+		aservice.itemUpdate(idto, session);
+		ItemDTO idto2 = aservice.oneItemList(idto.getI_code());
+		model.addAttribute("idto", idto2);
+		model.addAttribute("pageNum", pageNum);
+		return "admin/AdminItemDetail";
+	}
+
 	// 상품 등록화면으로 이동하는 맵핑
 	@RequestMapping(value="goItemInsert", method={RequestMethod.GET, RequestMethod.POST})
 	public String goItemInsert(Model model) {
@@ -219,5 +242,28 @@ public class AdminController {
 	public String ItemInsert(ItemInsertDTO idto, HttpSession session, Model model) {
 		aservice.ItemInsert(idto, session);		
 		return "admin/AdminItemInsert";
-	}											 
+	}
+	
+	// 문의 목록
+	@RequestMapping("allQnaList")
+	public String allQnaList(@RequestParam(required=false, defaultValue="1") int pageNum, @RequestParam(required=false) String column,
+		@RequestParam(required=false) String keyword, @RequestParam(required=false, defaultValue="") String code, 
+		@RequestParam(required=false, defaultValue="-1") int rchk, Model model){
+		model.addAttribute("itemList", aservice.getItemNameList());
+		model.addAttribute("code", code);
+		model.addAttribute("rchk", rchk);
+		if(keyword != null && column != null) {
+			model.addAttribute("keyword", keyword);
+			model.addAttribute("column", column);
+			if(column.equals("title")) keyword = "%" + keyword + "%";
+		}
+		int qnacnt = aservice.qnaCount(column, keyword, code, rchk);
+		model.addAttribute("qnacnt", qnacnt);
+		if(qnacnt > 0) {
+			PagingDTO paging = new PagingDTO(pageNum, qnacnt, 10, 5);
+			model.addAttribute("paging", paging);
+			model.addAttribute("qnalist", aservice.qnaList(column, keyword, code, rchk, paging.getStartRow(), paging.getEndRow()));
+		}
+		return "admin/AdminQnaList";
+	}
 }

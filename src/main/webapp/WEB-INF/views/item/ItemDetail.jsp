@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<!DOCTYPE html>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<!DOCTYPE html>
 <html lang="ko">
 <link rel="stylesheet" href="resources/css/ItemDetail.css">
 <head>
@@ -55,7 +55,7 @@
 				</form>
 			</div>
 	  	</div>		
-	  	<div class="fixed_info"><a href="#">상세정보</a>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a href="#item_evel" >구매평</a>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a href="#item_qna" >Q &amp; A</a><br><br><hr></div>
+	  	<div class="fixed_info"><a href="#">상세정보</a>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a href="#item_eval" >구매평</a>&nbsp;&nbsp;&nbsp;/&nbsp;&nbsp;&nbsp;<a href="#item_qna" >Q &amp; A</a><br><br><hr></div>
 		<div class="detail_div">
 			<img alt="img" src="resources/image/detail_img/${idto.i_detailimg }">
 		</div>
@@ -78,7 +78,7 @@
 				<p> - 교환 및 반품 접수 기간(7일)의 경과 혹은 시간의 경과에 의해 재판매가 곤란할 정도로 상품등의 가치가 현저히 감소한 경우</p>
 			</div>
 		</div>
-		<div id="item_evel"></div>
+		<div id="item_eval"></div>
 		<div id="item_qna"></div>
 		<a id="toplink" href="#">TOP</a>
 	</div>

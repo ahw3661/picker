@@ -34,23 +34,23 @@
 				</table>
 			</div>
 			<div class="centerBlock">
-	 			<c:if test="${pgdto.startPage > 3}">
-	 				<div class="prev_div"><a href="javascript:pointDetail('${m_id }', ${startPage - pgdto.pageSize} });"><b>《</b></a></div>
+	 			<c:if test="${pgdto.startPage > 1}">
+	 				<div class="prev_div"><a href="javascript:pointDetail('${m_id }', ${pgdto.startPage - pgdto.pageSize}, ${listPageNum} });"><b>《</b></a></div>
 	 			</c:if>
 				<c:forEach var="page" begin="${pgdto.startPage}" end="${pgdto.endPage}">
 					<c:if test="${page != pgdto.pageNum}">
-						<div class="page_div"><a href="javascript:pointDetail('${m_id }', ${page})">${page}</a></div>
+						<div class="page_div"><a href="javascript:pointDetail('${m_id }', ${page}, ${listPageNum})">${page}</a></div>
 					</c:if>
 					<c:if test="${page == pgdto.pageNum}">
-						<div class="curr_div"><a href="javascript:pointDetail('${m_id }', ${page})">${page}</a></div>
+						<div class="curr_div"><a href="javascript:pointDetail('${m_id }', ${page}, ${listPageNum})">${page}</a></div>
 					</c:if>		
 				</c:forEach>
 	 			<c:if test="${pgdto.endPage < pgdto.pageCount}">
-	 				<div class="next_div"><a href="javascript:pointDetail('${m_id }', ${startPage + pgdto.pageSize });"><b>》</b></a></div>
+	 				<div class="next_div"><a href="javascript:pointDetail('${m_id }', ${pgdto.startPage + pgdto.pageSize }, ${listPageNum});"><b>》</b></a></div>
 	 			</c:if>
 			</div>
 			<div class="list_btn">
-				<input type="button" value="목록" onclick="javascript:allPointList(${pageNum});">
+				<input type="button" value="목록" onclick="javascript:allPointList(${listPageNum});">
 			</div>
 		</div>
 	</section>
@@ -61,7 +61,7 @@
 		$.ajax({
 			url : "allPointList",
 			type : "post",
-			data : { "pageNum" : pn },
+			data : { "listPageNum" : pn },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();
@@ -74,18 +74,18 @@
 	}
 	
 	// 페이징
-	function pointDetail(id, pn) {
+	function pointDetail(id, pn, lipn) {
 		$.ajax({
 			url : "pointDetail",
 			type : "post",
-			data : { "m_id" : id, "pageNum" : pn },
+			data : { "m_id" : id, "pageNum" : pn, "listPageNum" : lipn },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
 			},
-			error : function(data) {
-				alert("ajax 실패");
+			error : function(request, error) {
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		});
 	}

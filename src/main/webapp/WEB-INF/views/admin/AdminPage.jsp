@@ -15,13 +15,13 @@
 				<div class="menu_list_left">
 					<input type="hidden" name="m_id" value="${u_id }" id="mid">
 					<ul>
-						<li><a href="javascript:allBuyList(1);" class="admin_a" id="buy_list">주문내역 관리</a></li>
-						<li><a href="javascript:allBuyCancel(1);" class="admin_a" id="buy_cancel">주문취소 관리</a></li>
-						<li><a href="javascript:allPointList(1);" class="admin_a" id="point_list">포인트 관리</a></li>
-						<li><a href="#" class="admin_a">1:1문의 관리</a></li>
-						<li><a href="javascript:goItemList(1);" class="admin_a" id="item_list">상품 관리</a></li>
+						<li><a href="javascript:allBuyList();" class="admin_a" id="buy_list">주문내역 관리</a></li>
+						<li><a href="javascript:allBuyCancel();" class="admin_a" id="buy_cancel">주문취소 관리</a></li>
+						<li><a href="javascript:allPointList();" class="admin_a" id="point_list">포인트 관리</a></li>
+						<li><a href="javascript:goQnaList(1)" class="admin_a">1:1문의 관리</a></li>
+						<li><a href="javascript:goItemList();" class="admin_a" id="item_list">상품 관리</a></li>
 						<li><a href="javascript:goItemInsert();" class="admin_a">상품 등록</a></li>
-						<li><a href="javascript:goMemberList(1);" class="admin_a" id="member_list">회원 관리</a></li>
+						<li><a href="javascript:goMemberList();" class="admin_a" id="member_list">회원 관리</a></li>
 					</ul>
 				</div>
 				<div class="menu_list_right">

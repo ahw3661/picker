@@ -66,7 +66,7 @@ public class KakaoPayController {
 		int c_num =0;
 		if(session.getAttribute("u_id")!=null) {
 			// ↓ point메서드를 위한 request값
-			int plus_point = Integer.parseInt("+"+request.getParameter("saving_point"));  //적립포인트
+			int plus_point = Integer.parseInt("+"+request.getParameter("saving_P"));  //적립포인트
 			int minus_point = Integer.parseInt("-"+request.getParameter("usePoint_hidden")); //사용포인트
 			kakaopay.insertPoint(plus_point, minus_point);
 			kakaopay.updatePoint(m_id);

@@ -12,6 +12,7 @@
 		<typeAlias type="com.project.picker.DTO.BuyitemDTO" alias="bidto"/>
 		<typeAlias type="com.project.picker.DTO.PointDTO" alias="pdto"/>
 		<typeAlias type="com.project.picker.DTO.ItemDTO" alias="idto"/>
+		<typeAlias type="com.project.picker.DTO.ItemQnaDTO" alias="iqdto"/>
 	</typeAliases>
 
 </configuration>

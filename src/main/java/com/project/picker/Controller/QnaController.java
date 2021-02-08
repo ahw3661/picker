@@ -122,7 +122,7 @@ public class QnaController {
 	}
 	
 	@ResponseBody
-	@RequestMapping("replyGetContent")
+	@RequestMapping(value="replyGetContent", produces="text/html;charset=utf-8")
 	public String replyGetContent(@RequestParam int r_num) {
 		return service.getReplyContent(r_num).replace("<br>", "\r\n");
 	}

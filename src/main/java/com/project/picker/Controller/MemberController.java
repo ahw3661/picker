@@ -53,7 +53,8 @@ public class MemberController {
     	}else {
     		
     		if(referrer.equals("http://localhost:8090/picker/loginPage") || referrer.equals("http://localhost:8090/picker/logout")
-    				|| referrer.equals("http://localhost:8090/picker/joinAgree") || referrer.equals("http://localhost:8090/picker/findIdPw")) {
+    				|| referrer.equals("http://localhost:8090/picker/joinAgree") || referrer.equals("http://localhost:8090/picker/joinWrite") 
+    				|| referrer.equals("http://localhost:8090/picker/findIdPw")) {
         		session.setAttribute("url", null);
         	}else {
         		session.setAttribute("url", referrer);
@@ -255,7 +256,7 @@ public class MemberController {
 	
 	// 회원별 주문 목록
 	@RequestMapping(value="buyInfo", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyInfo(@RequestParam int pageNum, Model model, HttpSession session) {
+	public String buyInfo(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
 		String m_id = (String)session.getAttribute("u_id");
 		ArrayList<BuyitemDTO> buyitem = mservice.buyItem();
 		int cnt = mservice.getBuyCount(m_id);
@@ -288,7 +289,7 @@ public class MemberController {
 	
 	// 회원별 주문취소 가능 주문 목록 및 구매취소 완료된 목록
 	@RequestMapping(value="buyCancel", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyCancel(@RequestParam int pageNum, Model model, HttpSession session) {
+	public String buyCancel(@RequestParam(defaultValue = "0") int pageNum, Model model, HttpSession session) {
 		String m_id = (String)session.getAttribute("u_id");
 		ArrayList<BuyitemDTO> buyitem = mservice.buyItem();
 		logger.info(">>> pageNum : "+pageNum);
@@ -397,7 +398,7 @@ public class MemberController {
 	
 	// 회원별 포인트 목록
 	@RequestMapping(value="pointInfo", method= {RequestMethod.GET, RequestMethod.POST})
-	public String pointInfo(@RequestParam int pageNum, Model model, HttpSession session) {
+	public String pointInfo(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
 		String m_id = (String)session.getAttribute("u_id");
 		int cnt = mservice.getPointCount(m_id);
 		

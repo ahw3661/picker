@@ -15,9 +15,9 @@
 				<div class="menu_list_left">
 					<input type="hidden" name="m_id" value="${u_id }" id="mid">
 					<ul>
-						<li><a href="javascript:buyInfo(1);" class="my_a">주문조회</a></li>
-						<li><a href="javascript:buyCancel(0);" class="my_a">주문취소</a></li>
-						<li><a href="javascript:pointInfo(1);" class="my_a">포인트</a></li>
+						<li><a href="javascript:buyInfo();" class="my_a">주문조회</a></li>
+						<li><a href="javascript:buyCancel();" class="my_a">주문취소</a></li>
+						<li><a href="javascript:pointInfo();" class="my_a">포인트</a></li>
 						<li><a href="javascript:qnaInfo(5);" class="my_a">1:1문의</a></li>
 						<li><a href="javascript:myInfo();" class="my_a">정보수정</a></li>
 						<li><a href="javascript:withdrawPage();" class="my_a">회원탈퇴</a></li>

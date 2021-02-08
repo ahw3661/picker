@@ -38,17 +38,39 @@
 					</p>
 					<p>
 						<label>상품코드</label>
-						<span>${idto.i_code }</span>
+						<span>${idto.i_code }<input type="hidden" name="i_code" value="${idto.i_code }" id="iCode"></span>
 					</p>
 				</div>
 		  	</div>
 			<div id="List_btn">
+				<input type="hidden" name="pageNum" value="${pageNum }" id="page_num">
+				<input type="button" value="상품수정" id="itemUpdate">
 				<input type="button" value="목록보기" onclick="javascript:goItemList(${pageNum});">
 			</div>
 		</div>
 	</section>
 </body>
 <script type="text/javascript">
+	// 상품수정
+	$("#itemUpdate").click(function() {
+		$.ajax({
+			url : "itemUpdatePage",
+			type : "post",
+			data : { "i_code" : $("#iCode").val(), "pageNum" : $("#page_num").val() },
+			datatype : "html",
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
+			success : function(data) {
+				$(".menu_info").children().remove();
+				$(".menu_info").html(data);
+			},
+			error : function(data, error) {
+				alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+error);
+			}
+		});
+	});
+	
 	function goItemList(pn) {
 		$.ajax({
 			url : "goItemList",
@@ -59,8 +81,8 @@
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
 			},
-			error : function(data) {
-				alert("ajax 실패");
+			error : function(data, error) {
+				alert("code:"+data.status+"\n"+"message:"+data.responseText+"\n"+"error:"+error);
 			}
 		});
 	}

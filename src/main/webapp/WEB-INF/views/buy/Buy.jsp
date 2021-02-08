@@ -280,12 +280,6 @@ function calculate(){ //계산만하는 함수
 	var pointCal_hidden = document.getElementById("pointCal_hidden");
 	var saving_P = document.getElementById("saving_P");
 	
-	var sPoint = "";
-	
-	if(saving_P != null) { // 개체의 null 체크 (.value가 아닌 개체 자체의 null 체크)
-		sPoint = saving_P.value;
-	}
-	
 	for(var i=0;i<cnt_hidden.length;i++){
 		price = parseInt(price_hidden[i].value) * parseInt(cnt_hidden[i].value); //상품가격
 		total = total + parseInt(price); // 상품가격 합계
@@ -303,12 +297,8 @@ function calculate(){ //계산만하는 함수
 	usePoint.value = parseInt(usePoint_hidden.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"P"; // 사용할 포인트
 	tot.value = total-parseInt(usePoint_hidden.value)+ delivery; // 배송비 포함 전체 합계 금액 
 	totalPrice.value = (tot.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",")+"원"; // 배송비 포함 전체 합계 금액  천단위 구분 표시
-	if(sPoint != ""){
-		saving_P.value = (total-use_point)*0.02; // 적립포인트
-		saving_point.value = (saving_P.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 적립포인트 천단위 구분 표시
-	}
-	//saving_P.value = (total-use_point)*0.02; // 적립포인트
-	//saving_point.value = (saving_P.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 적립포인트 천단위 구분 표시
+	saving_P.value = (total-use_point)*0.02; // 적립포인트
+	saving_point.value = (saving_P.value).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); // 적립포인트 천단위 구분 표시
 	
 	var mid = "";
 	
@@ -317,7 +307,6 @@ function calculate(){ //계산만하는 함수
 	}
 	
 	if(mid!=""){
-	//if(m_id!=null){
 		usePoint_hidden.value = parseInt(usePoint_hidden.value);
 	}else{
 		usePoint_hidden.value = 0;

@@ -5,11 +5,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.project.mapper.QnaMapperDAO;
 
 public class ReplyInterceptor extends HandlerInterceptorAdapter {
+	
+	private final static Logger logger = LoggerFactory.getLogger(ReplyInterceptor.class);
 	
 	@Inject
 	QnaMapperDAO dao;
@@ -17,6 +21,7 @@ public class ReplyInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 		throws Exception {
+		logger.info("replyInterceptor 실행");
 		HttpSession session = request.getSession();
 		if(session.getAttribute("u_id") != null && session.getAttribute("u_type") != null) {
 			int r_num = Integer.parseInt(request.getParameter("r_num"));
@@ -29,7 +34,7 @@ public class ReplyInterceptor extends HandlerInterceptorAdapter {
 			return false;
 		}
 		if(request.getHeader("ajax") != null && request.getHeader("ajax").equals("html")) {
-			response.sendRedirect(request.getContextPath() + "/ajaxError");
+			response.sendRedirect(request.getContextPath() + "/replyError");
 			return false;
 		}
 		response.sendRedirect(request.getContextPath() + "/replyError");

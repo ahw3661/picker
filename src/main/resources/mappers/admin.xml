@@ -35,6 +35,18 @@
 		 ]]>
 	</select>
 	
+	<!-- 상품 정보 수정 -->
+	<update id="itemUpdate">
+		UPDATE picker_item 
+		   SET i_name = #{i_name}
+		     , i_price = #{i_price}
+		     , i_img = #{i_img}
+		     , i_detailimg = #{i_detailimg}
+		     , i_category = #{i_category}
+		     , i_chk = #{i_chk}
+		 WHERE i_code = #{i_code}
+	</update>
+	
 	<!-- 전체 회원 목록 -->
 	<select id="memberList" resultType="mdto">
 		<!-- 부등호 사용을 위한 처리 -->
@@ -43,12 +55,75 @@
 			  FROM (SELECT rownum as rnum, a.m_id, a.m_phone, a.m_email, a.m_date, a.m_type
 			          FROM (SELECT m_id, m_phone, m_email, m_date, m_type
 			                  FROM picker_member 
-			                 WHERE m_type IN (1, 2)
+			                 ]]>
+			                 <if test='m_type == -1'>WHERE m_type IN (1, 2)</if>
+			                 <if test='m_type != -1'>WHERE m_type = #{m_type}</if>
+			                 <if test='s_type == "m_id" and (m_keyword != null or m_keyword != "")'>AND m_id LIKE #{m_keyword} AND m_type IN (1, 2)</if>
+							 <if test='s_type == "m_phone" and (m_keyword != null or m_keyword != "")'>AND m_phone LIKE #{m_keyword} AND m_type IN (1, 2)</if>
+							 <if test='s_type == "m_email" and (m_keyword != null or m_keyword != "")'>AND m_email LIKE #{m_keyword} AND m_type IN (1, 2)</if>
+							 ORDER BY m_id ASC
+			                 <![CDATA[
 			               ) a
 			         WHERE rownum <= #{endRow}
 			       ) b
 			 WHERE b.rnum >= #{startRow}
 		 ]]>
+	</select>
+	
+	<!-- 전체 회원 검색 카운트 -->
+	<select id="searchCnt" resultType="int">
+		SELECT COUNT(*) FROM picker_member  
+			<if test='m_type == -1'>WHERE m_type IN (1, 2)</if>
+			<if test='m_type != -1'>WHERE m_type = #{m_type}</if>
+			<if test='s_type == "m_id" and (m_keyword != null or m_keyword != "")'>AND m_id LIKE #{m_keyword}</if>
+			<if test='s_type == "m_phone" and (m_keyword != null or m_keyword != "")'>AND m_phone LIKE #{m_keyword}</if>
+			<if test='s_type == "m_email" and (m_keyword != null or m_keyword != "")'>AND m_email LIKE #{m_keyword}</if>
+			ORDER BY m_id ASC
+	</select>
+	
+	<!-- 게시글 갯수 -->
+	<select id="qnaCount" resultType="int">
+		SELECT COUNT(*)
+			FROM picker_qna
+			WHERE q_chk = 0
+			<if test='keyword != null and keyword neq "" and column eq "title"'>
+				AND q_title LIKE #{keyword}
+			</if>
+			<if test='keyword != null and keyword neq "" and column eq "id"'>
+				AND m_id LIKE #{keyword}
+			</if>	
+			<if test='code neq ""'>
+				AND i_code = #{code} 
+			</if>
+			<if test='rchk != -1'>
+				AND q_rchk = #{rchk}
+			</if>
+	</select>
+	
+	<!-- 게시글 목록 -->
+	<select id="qnaList" resultType="iqdto">
+		SELECT q_num, q_title, q_date, m_id, m_name, q_rchk, i_img, i_code, i_name, re_cnt 
+			FROM (SELECT qna.*, ROWNUM AS rnum 
+				FROM (SELECT q.*, NVL(r.re_cnt, 0) AS re_cnt 
+					FROM picker_qna q 
+					LEFT OUTER JOIN (SELECT q_num, COUNT(*) AS re_cnt 
+						FROM picker_reply WHERE r_chk = 0 GROUP BY q_num) r 
+					ON q.q_num = r.q_num 
+				WHERE q.q_chk = 0 
+				<if test='keyword != null and keyword neq "" and column eq "title"'>
+					AND q.q_title LIKE #{keyword}
+				</if>
+				<if test='keyword != null and keyword neq "" and column eq "id"'>
+					AND q.m_id LIKE #{keyword}
+				</if>
+				<if test='code neq ""'>
+					AND q.i_code = #{code} 
+				</if>
+				<if test='rchk != -1'>
+					AND q.q_rchk = #{rchk}
+				</if>
+				ORDER BY q.q_num DESC) qna) 
+			WHERE rnum BETWEEN #{startRow} AND #{endRow}
 	</select>
 	
 </mapper>

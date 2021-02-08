@@ -19,103 +19,131 @@ $('#contentEditor').summernote({
 	resize: false
 });
 
+$("#resetBtn").click(function(){
+	$("#contentEditor").summernote("reset");
+})
+
+function fillOutCheck(){
+	if($("input[name=q_title]").val() == null || $("input[name=q_title]").val() == ""){
+		window.alert("제목을 입력해주세요.");
+		return false;
+	} else if($("textarea[name=q_content]").val() == null || $("textarea[name=q_content]").val() == ""){
+		window.alert("내용을 입력해주세요.");
+		return false;
+	} else {
+		return true;
+	}
+}
+
 $('#writeBtn').click(function(){
-	$.ajax({
-		url : 'qnaWriteProc',
-		type : 'post',
-		datatype : 'json',
-		data : $('form').serialize(),
-		beforeSend : function(xmlHttpRequest) {
-			xmlHttpRequest.setRequestHeader("ajax", "true");
-		},
-		success : function(json){
-			if(json.chk) {
-				window.alert('게시글이 작성되었습니다.');
-				location.href=document.referrer;
-			} else if(json.logError != undefined && json.logError) {	
-				window.alert('[세션종료] 세션이 종료되었습니다.');
-			} else {
-				window.alert('글 작성 오류');
+	if(fillOutCheck()){
+		$.ajax({
+			url : 'qnaWriteProc',
+			type : 'post',
+			datatype : 'json',
+			data : $('form').serialize(),
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
+			success : function(json){
+				if(json.chk) {
+					window.alert('게시글이 작성되었습니다.');
+					location.href=document.referrer;
+				} else if(json.logError != undefined && json.logError) {	
+					window.alert('[세션종료] 세션이 종료되었습니다.');
+				} else {
+					window.alert('글 작성 오류');
+				}
+			},
+			error : function(){
+				window.alert('ajax 에러');
 			}
-		},
-		error : function(){
-			window.alert('ajax 에러');
-		}
-	})
+		})
+	}
+   
 })
 
 $('#modifyBtn').click(function(){
-	$.ajax({
-		url : 'qnaModifyProc',
-		type : 'post',
-		datatype : 'json',
-		data : $('form').serialize(),
-		beforeSend : function(xmlHttpRequest) {
-			xmlHttpRequest.setRequestHeader("ajax", "json");
-		},
-		success : function(json){
-			if(json.chk) {
-				window.alert('게시글이 수정되었습니다.');
-				location.href=document.referrer;
-			} else if(json.logError != undefined && json.logError) {	
-				window.alert('[세션종료] 세션이 종료되었습니다.');
-			} else {
-				window.alert('글 수정 오류');
+	if(fillOutCheck()){
+		$.ajax({
+			url : 'qnaModifyProc',
+			type : 'post',
+			datatype : 'json',
+			data : $('form').serialize(),
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "json");
+			},
+			success : function(json){
+				if(json.chk) {
+					window.alert('게시글이 수정되었습니다.');
+					location.href=document.referrer;
+				} else if(json.logError != undefined && json.logError) {	
+					window.alert('[세션종료] 세션이 종료되었습니다.');
+				} else {
+					window.alert('글 수정 오류');
+				}
+			},
+			error : function(){
+				window.alert('ajax 에러');
 			}
-		},
-		error : function(){
-			window.alert('ajax 에러');
-		}
-	})
+		})
+	}
+   
 })
 
 
 $('#noticeWriteBtn').click(function(){
-	$.ajax({
-		url : 'noticeWriteProc',
-		type : 'post',
-		datatype : 'json',
-		data : $('form').serialize(),
-		beforeSend : function(xmlHttpRequest) {
-			xmlHttpRequest.setRequestHeader("ajax", "true");
-		},
-		success : function(json){
-			if(json.chk) {
-				window.alert('공지글이 작성되었습니다.');
-				location.href='noticeList';
-			} else if(json.logError != undefined && json.logError) {	
-				window.alert('[세션종료] 세션이 종료되었습니다.');
-			} else {
-				window.alert('공지 작성 오류');
+	if(fillOutCheck()){
+		$.ajax({
+			url : 'noticeWriteProc',
+			type : 'post',
+			datatype : 'json',
+			data : $('form').serialize(),
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
+			success : function(json){
+				if(json.chk) {
+					window.alert('공지글이 작성되었습니다.');
+					location.href='noticeList';
+				} else if(json.logError != undefined && json.logError) {	
+					window.alert('[세션종료] 세션이 종료되었습니다.');
+				} else {
+					window.alert('공지 작성 오류');
+				}
+			},
+			error : function(){
+				window.alert('ajax 에러');
 			}
-		},
-		error : function(){
-			window.alert('ajax 에러');
-		}
-	})
+		})
+	}
+   
 })
 
 $('#noticeModifyBtn').click(function(){
-	$.ajax({
-		url : 'noticeModifyProc',
-		type : 'post',
-		datatype : 'json',
-		data : $('form').serialize(),
-		beforeSend : function(xmlHttpRequest) {
-			xmlHttpRequest.setRequestHeader("ajax", "true");
-		},
-		success : function(json){
-			if(json.chk) {
-				window.alert('공지글이 수정되었습니다.');
-				location.href=document.referrer;
-			} else if(json.logError != undefined && json.logError) {	
-				window.alert('[세션종료] 세션이 종료되었습니다.');
-			} else {
-				window.alert('공지 수정 오류');
+	if(fillOutCheck()){
+		$.ajax({
+			url : 'noticeModifyProc',
+			type : 'post',
+			datatype : 'json',
+			data : $('form').serialize(),
+			beforeSend : function(xmlHttpRequest) {
+				xmlHttpRequest.setRequestHeader("ajax", "true");
+			},
+			success : function(json){
+				if(json.chk) {
+					window.alert('공지글이 수정되었습니다.');
+					location.href=document.referrer;
+				} else if(json.logError != undefined && json.logError) {	
+					window.alert('[세션종료] 세션이 종료되었습니다.');
+				} else {
+					window.alert('공지 수정 오류');
+				}
+			},
+			error : function(){
+				window.alert('ajax 에러');
 			}
-		},
-		error : function(){
-			window.alert('ajax 에러');
-		}
-	})
+		})
+	}
+   
 })

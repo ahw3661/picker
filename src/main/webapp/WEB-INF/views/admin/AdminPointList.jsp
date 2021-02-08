@@ -56,7 +56,7 @@
 		$.ajax({
 			url : "pointDetail",
 			type : "post",
-			data : { "m_id" : id, "pageNum" : pn },
+			data : { "m_id" : id, "listPageNum" : pn },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();
@@ -79,8 +79,8 @@
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
 			},
-			error : function(data) {
-				alert("ajax 실패");
+			error : function(request, status, error) {
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		});
 	}

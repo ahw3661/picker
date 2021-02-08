@@ -10,10 +10,14 @@
 	<section class="wrap">
 		<form id="writeForm" class="writeWrap" method="post">
 			<h3>문의 수정</h3>
-			<c:if test="${not empty i_code}">
-				<p>관련상품 : <input type="text" name="i_name" value="${i_name}" readonly></p>
-				<input type="hidden" name="i_img" value="${i_img}">
-				<input type="hidden" name="i_code" value="${i_code}">
+			<c:if test="${dto.i_code != null}">
+				<div id="itemCon">
+					<div id="itemTitle" class="centerInline">관련상품</div>
+					<div id="itemInfo">
+						<img alt="상품이미지" src="resources/image/category_img/${dto.i_img}">
+						<input type="text" name="i_name" value="${dto.i_name}" readonly>
+					</div>
+				</div>
 			</c:if>
 			<input type="text" name="q_title" id="iptTitle" value="${dto.q_title}" placeholder="제목을 입력해주세요">
 			<input type="hidden" name="q_num" value="${dto.q_num}">

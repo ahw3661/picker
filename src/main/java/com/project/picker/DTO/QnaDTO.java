@@ -6,8 +6,8 @@ public class QnaDTO {
 	private String q_title, q_content, q_date, m_id, m_name, i_img, i_code, i_name;
 	
 	public QnaDTO() { }
-	public QnaDTO(int q_num, int q_rchk, int q_chk, String q_title, String q_content, String q_date, String m_id,
-			String i_img, String i_code, String i_name) {
+	public QnaDTO(int q_num, int q_rchk, int q_chk, String q_title, String q_content, String q_date,
+			String m_id, String m_name, String i_img, String i_code, String i_name) {
 		this.q_num = q_num;
 		this.q_rchk = q_rchk;
 		this.q_chk = q_chk;
@@ -15,6 +15,7 @@ public class QnaDTO {
 		this.q_content = q_content;
 		this.q_date = q_date;
 		this.m_id = m_id;
+		this.m_name = m_name;
 		this.i_img = i_img;
 		this.i_code = i_code;
 		this.i_name = i_name;
