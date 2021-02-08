@@ -10,6 +10,7 @@
 			          FROM (SELECT b_date, b_code, b_price, m_id 
 							  FROM picker_buy 
 							 WHERE b_chk = 0
+							   AND b_date BETWEEN TO_DATE(#{start_date}, 'yy/MM/dd') AND TO_DATE(#{end_date}, 'yy/MM/dd')+1
 							 ORDER BY b_date DESC, b_code DESC
 			               ) a
 			         WHERE rownum <= #{endRow}
@@ -27,7 +28,45 @@
 			          FROM (SELECT b_date, b_code, b_price, m_id 
 							  FROM picker_buy 
 							 WHERE b_chk = 1
+							   AND b_date BETWEEN TO_DATE(#{start_date}, 'yy/MM/dd') AND TO_DATE(#{end_date}, 'yy/MM/dd')+1
 							 ORDER BY b_date DESC, b_code DESC
+			               ) a
+			         WHERE rownum <= #{endRow}
+			       ) b
+			 WHERE b.rnum >= #{startRow}
+		 ]]>
+	</select>
+	
+	<!-- 전체 상품 검색 카운트 -->
+	<select id="itemListCount" resultType="int">
+		SELECT COUNT(*) FROM picker_item   
+			<if test='i_category != "all"'>WHERE i_category = #{i_category}</if>
+			<if test='i_category == "all" and s_type == "i_code" and (m_keyword != null or m_keyword != "")'>WHERE i_code LIKE #{m_keyword}</if>
+			<if test='s_type == "i_code" and (m_keyword != null or m_keyword != "")'>AND i_code LIKE #{m_keyword}</if>
+			<if test='i_category == "all" and s_type == "i_name" and (m_keyword != null or m_keyword != "")'>WHERE i_name LIKE #{m_keyword}</if>
+			<if test='s_type == "i_name" and (m_keyword != null or m_keyword != "")'>AND i_name LIKE #{m_keyword}</if>
+			<if test='i_category == "all" and i_chk != -1'>WHERE i_chk = #{i_chk}</if>
+			<if test='i_chk != -1'>AND i_chk = #{i_chk}</if>
+	</select>
+	
+	<!-- 전체 상품 목록 -->
+	<select id="itemList" resultType="idto">
+		<!-- 부등호 사용을 위한 처리 -->
+		<![CDATA[
+			SELECT b.i_code, b.i_name, b.i_category
+			  FROM (SELECT rownum as rnum, a.i_code, a.i_name, a.i_category
+			          FROM (SELECT i_code, i_name, i_category
+			                  FROM picker_item 
+			                 ]]>
+			                 <if test='i_category != "all"'>WHERE i_category = #{i_category}</if>
+			                 <if test='i_category == "all" and s_type == "i_code" and (m_keyword != null or m_keyword != "")'>WHERE i_code LIKE #{m_keyword}</if>
+							 <if test='s_type == "i_code" and (m_keyword != null or m_keyword != "")'>AND i_code LIKE #{m_keyword}</if>
+							 <if test='i_category == "all" and s_type == "i_name" and (m_keyword != null or m_keyword != "")'>WHERE i_name LIKE #{m_keyword}</if>
+							 <if test='s_type == "i_name" and (m_keyword != null or m_keyword != "")'>AND i_name LIKE #{m_keyword}</if>
+							 <if test='i_category == "all" and i_chk != -1'>WHERE i_chk = #{i_chk}</if>
+							 <if test='i_chk != -1'>AND i_chk = #{i_chk}</if>
+							 ORDER BY i_code DESC
+			                 <![CDATA[
 			               ) a
 			         WHERE rownum <= #{endRow}
 			       ) b
@@ -46,6 +85,16 @@
 		     , i_chk = #{i_chk}
 		 WHERE i_code = #{i_code}
 	</update>
+	
+	<!-- 전체 회원 검색 카운트 -->
+	<select id="getAllMemberCount" resultType="int">
+		SELECT COUNT(*) FROM picker_member  
+			<if test='m_type == -1'>WHERE m_type IN (1, 2)</if>
+			<if test='m_type != -1'>WHERE m_type = #{m_type}</if>
+			<if test='s_type == "m_id" and (m_keyword != null or m_keyword != "")'>AND m_id LIKE #{m_keyword}</if>
+			<if test='s_type == "m_phone" and (m_keyword != null or m_keyword != "")'>AND m_phone LIKE #{m_keyword}</if>
+			<if test='s_type == "m_email" and (m_keyword != null or m_keyword != "")'>AND m_email LIKE #{m_keyword}</if>
+	</select>
 	
 	<!-- 전체 회원 목록 -->
 	<select id="memberList" resultType="mdto">
@@ -68,17 +117,6 @@
 			       ) b
 			 WHERE b.rnum >= #{startRow}
 		 ]]>
-	</select>
-	
-	<!-- 전체 회원 검색 카운트 -->
-	<select id="searchCnt" resultType="int">
-		SELECT COUNT(*) FROM picker_member  
-			<if test='m_type == -1'>WHERE m_type IN (1, 2)</if>
-			<if test='m_type != -1'>WHERE m_type = #{m_type}</if>
-			<if test='s_type == "m_id" and (m_keyword != null or m_keyword != "")'>AND m_id LIKE #{m_keyword}</if>
-			<if test='s_type == "m_phone" and (m_keyword != null or m_keyword != "")'>AND m_phone LIKE #{m_keyword}</if>
-			<if test='s_type == "m_email" and (m_keyword != null or m_keyword != "")'>AND m_email LIKE #{m_keyword}</if>
-			ORDER BY m_id ASC
 	</select>
 	
 	<!-- 게시글 갯수 -->

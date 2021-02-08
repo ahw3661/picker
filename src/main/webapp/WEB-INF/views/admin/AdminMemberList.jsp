@@ -11,6 +11,7 @@
 <body>
 	<section>
 		<div class="AdminUserList_wrap">
+			<h3>회원정보</h3>
 			<div class="search_div">
 				<div class="select_input_div">
 					<input type="hidden" name="stype" value="${s_type }" id="sType">
@@ -22,7 +23,6 @@
 					<input type="text" name="m_keyword" value="${m_keyword}" id="mKeyword">
 					<input type="button" name="s_btn" value="검색" id="sBtn">
 				</div>
-				<h3>회원정보</h3>
 				<div class="select_div">
 					<input type="hidden" name="mtype" value="${m_type }" id="m_Type">
 					<select name="m_type" id="mType" onchange="changeType();">
@@ -32,6 +32,7 @@
 					</select>
 				</div>
 			</div>
+			<div class="count_div">총 ${cnt }건</div>
 			<div class="AdminUserList_table_wrap">
 				<table>
 					<tr>
@@ -40,52 +41,61 @@
 						<th>이메일</th>
 						<th>회원유형</th>
 					</tr>
-					<c:forEach var="mdto" items="${mdto }">
-						<tr>
-							<td>
-								<c:if test="${mdto.m_type == 1 }">
-									<a href="javascript:goOneList('${mdto.m_id }', ${pgdto.pageNum });"><span>${mdto.m_id }</span></a>
-								</c:if>
-								<c:if test="${mdto.m_type == 2 }"><span>${mdto.m_id }</span></c:if>
-							</td>
-							<td>
-								<c:if test="${mdto.m_type == 1 }">${mdto.m_phone }</c:if>
-								<c:if test="${mdto.m_type == 2 }">
-									<c:set var="phone" value="${mdto.m_phone}" />
-									<c:set var="totalLength" value="${fn:length(phone) }" />
-									<c:forEach begin="1" end="${totalLength-1 }">*</c:forEach>
-								</c:if>
-							</td>
-							<td>
-								<c:if test="${mdto.m_type == 1 }">${mdto.m_email }</c:if>
-								<c:if test="${mdto.m_type == 2 }">
-									<c:set var="email" value="${mdto.m_email}" />
-									<c:set var="totalLength" value="${fn:length(email) }" />
-									<c:forEach begin="1" end="${totalLength-1 }">*</c:forEach>
-								</c:if>
-							</td>
-							<td>
-								<c:if test="${mdto.m_type == 1 }">일반회원</c:if>
-								<c:if test="${mdto.m_type == 2 }">탈퇴회원</c:if>
-							</td>
+					<c:if test="${cnt == 0 }">
+				 		<tr>
+							<td colspan="3">검색된 내용이 없습니다.</td>
 						</tr>
-					</c:forEach>
+				 	</c:if>
+				 	<c:if test="${cnt > 0 }">
+						<c:forEach var="mdto" items="${mdto }">
+							<tr>
+								<td>
+									<c:if test="${mdto.m_type == 1 }">
+										<a href="javascript:goOneList('${mdto.m_id }', ${pgdto.pageNum });"><span>${mdto.m_id }</span></a>
+									</c:if>
+									<c:if test="${mdto.m_type == 2 }"><span>${mdto.m_id }</span></c:if>
+								</td>
+								<td>
+									<c:if test="${mdto.m_type == 1 }">${mdto.m_phone }</c:if>
+									<c:if test="${mdto.m_type == 2 }">
+										<c:set var="phone" value="${mdto.m_phone}" />
+										<c:set var="totalLength" value="${fn:length(phone) }" />
+										<c:forEach begin="1" end="${totalLength-1 }">*</c:forEach>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${mdto.m_type == 1 }">${mdto.m_email }</c:if>
+									<c:if test="${mdto.m_type == 2 }">
+										<c:set var="email" value="${mdto.m_email}" />
+										<c:set var="totalLength" value="${fn:length(email) }" />
+										<c:forEach begin="1" end="${totalLength-1 }">*</c:forEach>
+									</c:if>
+								</td>
+								<td>
+									<c:if test="${mdto.m_type == 1 }">일반회원</c:if>
+									<c:if test="${mdto.m_type == 2 }">탈퇴회원</c:if>
+								</td>
+							</tr>
+						</c:forEach>
+					</c:if>
 				</table>
 			</div>
 			<div class="centerBlock">
 	 			<c:if test="${pgdto.startPage > 1}">
-	 				<div class="prev_div"><a href="javascript:goMemberList(${pgdto.startPage - pgdto.pageSize}, '${s_type }', '${m_keyword}');"><b>《</b></a></div>
+	 				<div class="prev_div"><a href="javascript:goMemberList(${pgdto.startPage - pgdto.pageSize}, '${s_type }', '${m_keyword}', ${m_type });"><b>《</b></a></div>
 	 			</c:if>
 				<c:forEach var="page" begin="${pgdto.startPage}" end="${pgdto.endPage}">
-					<c:if test="${page != pgdto.pageNum}">
-						<div class="page_div"><a href="javascript:goMemberList(${page}, '${s_type }', '${m_keyword}')">${page}</a></div>
-					</c:if>
-					<c:if test="${page == pgdto.pageNum}">
-						<div class="curr_div"><a href="javascript:goMemberList(${page}, '${s_type }', '${m_keyword}')">${page}</a></div>
+					<c:if test="${page >= 1}">
+						<c:if test="${page != pgdto.pageNum}">
+							<div class="page_div"><a href="javascript:goMemberList(${page}, '${s_type }', '${m_keyword}', ${m_type })">${page}</a></div>
+						</c:if>
+						<c:if test="${page == pgdto.pageNum}">
+							<div class="curr_div"><a href="javascript:goMemberList(${page}, '${s_type }', '${m_keyword}', ${m_type })">${page}</a></div>
+						</c:if>
 					</c:if>
 				</c:forEach>
 	 			<c:if test="${pgdto.endPage < pgdto.pageCount}">
-	 				<div class="next_div"><a href="javascript:goMemberList(${pgdto.startPage + pgdto.pageSize }, '${s_type }', '${m_keyword}');"><b>》</b></a></div>
+	 				<div class="next_div"><a href="javascript:goMemberList(${pgdto.startPage + pgdto.pageSize }, '${s_type }', '${m_keyword}', ${m_type });"><b>》</b></a></div>
 	 			</c:if>
 			</div>
 		</div>
@@ -158,11 +168,11 @@
 	}
 	
 	// 페이징
-	function goMemberList(pn, st, kw) {
+	function goMemberList(pn, st, kw, tp) {
 		$.ajax({
 			url : "goMemberList",
 			type : "post",
-			data : { "pageNum" : pn, "s_type" : st, "m_keyword" : kw },
+			data : { "pageNum" : pn, "s_type" : st, "m_keyword" : kw, "m_type" : tp },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();

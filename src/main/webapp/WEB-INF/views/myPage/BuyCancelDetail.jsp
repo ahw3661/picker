@@ -111,7 +111,7 @@
 					<input type="button" value="목록" onclick="javascript:buyCancel(0);">
 				</c:if>
 				<c:if test="${pageNum > 0}">
-					<input type="button" value="목록" onclick="javascript:buyCancel(${pageNum});">
+					<input type="button" value="목록" onclick="javascript:buyCancel(${pageNum}, '${start_date }', '${end_date }');">
 				</c:if>
 			</div>
 		</div>
@@ -154,15 +154,23 @@
 	});
 	
 	//주문목록
-	function buyCancel(pn) {
+	function buyCancel(pn, sd, ed) {
 		$.ajax({
 			url : "buyCancel",
 			type : "post",
-			data : { "pageNum" : pn },
+			data : { "pageNum" : pn, "start_date" : sd, "end_date" : ed },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
+				
+				if($("#start").val() != "" && $("#end").val() != "") {
+					$("#from").val($("#start").val());
+					$("#to").val($("#end").val());
+					$(".date_search_div").show();
+				}
+				$("#count").val();
+				$("#pagenum").val();
 			},
 			error : function(data, error) {
 				alert("code : "+data.status+"\n"+"message : "+data.responseText+"\n"+"error : "+error);

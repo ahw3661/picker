@@ -1,5 +1,7 @@
 package com.project.picker.Controller;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -51,56 +53,89 @@ public class AdminController {
 	
 	// 전체 회원 및 비회원 구매 목록
 	@RequestMapping(value="allBuyList", method={RequestMethod.GET, RequestMethod.POST})
-	public String allBuyList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String allBuyList(@RequestParam(required=false) String start_date, @RequestParam(required=false) String end_date, 
+			@RequestParam(defaultValue = "1") int pageNum, Model model) {
+		
+		if(start_date == null && end_date == null) {
+			logger.info("주문내역관리 메뉴 클릭");
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate now = LocalDate.now();
+			LocalDate preMonth = now.minusMonths(3);
+			
+			start_date = dtf.format(preMonth);
+			end_date = dtf.format(now);
+		}
 		ArrayList<BuyitemDTO> buyItem = aservice.allBuyItem();
-		int cnt = aservice.getAllBuyCount();
+		int cnt = aservice.getAllBuyCount(start_date, end_date);
 		
 		if(cnt > 0) {
 			PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5);
 			model.addAttribute("pgdto", pgdto);
-			List<BuyDTO> buyList = aservice.allBuyList(pgdto.getStartRow(), pgdto.getEndRow());
+			List<BuyDTO> buyList = aservice.allBuyList(start_date, end_date, pgdto.getStartRow(), pgdto.getEndRow());
 			model.addAttribute("buyList", buyList);
 		}
+		model.addAttribute("start_date", start_date);
+		model.addAttribute("end_date", end_date);
 		model.addAttribute("buyItem", buyItem);
+		model.addAttribute("cnt", cnt);
 		return "admin/AdminBuyList";
 	}
 	
 	// 전체 회원 및 비회원 주문 상세
 	@RequestMapping(value="buyDetail", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyDetail(@RequestParam int b_code, @RequestParam int pageNum, Model model, HttpSession session) {
+	public String buyDetail(@RequestParam int b_code, @RequestParam int pageNum, @RequestParam String start_date, 
+			@RequestParam String end_date, Model model, HttpSession session) {
 		BuyDTO bdto = aservice.getOneBuyInfo(b_code);
 		ArrayList<BuyitemDTO> bidto = aservice.getOneBuyItemInfo(b_code);
 		int total = aservice.getSumBuyPrice(b_code);
+		Integer point = mservice.usePoint(b_code);
 		model.addAttribute("bdto", bdto);
 		model.addAttribute("bidto", bidto);
 		model.addAttribute("total", total);
+		model.addAttribute("point", point);
 		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("start_date", start_date);
+		model.addAttribute("end_date", end_date);
 		return "admin/AdminBuyDetail";
 	}
 	
 	// 회원별 구매취소 완료된 목록
 	@RequestMapping(value="allBuyCancel", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyCancel(@RequestParam(defaultValue = "1") int pageNum, Model model) {
+	public String buyCancel(@RequestParam(required=false) String start_date, @RequestParam(required=false) String end_date, 
+			@RequestParam(defaultValue = "1") int pageNum, Model model) {
+		
+		if(start_date == null && end_date == null) {
+			logger.info("주문취소관리 메뉴 클릭");
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate now = LocalDate.now();
+			LocalDate preMonth = now.minusMonths(3);
+			
+			start_date = dtf.format(preMonth);
+			end_date = dtf.format(now);
+		}
 		ArrayList<BuyitemDTO> buyitem = aservice.buyItemList();
-		logger.info(">>> pageNum : "+pageNum);
-		int	cnt = aservice.getAllBuyCancelCount();
+		int	cnt = aservice.getAllBuyCancelCount(start_date, end_date);
 		
 		if(cnt > 0) {
 			PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5);
 			model.addAttribute("pgdto", pgdto);
-			List<BuyDTO> allBuyCancel = aservice.allBuyCancel(pgdto.getStartRow(), pgdto.getEndRow());
+			List<BuyDTO> allBuyCancel = aservice.allBuyCancel(start_date, end_date, pgdto.getStartRow(), pgdto.getEndRow());
 			model.addAttribute("allBuyCancel", allBuyCancel);
 			logger.info(">>> 구매 취소 완료 목록 존재");
 		}
 		logger.info(">>> 구매 취소 완료 목록");
+		model.addAttribute("start_date", start_date);
+		model.addAttribute("end_date", end_date);
 		model.addAttribute("buyitem", buyitem);
 		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("cnt", cnt);
 		return "admin/AdminBuyCancelList";
 	}
 	
 	// 주문취소 완료 주문 상세
 	@RequestMapping(value="oneBuyCancel", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyCancelDetail(@RequestParam int b_code, @RequestParam int pageNum, Model model, HttpSession session) {
+	public String buyCancelDetail(@RequestParam int b_code, @RequestParam int pageNum, @RequestParam String start_date, 
+			@RequestParam String end_date, Model model, HttpSession session) {
 		logger.info("주문취소 완료 건");
 		BuyDTO bdto = aservice.oneBuyCancel(b_code);
 		ArrayList<BuyitemDTO> bidto = aservice.getOneBuyItemInfo(b_code);
@@ -114,6 +149,8 @@ public class AdminController {
 		model.addAttribute("cancelId", bdto.getM_id());
 		model.addAttribute("cancelDate", cancelDate);
 		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("start_date", start_date);
+		model.addAttribute("end_date", end_date);
 		return "admin/AdminBuyCancelDetail";
 	}
 	
@@ -144,6 +181,7 @@ public class AdminController {
 			model.addAttribute("list", list);
 		}
 		model.addAttribute("listPageNum", listPageNum);
+		model.addAttribute("cnt", cnt);
 		return "admin/AdminPointDetail";
 	}
 	
@@ -155,6 +193,7 @@ public class AdminController {
 		model.addAttribute("m_keyword", m_keyword);
 		model.addAttribute("m_type", m_type);
 		m_keyword = "%" + m_keyword + "%";
+		
 		int cnt = aservice.getAllMemberCount(s_type, m_keyword, m_type);
 		
 		if(cnt > 0) {
@@ -163,13 +202,13 @@ public class AdminController {
 			List<MemberDTO> mdto = aservice.memberList(s_type, m_keyword, m_type, pgdto.getStartRow(), pgdto.getEndRow());
 			model.addAttribute("mdto", mdto);
 		}
+		model.addAttribute("cnt", cnt);
 		return "admin/AdminMemberList";
 	}
 	
 	//한 명의 회원정보 리스트 보이는 맵핑
 	@RequestMapping(value="goOneList", method= {RequestMethod.GET, RequestMethod.POST})
 	public String goOneList(@RequestParam String m_id, @RequestParam int pageNum, Model model, HttpSession session) {
-		
 		MemberDTO mdto = aservice.oneList(m_id);
 		logger.info(">>> 회원유형 : "+mdto.getM_type());
 		int type = mdto.getM_type();
@@ -191,15 +230,23 @@ public class AdminController {
 	
 	// 상품 전체 리스트 보는 맵핑
 	@RequestMapping(value="goItemList", method={RequestMethod.GET, RequestMethod.POST})
-	public String goItemList(@RequestParam(defaultValue = "1") int pageNum, Model model) {
-		int cnt = aservice.itemListCount();
+	public String goItemList(@RequestParam(required=false, defaultValue="") String s_type, @RequestParam(required=false, defaultValue="") String m_keyword, 
+			@RequestParam(defaultValue="all") String i_category, @RequestParam(defaultValue="-1") int i_chk, @RequestParam(defaultValue = "1") int pageNum, Model model) {
+		model.addAttribute("s_type", s_type);
+		model.addAttribute("m_keyword", m_keyword);
+		model.addAttribute("i_category", i_category);
+		model.addAttribute("i_chk", i_chk);
+		m_keyword = "%" + m_keyword + "%";
+		
+		int cnt = aservice.itemListCount(s_type, m_keyword, i_category, i_chk);
 		
 		if(cnt>0){
-			PagingDTO pgdto = new PagingDTO(pageNum,cnt,5,5);
+			PagingDTO pgdto = new PagingDTO(pageNum,cnt,10,5);
 			model.addAttribute("pgdto", pgdto);
-			ArrayList<ItemDTO> itemList = aservice.itemList(pgdto.getStartRow(), pgdto.getEndRow());
+			List<ItemDTO> itemList = aservice.itemList(s_type, m_keyword, i_category, i_chk, pgdto.getStartRow(), pgdto.getEndRow());
 			model.addAttribute("itemList", itemList);
 		}
+		model.addAttribute("cnt", cnt);
 		return "admin/AdminItemList";
 	}
 	

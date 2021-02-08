@@ -28,7 +28,7 @@ public class MemberDAOImpl implements MemberDAO {
 	@Override
 	public void updateMember(MemberDTO mdto) {
 		if(mdto.getM_newpassword().equals("")) {
-			logger.info(">>> 내 정보 수정(비밀번호 제외");
+			logger.info(">>> 내 정보 수정(비밀번호 제외)");
 			sqlSession.selectOne("member.updateMember", mdto);
 		}else {
 			logger.info(">>> 비밀번호 수정");
@@ -37,10 +37,12 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<BuyDTO> buyList(String m_id, int startRow, int endRow) {
+	public List<BuyDTO> buyList(String m_id, String start_date, String end_date, int startRow, int endRow) {
 		logger.info(">>> 구매 내역");
 		Map<String, Object>map = new HashMap<>();
 		map.put("m_id", m_id);
+		map.put("start_date", start_date);
+		map.put("end_date", end_date);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		return sqlSession.selectList("member.buyList", map);
@@ -57,10 +59,12 @@ public class MemberDAOImpl implements MemberDAO {
 	}
 
 	@Override
-	public List<BuyDTO> buyCancelContent(String m_id, int startRow, int endRow) {
+	public List<BuyDTO> buyCancelContent(String m_id, String start_date, String end_date, int startRow, int endRow) {
 		logger.info(">>> 구매취소 내역");
 		Map<String, Object>map = new HashMap<>();
 		map.put("m_id", m_id);
+		map.put("start_date", start_date);
+		map.put("end_date", end_date);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		return sqlSession.selectList("member.buyCancelContent", map);

@@ -21,7 +21,7 @@ public class ReplyInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 		throws Exception {
-		logger.info("replyInterceptor ì‹¤í–‰");
+		logger.info("replyInterceptor ½ÇÇà");
 		HttpSession session = request.getSession();
 		if(session.getAttribute("u_id") != null && session.getAttribute("u_type") != null) {
 			int r_num = Integer.parseInt(request.getParameter("r_num"));

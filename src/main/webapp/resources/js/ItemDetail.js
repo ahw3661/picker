@@ -55,6 +55,29 @@ $(function(){
    });
 });
 
+function getEvalList(num) {
+	console.log($("input[name=i_code]").val());
+	$.ajax({
+		url : "itemEvalList",
+		type : "post",
+		datatype : "html",
+		data : {"i_code" : $("input[name=i_code]").val(), "pageNum" : num },
+		success : function(data) {
+			$("#item_eval").html(data);
+		},
+		error:function(request,error){
+			console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+		}
+	})
+}
+
+function closeEvalPop(){
+	$("aside").remove();
+	$("body").css("overflow-y", "auto");
+	$.ajax({
+		url : "endSessionEval"
+	})
+}
 
 function getQnaList(num){
 	$.ajax({
@@ -88,3 +111,105 @@ $(function() {
 		return false;
 	});
 });
+// 리뷰 작성 창
+function evalPop() {
+	var ele = "<aside><div id='evalWriteWrap'><h3 class='stretchBlock'><span>리뷰 작성</span>"
+			+ "<a href='javascript:closeEvalPop()'><img src='resources/image/icon/closeBtn.svg' alt='닫기' class='btnClose'></a>"
+			+ "</h3><div id='evalCon'></div></div></aside>"
+	$("body").append(ele);
+	$("body").css("overflow-y", "hidden");
+	$.ajax({
+		url : "evalPop?i_code=" + $("input[name=i_code]").val(),
+		type : "get",
+		dataType : "html",
+		success : function(data) {
+			$("#evalCon").html(data);
+		},
+		error:function(request,error){
+				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+	})
+}
+
+// 비회원 주문 확인
+function noneMemberEval(){
+	if($("input[name=b_code]").val() != "" && $("input[name=phone]").val() != ""){
+		$.ajax({
+			url : "evalAuthen",
+			type : "post",
+			dataType : "html",
+			data : { "i_code" : $("input[name=i_code]").val(), 
+					 "b_code" : $("input[name=b_code]").val(),  
+					 "phone" : $("input[name=phone]").val() },
+			success : function(data){
+				$("#evalCon").html(data);
+			}
+		})
+	} else {
+		window.alert("구매 정보를 모두 입력해주세요.")
+	}
+}
+
+// 리뷰 작성 및 수정
+function evalWrite(proc) {
+	if($("input[name=e_level]").val() != null && $("textarea[name=e_content]").val() != ""){
+		var formData = new FormData($("#evalForm")[0]);
+		formData.append("i_code", $("input[name=i_code]").val());
+		for(var pair of formData){
+			console.log(pair[0] + " : " + pair[1]);
+		}
+ 		$.ajax({
+ 			url : "evalWrite",
+ 			type : "post",
+ 			dataType : "json",
+ 			contentType : false,
+ 			processData : false,
+ 			data : formData,
+ 			success : function(json) {
+ 				if(json.chk){
+ 					alert("리뷰가 " + proc + "되었습니다.");
+ 					$("aside").remove();
+ 					$("body").css("overflow-y", "auto");
+ 					getEvalList(1);
+ 				} else {
+ 					alert("[에러] 리뷰 " + proc + " 오류");
+ 				}
+ 			},
+ 			error:function(request,error){
+ 				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+ 			}
+ 		})
+ 	} else {
+		window.alert("작성란을 채워주세요.");
+ 	}
+}
+
+// 리뷰 삭제
+function evalErase(){
+	if(window.confirm("리뷰를 삭제하시겠습니까?")){
+		$.ajax({
+			url : "evalErase",
+			dataType : "json",
+			success : function(json){
+ 				if(json.chk){
+ 					alert("리뷰가 삭제되었습니다.");
+ 					$("aside").remove();
+ 					$("body").css("overflow-y", "auto");
+ 					getEvalList(1);
+ 				} else {
+ 					alert("[에러] 리뷰 삭제 오류");
+ 				}
+ 			},
+ 			error:function(request,error){
+ 				console.log("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+ 			}
+		})
+	}
+}
+
+// 세션 종료
+$(window).on("load unload", function(){
+	$.ajax({
+		url : "endSessionEval"
+	})
+})

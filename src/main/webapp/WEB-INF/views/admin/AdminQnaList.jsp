@@ -6,7 +6,7 @@
 </head>
 <body>
 	<div class="qnaAdminList">
-		<h3>문의 목록</h3>
+		<h3>문의목록</h3>
 		<div id="qnaAdminCount">문의글 : <span>${qnacnt}</span>건</div>
 		<div class="stretchBlock">
 			<div>

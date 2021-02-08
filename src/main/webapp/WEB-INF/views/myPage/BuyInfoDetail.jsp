@@ -92,7 +92,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="list_btn"><input type="button" value="목록" onclick="javascript:buyInfo(${pageNum});"></div>
+			<div class="list_btn"><input type="button" value="목록" onclick="javascript:buyInfo(${pageNum}, '${start_date }', '${end_date }');"></div>
 		</div>
 	</section>
 </body>
@@ -110,11 +110,11 @@
 	});
 	
 	//주문목록
-	function buyInfo(pn) {
+	function buyInfo(pn, sd, ed) {
 		$.ajax({
 			url : "buyInfo",
 			type : "post",
-			data : { "pageNum" : pn },
+			data : { "pageNum" : pn, "start_date" : sd, "end_date" : ed },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();

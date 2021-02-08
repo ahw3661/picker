@@ -13,6 +13,13 @@
 			<h3>주문상세</h3>
 			<h4>주문정보</h4>
 			<div class="buy_list">
+				<div class="buy_id">
+					<div class="buy_list_title"><b>주문자</b></div>
+					<div class="buy_list_detail">
+						${bdto.b_order_name }
+						<c:if test="${bdto.m_id != 'none' }">(${bdto.m_id })</c:if>
+					</div>
+				</div>
 				<div class="buy_date">
 					<div class="buy_list_title"><b>주문일자</b></div>
 					<div class="buy_list_detail">
@@ -24,13 +31,28 @@
 					<div class="buy_list_title"><b>주문번호</b></div>
 					<div class="buy_list_detail">${bdto.b_code }</div>
 				</div>
+				<div class="buy_item_price">
+					<div class="buy_list_title"><b>주문금액</b></div>
+					<div class="buy_list_detail">
+						<fmt:formatNumber var="item_price" value="${total }" pattern="#,###"/>${item_price }원
+					</div>
+				</div>
+				<div class="buy_point">
+					<div class="buy_list_title"><b>사용 포인트</b></div>
+					<c:if test="${empty point }">
+						<div class="buy_list_detail">0포인트</div>
+					</c:if>
+					<c:if test="${not empty point }">
+						<div class="buy_list_detail"><fmt:formatNumber var="usePoint" value="${point }" pattern="#,###"/>${usePoint }포인트</div>
+					</c:if>
+				</div>
 				<div class="buy_price">
 					<div class="buy_list_title"><b>총 결제금액</b></div>
-					<c:if test="${total < 50000 }">
-						<div class="buy_list_detail"><fmt:formatNumber var="totalPrice" value="${total+3000 }" pattern="#,###"/>${totalPrice }원</div>
+					<c:if test="${(total+point) < 50000 }">
+						<div class="buy_list_detail"><fmt:formatNumber var="totalPrice" value="${(total+point)+3000 }" pattern="#,###"/>${totalPrice }원</div>
 					</c:if>
-					<c:if test="${total >= 50000 }">
-						<div class="buy_list_detail"><fmt:formatNumber var="totalPrice" value="${total }" pattern="#,###"/>${totalPrice }원</div>
+					<c:if test="${(total+point) >= 50000 }">
+						<div class="buy_list_detail"><fmt:formatNumber var="totalPrice" value="${(total+point) }" pattern="#,###"/>${totalPrice }원</div>
 					</c:if>
 				</div>
 			</div>
@@ -52,7 +74,7 @@
 								<td class="item_td">${bidto.i_name }</td>
 								<td class="item_td">${bidto.bi_cnt }개</td>
 								<td class="item_td">
-									<fmt:formatNumber var="i_price" value="${bidto.i_price*bidto.bi_cnt }" pattern="#,###"/>${i_price }원
+									<fmt:formatNumber var="i_price" value="${(bidto.i_price*bidto.bi_cnt)+point }" pattern="#,###"/>${i_price }원
 								</td>
 								<td class="item_td bprice">
 									<c:if test="${bdto.b_price == 0}">
@@ -79,7 +101,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="list_btn"><input type="button" value="목록" onclick="javascript:allBuyList(${pageNum});"></div>
+			<div class="list_btn"><input type="button" value="목록" onclick="javascript:allBuyList(${pageNum}, '${start_date }', '${end_date }');"></div>
 		</div>
 	</section>
 </body>
@@ -97,11 +119,11 @@
 	});
 	
 	//주문목록
-	function allBuyList(pn) {
+	function allBuyList(pn, sd, ed) {
 		$.ajax({
 			url : "allBuyList",
 			type : "post",
-			data : { "pageNum" : pn },
+			data : { "pageNum" : pn, "start_date" : sd, "end_date" : ed },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();

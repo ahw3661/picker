@@ -22,9 +22,18 @@ section .my_page_wrap .menu_list_right .right_bottom { width: 1000px; min-height
 /* BuyInfo.jsp CSS */
 section .buy_info_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 section .buy_info_wrap>h3 { width: 100%; height: 40px; text-align: center; }
+section .buy_info_wrap .search_div { display: flex; width: 100%; height: 40px; }
+section .buy_info_wrap .search_div .date_search_div { width: 1000px; font-size: 14px; }
+section .buy_info_wrap .search_div .date_search_div span { display: inline-block; padding-bottom: 2px; vertical-align: middle; }
+section .buy_info_wrap .search_div .date_search_div input[type=text] { width: 100px; height: 35px; text-align: center; vertical-align: middle; border: 1px solid lightgray; }
+section .buy_info_wrap .search_div .date_search_div input[type=button] { width: 60px; height: 35px; padding-bottom: 2px; vertical-align: middle; border: 1px solid lightgray; }
+section .buy_info_wrap .search_div .date_search_div input[type=button]:hover { background: lightgray; }
+section .buy_info_wrap .search_div .item_search_div { text-align: right; }
+section .buy_info_wrap .search_div .item_search_div input[type=text] { width: 150px; height: 35px; vertical-align: middle; padding-left: 5px; }
+section .buy_info_wrap .count_div { width: 1000px; height: 30px; text-align: right; vertical-align: middle; padding: 4px 0; font-size: 14px; }
 section .buy_info_wrap .buy_info_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
 section .buy_info_wrap .buy_info_table_wrap table { width: 100%; margin: 0 auto; }
-section .buy_info_wrap .buy_info_table_wrap table tr .buy_th { height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_info_wrap .buy_info_table_wrap table tr .buy_th { height: 40px; text-align: center; font-size: 16px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
 section .buy_info_wrap .buy_info_table_wrap table tr .buy_th, tr .date_td, tr .iprice_td, tr .cnt_td, tr .bprice_td { width: 130px; }
 section .buy_info_wrap .buy_info_table_wrap table tr .buy_th:nth-child(3), tr .item_td { width: 350px; }
 section .buy_info_wrap .buy_info_table_wrap table tr td { height: 55px; text-align: center; font-size: 14px; border-top: 1px solid #E5E5E5; border-bottom: 1px solid #E5E5E5; }
@@ -63,14 +72,20 @@ section .buy_info_detail_wrap .list_btn input { width: 150px; height: 40px; bord
 
 /* BuyCancel.jsp CSS */
 section .buy_cancel_wrap { width: 1000px; height: 100%; margin: 0 auto; }
+section .buy_cancel_wrap>h3 { width: 100%; height: 40px; text-align: center; }
 section .buy_cancel_wrap .choice_input { display: flex; width: 100%; height: 40px; }
-section .buy_cancel_wrap .choice_input .a_div { width: 462px; }
-section .buy_cancel_wrap .choice_input .a_div a { width: 120px; height: 30px; padding: 5px 0; text-align: center; font-size: 14px; border: 1px solid lightgray; }
+section .buy_cancel_wrap .choice_input .a_div { width: 500px; }
+section .buy_cancel_wrap .choice_input .a_div a { width: 120px; height: 35px; padding: 7px 0; text-align: center; font-size: 14px; border: 1px solid lightgray; }
 section .buy_cancel_wrap .choice_input .a_div a:hover { background: lightgray; }
-section .buy_cancel_wrap .choice_input h3 { width: 538px; padding-left: 0.5px; }
+section .buy_cancel_wrap .choice_input .date_search_div { display: none; width: 500px; font-size: 14px; text-align: right; }
+section .buy_cancel_wrap .choice_input .date_search_div span { display: inline-block; padding-bottom: 2px; vertical-align: middle; }
+section .buy_cancel_wrap .choice_input .date_search_div input[type=text] { width: 100px; height: 35px; text-align: center; vertical-align: middle; border: 1px solid lightgray; }
+section .buy_cancel_wrap .choice_input .date_search_div input[type=button] { width: 60px; height: 35px; padding-bottom: 2px; vertical-align: middle; border: 1px solid lightgray; }
+section .buy_cancel_wrap .choice_input .date_search_div input[type=button]:hover { background: lightgray; }
+section .buy_cancel_wrap .count_div { width: 1000px; height: 30px; text-align: right; vertical-align: middle; padding: 4px 0; font-size: 14px; }
 section .buy_cancel_wrap .buy_cancel_table_wrap { width: 1000px; min-height: 600px; margin: 0 auto; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table { width: 100%; margin: 0 auto; }
-section .buy_cancel_wrap .buy_cancel_table_wrap table tr .buy_cancel_th, tr .buyCancel_th { height: 40px; text-align: center; font-size: 14px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
+section .buy_cancel_wrap .buy_cancel_table_wrap table tr .buy_cancel_th, tr .buyCancel_th { height: 40px; text-align: center; font-size: 16px; border-top: 1px solid gray; border-bottom: 1px solid gray; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table tr .buy_cancel_th, tr .date_td, tr .iprice_td, tr .cnt_td, tr .bprice_td { width: 130px; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table tr .buyCancel_th, tr .date_td, tr .iprice_td, tr .cnt_td, tr .bprice_td, tr .cancel_date_td { width: 110px; }
 section .buy_cancel_wrap .buy_cancel_table_wrap table tr .buy_cancel_th:nth-child(3), tr .item_td { width: 350px; }
@@ -160,23 +175,25 @@ aside textarea { width: 100%; height: 150px; max-height: 450px;  border: 1px sol
 /* MyInfo.jsp CSS */
 section .my_info_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 section .my_info_wrap>h3 { width: 100%; height: 40px; text-align: center; }
-section .my_info_wrap div { width: 400px; margin: 10px auto; }
-section .my_info_wrap div p { margin-bottom: 0; }
-section .my_info_wrap div p>span { font-size: 11px; vertical-align: top; color: red; }
-section .my_info_wrap div>span { display: block; height: 10px; font-size: 11px; }
-section .my_info_wrap .input_div input { width: 400px; height: 35px; }
-section .my_info_wrap .zipcode_div input { margin: 2px 0; }
-section .my_info_wrap .zipcode_div #zipCode { width: 195px; height: 35px; }
-section .my_info_wrap .zipcode_div .zipbtn { width: 200px; height: 35px; vertical-align: middle; border: 1px solid black; color: white; background: black; }
-section .my_info_wrap .zipcode_div #roadAddress, .zipcode_div #detailAddress { width: 400px; height: 35px; }
-section .my_info_wrap .update_btn { margin-top: 10px; text-align: center; }
-section .my_info_wrap .update_btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
+section .my_info_wrap .my_info { width: 1000px; margin: 0 auto; padding: 10px 0; border-top: 1px solid gray; }
+section .my_info_wrap .my_info div { width: 400px; margin: 10px auto; }
+section .my_info_wrap .my_info div p { margin-bottom: 0; }
+section .my_info_wrap .my_info div p>span { font-size: 11px; vertical-align: top; color: red; }
+section .my_info_wrap .my_info div>span { display: block; height: 10px; font-size: 11px; }
+section .my_info_wrap .my_info .input_div input { width: 400px; height: 35px; }
+section .my_info_wrap .my_info .zipcode_div input { margin: 2px 0; }
+section .my_info_wrap .my_info .zipcode_div #zipCode { width: 195px; height: 35px; }
+section .my_info_wrap .my_info .zipcode_div .zipbtn { width: 200px; height: 35px; vertical-align: middle; border: 1px solid black; color: white; background: black; }
+section .my_info_wrap .my_info .zipcode_div #roadAddress, .zipcode_div #detailAddress { width: 400px; height: 35px; }
+section .my_info_wrap .my_info .update_btn { margin-top: 10px; text-align: center; }
+section .my_info_wrap .my_info .update_btn input { width: 150px; height: 40px; border: 1px solid black; color: white; background: black; }
 
 /* WithdrawPage.jsp CSS */
 section .withdraw_wrap { width: 1000px; height: 100%; margin: 0 auto; }
 section .withdraw_wrap>h3 { width: 100%; height: 40px; text-align: center; }
-section .withdraw_wrap div { width: 600px; margin: 0 auto; }
-section .withdraw_wrap div>p { width: 100%; font-size: 14px; }
+section .withdraw_wrap .withdraw_div { width: 1000px; margin: 0 auto; padding: 20px 0; border-top: 1px solid gray; }
+section .withdraw_wrap .withdraw_div .p_div { width: 432px; margin: 0 auto; }
+section .withdraw_wrap .withdraw_div .p_div p { width: 100%; font-size: 14px; }
 section .withdraw_wrap div .withdraw_input { width: 200px; margin: 0 auto; }
 section .withdraw_wrap div .withdraw_input input { width: 100%; height: 35px; margin-top: 25px; }
 section .withdraw_wrap div .withdraw_input span { display: block; width: 200px; height: 15px; font-size: 11px; }

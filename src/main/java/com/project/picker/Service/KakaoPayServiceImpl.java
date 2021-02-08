@@ -127,7 +127,7 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	    		System.out.println("try");
 	    	kakaoPayReadyDTO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyDTO.class);
 	    		System.out.println("tid : " + kakaoPayReadyDTO.getTid());
-	    	
+	    		quantity = 0;
 	    	//¼º°ø½Ã           
 	        return kakaoPayReadyDTO.getNext_redirect_pc_url();
 	        

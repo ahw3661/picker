@@ -51,13 +51,13 @@ public class AdminServicelmpl implements AdminService {
 	}
 	
 	@Override
-	public ArrayList<ItemDTO> itemList(int startRow, int endRow) {
-		return adao.itemList(startRow, endRow);
+	public List<ItemDTO> itemList(String s_type, String m_keyword, String i_category, int i_chk, int startRow, int endRow) {
+		return amdao.itemList(s_type, m_keyword, i_category, i_chk, startRow, endRow);
 	}
 
 	@Override
-	public int  itemListCount() {
-		return adao.itemListCount();
+	public int  itemListCount(String s_type, String m_keyword, String i_category, int i_chk) {
+		return amdao.itemListCount(s_type, m_keyword, i_category, i_chk);
 	}
 
 	@Override
@@ -141,13 +141,13 @@ public class AdminServicelmpl implements AdminService {
 	}
 
 	@Override
-	public int getAllBuyCount() {
-		return adao.getAllBuyCount();
+	public int getAllBuyCount(String start_date, String end_date) {
+		return adao.getAllBuyCount(start_date, end_date);
 	}
 
 	@Override
-	public List<BuyDTO> allBuyList(int startRow, int endRow) {
-		return amdao.allBuyList(startRow, endRow);
+	public List<BuyDTO> allBuyList(String start_date, String end_date, int startRow, int endRow) {
+		return amdao.allBuyList(start_date, end_date, startRow, endRow);
 	}
 
 	@Override
@@ -176,13 +176,13 @@ public class AdminServicelmpl implements AdminService {
 	}
 
 	@Override
-	public int getAllBuyCancelCount() {
-		return adao.getAllBuyCancelCount();
+	public int getAllBuyCancelCount(String start_date, String end_date) {
+		return adao.getAllBuyCancelCount(start_date, end_date);
 	}
 
 	@Override
-	public List<BuyDTO> allBuyCancel(int startRow, int endRow) {
-		return amdao.allBuyCancel(startRow, endRow);
+	public List<BuyDTO> allBuyCancel(String start_date, String end_date, int startRow, int endRow) {
+		return amdao.allBuyCancel(start_date, end_date, startRow, endRow);
 	}
 
 	@Override

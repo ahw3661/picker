@@ -85,7 +85,7 @@
 				</div>
 			</div>
 			<div class="btn_div">
-				<input type="button" value="주문취소" id="buy_Cancel">
+				<c:if test="${chk == 1 }"><input type="button" value="주문취소" id="buy_Cancel"></c:if>
 				<input type="button" value="닫기" onclick="location.href='closed'">
 			</div>
 		</div>

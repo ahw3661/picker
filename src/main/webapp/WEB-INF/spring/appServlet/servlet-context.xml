@@ -27,6 +27,7 @@
 	<beans:bean id="adminInterceptor" class="com.project.picker.Interceptor.AdminInterceptor"/>
 	<beans:bean id="qnaInterceptor" class="com.project.picker.Interceptor.QnaInterceptor"/>
 	<beans:bean id="replyInterceptor" class="com.project.picker.Interceptor.ReplyInterceptor"/>
+	<beans:bean id="evalInterceptor" class="com.project.picker.Interceptor.EvalInterceptor"/>
 	
 	<interceptors>
 		<interceptor>
@@ -72,6 +73,11 @@
 			<mapping path="/replyModify"/>
 			<mapping path="/replyDelete"/>
 			<beans:ref bean="replyInterceptor"/>
+		</interceptor>
+		<interceptor>
+			<mapping path="/evalAuthen"/>
+			<mapping path="/evalPop"/>
+			<beans:ref bean="evalInterceptor"/>
 		</interceptor>
 	</interceptors>
 	

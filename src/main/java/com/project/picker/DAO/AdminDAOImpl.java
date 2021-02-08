@@ -37,9 +37,11 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public List<BuyDTO> allBuyList(int startRow, int endRow) {
+	public List<BuyDTO> allBuyList(String start_date, String end_date, int startRow, int endRow) {
 		logger.info(">>> 전체 구매 목록");
 		Map<String, Object>map = new HashMap<>();
+		map.put("start_date", start_date);
+		map.put("end_date", end_date);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		return sqlSession.selectList("admin.allBuyList", map);
@@ -68,9 +70,11 @@ public class AdminDAOImpl implements AdminDAO {
 	}
 
 	@Override
-	public List<BuyDTO> allBuyCancel(int startRow, int endRow) {
+	public List<BuyDTO> allBuyCancel(String start_date, String end_date, int startRow, int endRow) {
 		logger.info(">>> 전체 구매취소 목록");
 		Map<String, Object>map = new HashMap<>();
+		map.put("start_date", start_date);
+		map.put("end_date", end_date);
 		map.put("startRow", startRow);
 		map.put("endRow", endRow);
 		return sqlSession.selectList("admin.allBuyCancel", map);
@@ -89,7 +93,31 @@ public class AdminDAOImpl implements AdminDAO {
 		map.put("s_type", s_type);
 		map.put("m_keyword", m_keyword);
 		map.put("m_type", m_type);
-		return sqlSession.selectOne("admin.searchCnt", map);
+		return sqlSession.selectOne("admin.getAllMemberCount", map);
+	}
+
+	@Override
+	public int itemListCount(String s_type, String m_keyword, String i_category, int i_chk) {
+		logger.info(">>> 전체 상품 검색 카운트");
+		Map<String, Object>map = new HashMap<>();
+		map.put("s_type", s_type);
+		map.put("m_keyword", m_keyword);
+		map.put("i_category", i_category);
+		map.put("i_chk", i_chk);
+		return sqlSession.selectOne("admin.itemListCount", map);
+	}
+
+	@Override
+	public List<ItemDTO> itemList(String s_type, String m_keyword, String i_category, int i_chk, int startRow, int endRow) {
+		logger.info(">>> 전체 상품 목록");
+		Map<String, Object>map = new HashMap<>();
+		map.put("s_type", s_type);
+		map.put("m_keyword", m_keyword);
+		map.put("i_category", i_category);
+		map.put("i_chk", i_chk);
+		map.put("startRow", startRow);
+		map.put("endRow", endRow);
+		return sqlSession.selectList("admin.itemList", map);
 	}
 
 }

@@ -1,5 +1,8 @@
 package com.project.picker.Controller;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -54,7 +57,8 @@ public class MemberController {
     		
     		if(referrer.equals("http://localhost:8090/picker/loginPage") || referrer.equals("http://localhost:8090/picker/logout")
     				|| referrer.equals("http://localhost:8090/picker/joinAgree") || referrer.equals("http://localhost:8090/picker/joinWrite") 
-    				|| referrer.equals("http://localhost:8090/picker/findIdPw")) {
+    				|| referrer.equals("http://localhost:8090/picker/findIdPw") || referrer.equals("http://localhost:8090/picker/gobuyPage_FromDetail") 
+    				|| referrer.equals("http://localhost:8090/picker/gobuyPage_FromCart")) {
         		session.setAttribute("url", null);
         	}else {
         		session.setAttribute("url", referrer);
@@ -211,10 +215,23 @@ public class MemberController {
 		ArrayList<BuyitemDTO> bidto = mservice.noneOneBuyItemInfo(b_code);
 		int total = mservice.sumBuyPrice(b_code);
 		Integer point = mservice.usePoint(b_code);
+		DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yy-MM-dd");
+		LocalDate now = LocalDate.now();
+		LocalDate preDay = now.minusDays(1);
+		String preday = dtf.format(preDay);
+		String nowday = dtf.format(now);
+		String bdate = bdto.getB_date();
+		String b_date = bdate.substring(2, 10);
+		int chk = -1;
+
+		if(b_date.equals(preday) || b_date.equals(nowday)) {
+			chk = 1;
+		}
 		model.addAttribute("bdto", bdto);
 		model.addAttribute("bidto", bidto);
 		model.addAttribute("total", total);
 		model.addAttribute("point", point);
+		model.addAttribute("chk", chk);
 		model.addAttribute("section", "NonePage.jsp");
 		return "Index";
 	}
@@ -256,24 +273,39 @@ public class MemberController {
 	
 	// 회원별 주문 목록
 	@RequestMapping(value="buyInfo", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyInfo(@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
+	public String buyInfo(@RequestParam(required=false) String start_date, @RequestParam(required=false) String end_date, 
+			@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
+		
+		if(start_date == null && end_date == null) {
+			logger.info("주문조회 메뉴 클릭");
+			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+			LocalDate now = LocalDate.now();
+			LocalDate preMonth = now.minusMonths(3);
+			
+			start_date = dtf.format(preMonth);
+			end_date = dtf.format(now);
+		}
 		String m_id = (String)session.getAttribute("u_id");
 		ArrayList<BuyitemDTO> buyitem = mservice.buyItem();
-		int cnt = mservice.getBuyCount(m_id);
+		int cnt = mservice.getBuyCount(m_id, start_date, end_date);
 		
 		if(cnt > 0) {
 			PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5);
 			model.addAttribute("pgdto", pgdto);
-			List<BuyDTO> buylist = mservice.buyList(m_id, pgdto.getStartRow(), pgdto.getEndRow());
+			List<BuyDTO> buylist = mservice.buyList(m_id, start_date, end_date, pgdto.getStartRow(), pgdto.getEndRow());
 			model.addAttribute("buylist", buylist);
 		}
+		model.addAttribute("start_date", start_date);
+		model.addAttribute("end_date", end_date);
 		model.addAttribute("buyitem", buyitem);
+		model.addAttribute("cnt", cnt);
 		return "myPage/BuyInfo";
 	}
 	
 	// 회원별 주문 상세
 	@RequestMapping(value="buyInfoDetail", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyInfoDetail(@RequestParam int b_code, @RequestParam int pageNum, Model model, HttpSession session) {
+	public String buyInfoDetail(@RequestParam int b_code, @RequestParam int pageNum, @RequestParam String start_date, 
+			@RequestParam String end_date, Model model, HttpSession session) {
 		String m_id = (String)session.getAttribute("u_id");
 		BuyDTO bdto = mservice.oneBuyInfo(m_id, b_code);
 		ArrayList<BuyitemDTO> bidto = mservice.oneBuyItemInfo(b_code);
@@ -284,32 +316,51 @@ public class MemberController {
 		model.addAttribute("total", total);
 		model.addAttribute("point", point);
 		model.addAttribute("pageNum", pageNum);
+		model.addAttribute("start_date", start_date);
+		model.addAttribute("end_date", end_date);
 		return "myPage/BuyInfoDetail";
 	}
 	
 	// 회원별 주문취소 가능 주문 목록 및 구매취소 완료된 목록
 	@RequestMapping(value="buyCancel", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyCancel(@RequestParam(defaultValue = "0") int pageNum, Model model, HttpSession session) {
+	public String buyCancel(@RequestParam(required=false) String start_date, @RequestParam(required=false) String end_date, 
+			@RequestParam(defaultValue = "0") int pageNum, Model model, HttpSession session) {
 		String m_id = (String)session.getAttribute("u_id");
 		ArrayList<BuyitemDTO> buyitem = mservice.buyItem();
-		logger.info(">>> pageNum : "+pageNum);
+		
 		if(pageNum == 0) {
+			int cnt = mservice.buyCancelListCount(m_id);
 			ArrayList<BuyDTO> buyCancelList = mservice.buyCancelList(m_id);
 			model.addAttribute("buyCancelList", buyCancelList);
 			model.addAttribute("pageNum", pageNum);
+			model.addAttribute("cnt", cnt);
 			logger.info(">>> 구매 취소 가능 목록");
 		}else {
-			int cnt = mservice.getBuyCancelCount(m_id);
+			if(start_date == null && end_date == null) {
+				logger.info("주문취소 메뉴 주문취소 버튼 클릭");
+				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+				LocalDate now = LocalDate.now();
+				LocalDate preMonth = now.minusMonths(3);
+				start_date = dtf.format(preMonth);
+				end_date = dtf.format(now);
+			}
+			int cnt = mservice.getBuyCancelCount(m_id, start_date, end_date);
 			
 			if(cnt > 0) {
 				PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5);
 				model.addAttribute("pgdto", pgdto);
-				List<BuyDTO> buyCancelContent = mservice.buyCancelContent(m_id, pgdto.getStartRow(), pgdto.getEndRow());
+				List<BuyDTO> buyCancelContent = mservice.buyCancelContent(m_id, start_date, end_date, pgdto.getStartRow(), pgdto.getEndRow());
 				model.addAttribute("buyCancelContent", buyCancelContent);
 				model.addAttribute("pageNum", pageNum);
+				model.addAttribute("start_date", start_date);
+				model.addAttribute("end_date", end_date);
+				model.addAttribute("cnt", cnt);
 				logger.info(">>> 구매 취소 완료 목록 존재");
 			}else {
 				model.addAttribute("pageNum", pageNum);
+				model.addAttribute("start_date", start_date);
+				model.addAttribute("end_date", end_date);
+				model.addAttribute("cnt", cnt);
 			}
 			logger.info(">>> 구매 취소 완료 목록");
 		}
@@ -319,7 +370,8 @@ public class MemberController {
 	
 	// 회원별 주문취소 가능 및 주문취소 완료 주문 상세
 	@RequestMapping(value="buyCancelDetail", method= {RequestMethod.GET, RequestMethod.POST})
-	public String buyCancelDetail(@RequestParam int b_code, @RequestParam int pageNum, Model model, HttpSession session) {
+	public String buyCancelDetail(@RequestParam int b_code, @RequestParam int pageNum, @RequestParam(required=false) String start_date, 
+			@RequestParam(required=false) String end_date, Model model, HttpSession session) {
 		String m_id = (String)session.getAttribute("u_id");
 		BuyDTO bdto = null;
 		ArrayList<BuyitemDTO> bidto = null;
@@ -340,6 +392,8 @@ public class MemberController {
 			total = mservice.sumBuyPrice(b_code);
 			point = mservice.preUsePoint(b_code);
 			cancelDate = mservice.getCancelDate(b_code);
+			model.addAttribute("start_date", start_date);
+			model.addAttribute("end_date", end_date);
 		}
 		model.addAttribute("bdto", bdto);
 		model.addAttribute("bidto", bidto);

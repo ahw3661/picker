@@ -36,22 +36,27 @@
 /* 리뷰 리스트 */
 .starIcon { width : 16px; }
 #item_eval, #item_qna { width: 900px; margin: 0 auto; padding: 20px 0; }
-#item_eval #info_Main { text-align: center; border-top: 1px solid black; border-bottom: 1px solid lightgray; margin: 10px 0; }
-#item_eval #info_Main #title_Div { border-bottom: 1px solid lightgray; }
-#item_eval #info_Main #title_Div p { width:200px; height: 30px ;  display: inline-block; }
-#item_eval #value_Main #value_Div { border-bottom: 1px solid lightgray; }
-#item_eval #value_Main #value_Div p { width:200px; height: 30px ; display: inline-block; }
+#item_eval #EvalListMain { border-top: 1px solid black; margin: 10px 0; }
+#item_eval .evalColumn { display: flex; justify-content: space-between; align-items: stretch; width: 900px; padding: 15px 0; border-bottom: 1px solid #c3c3c3; }
+#item_eval .evalColumn p { min-height: 24px; }
+#item_eval .evalCtt { width: 700px; }
+#item_eval .evalDesc { width: 200px; color: #777777; }
 #writeBtn { float:right; width: 90px; height: 36px; border: none; border-radius: 3px; color: #ffffff; background-color: #222222; font-size: 14px; }
 
 /* 리뷰 작성 */
-#evalWrite_wrap {width: 600px; max-height: 70%; margin: 10% auto; padding: 20px; background-color: #ffffff; }
-#evalWrite_wrap .btnClose { width: 16px; }
-#evalWrite_wrap .evalRank { display: inline-block; margin-right: 15px; }
-#evalWrite_wrap #write_Main { border-top: 1px solid #c3c3c3; margin-top : 8px; padding-top: 15px; color : #777777; }
-#evalWrite_wrap #write_Main label { display: inline-block; color : #222222; margin-right: 15px; }
-#evalWrite_wrap textarea { width: 100%; height: 100px; border: 1px solid #c3c3c3; margin: 10px 0; padding: 10px; font-size: 16px; line-height: 20px; resize: none; }
+#evalWriteWrap {width: 600px; max-height: 70%; margin: 10% auto; padding: 20px; background-color: #ffffff; }
+#evalWriteWrap p, #item_qna p{line-height: 20px; font-size: 14px; letter-spacing: -0.05em; color: #777777;}
+#evalWriteWrap .btnClose { width: 16px; }
+#evalWriteWrap .divAuthenCon { display: flex; justify-content: space-between; align-items: stretch; padding: 8px 5px; }
+#evalWriteWrap .divAuthen { width: 270px; border : 1px solid #777777; }
+#evalWriteWrap .btnLogin { width: 100%; height: 100%; border: none; background-color: #777777; color: #ffffff; font-size: 16px; font-weight: 500; }
+#evalWriteWrap label { display: inline-block; width: 250px; margin: 9px; line-height: 20px; font-size: 14px; font-weight: 500; color : #222222; text-align: center; }
+#evalWriteWrap .iptAuthen { width: 250px; height: 37px; border: none; border-bottom: 1px solid #c3c3c3; margin: 9px; padding: 8px; line-height: 20px; font-size: 14px; }
+#evalWriteWrap .btnAuthen { width: 250px; height: 36px; border: none; margin: 9px; background-color: #8393a7; color: #ffffff; font-size: 16px; font-weight: 500; }
+#evalWriteWrap .evalRank { display: inline-block; margin-right: 15px; }
+#evalWriteWrap #writeMain { border-top: 1px solid #c3c3c3; margin-top : 8px; padding-top: 15px; color : #777777; }
+#evalWriteWrap textarea { width: 100%; height: 100px; border: 1px solid #c3c3c3; margin: 10px 0; padding: 10px; font-size: 16px; line-height: 20px; resize: none; }
 /* 상품 QnA */
-#item_qna p{line-height: 20px; font-size: 14px; letter-spacing: -0.05em; color: #777777;}
 #item_qna table{border-top: 1px solid black; margin: 15px 0; color: #3a3a3a;}
 #item_qna tr{border-bottom: 1px solid #e5e5e5;}
 #item_qna thead{text-align: center;}
@@ -62,7 +67,7 @@
 #item_qna tbody>tr>td:nth-of-type(3){width: 200px; text-align: center;}
 #item_qna tbody>tr>td:last-of-type{width: 200px; text-align: center;}
 #item_qna .replyCount{margin-left: 15px; font-weight: 700; color: #ff472d;}
-.btnBlack{width: 90px; height: 36px; border: none; border-radius: 3px; color: #ffffff; background-color: #222222; font-size: 14px;}
+.btnBlack{width: 90px; height: 36px; border: none; margin-left: 5px; border-radius: 3px; color: #ffffff; background-color: #222222; font-size: 14px;}
 .nonlist{height: 200px; border-top: 1px solid #222222; border-bottom: 1px solid #c3c3c3; margin: 15px 0;}
 
 /* TOP 링크 CSS */

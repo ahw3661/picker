@@ -29,10 +29,10 @@ public class MemberServiceImpl implements MemberService {
 	@Inject
 	PointDAO pdao;
 	
-	@Override
-	public ArrayList<MemberDTO> memberList() {
-		return mmdao.memberList();
-	}
+	//@Override
+	//public ArrayList<MemberDTO> memberList() {
+	//	return mmdao.memberList();
+	//}
 
 	@Override
 	public MemberDTO viewMember(String m_id) {
@@ -89,8 +89,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public List<BuyDTO> buyList(String m_id, int startRow, int endRow) {
-		return mdao.buyList(m_id, startRow, endRow);
+	public List<BuyDTO> buyList(String m_id, String start_date, String end_date, int startRow, int endRow) {
+		return mdao.buyList(m_id, start_date, end_date, startRow, endRow);
 	}
 	
 	@Override
@@ -109,8 +109,8 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int getBuyCount(String m_id) {
-		return mmdao.getBuyCount(m_id);
+	public int getBuyCount(String m_id, String start_date, String end_date) {
+		return mmdao.getBuyCount(m_id, start_date, end_date);
 	}
 
 	@Override
@@ -180,13 +180,13 @@ public class MemberServiceImpl implements MemberService {
 	}
 
 	@Override
-	public int getBuyCancelCount(String m_id) {
-		return mmdao.getBuyCancelCount(m_id);
+	public int getBuyCancelCount(String m_id, String start_date, String end_date) {
+		return mmdao.getBuyCancelCount(m_id, start_date, end_date);
 	}
 
 	@Override
-	public List<BuyDTO> buyCancelContent(String m_id, int startRow, int endRow) {
-		return mdao.buyCancelContent(m_id, startRow, endRow);
+	public List<BuyDTO> buyCancelContent(String m_id, String start_date, String end_date, int startRow, int endRow) {
+		return mdao.buyCancelContent(m_id, start_date, end_date, startRow, endRow);
 	}
 
 	@Override
@@ -207,6 +207,11 @@ public class MemberServiceImpl implements MemberService {
 	@Override
 	public Date getCancelDate(int b_code) {
 		return mmdao.getCancelDate(b_code);
+	}
+
+	@Override
+	public int buyCancelListCount(String m_id) {
+		return mmdao.buyCancelListCount(m_id);
 	}
 	
 }

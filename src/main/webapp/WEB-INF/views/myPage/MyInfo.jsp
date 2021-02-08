@@ -9,57 +9,58 @@
 	<section>
 		<div class="my_info_wrap">
 			 <h3>정보수정</h3>
-			 <!-- <form action="myInfoUpdate" method="post" name="miu" onsubmit="return miuSubmit();" id="frm"> -->
-			 <form action="myInfoUpdate" method="post" name="miu" id="miufrm">
-			 	<div class="input_div">
-					<p>아이디</p>
-					<input type="text" name="m_id" value="${mdto.m_id }" id="Id" readonly="readonly">
-					<span id="idchk"></span>
-				</div>
-				<div class="input_div">
-					<p>비밀번호<span>⁎</span></p>
-					<input type="password" name="m_password" placeholder="기본 비밀번호 입력" id="Pw">
-					<span id="pwChk"></span>
-				</div>
-				<div class="input_div">
-					<p>비밀번호 변경</p>
-					<input type="password" name="m_newpassword" placeholder="비밀번호를 변경하는 경우 입력하세요" id="newPw">
-					<span id="newPwChk"></span>
-				</div>
-				<div class="input_div">
-					<p>비밀번호 확인</p>
-					<input type="password" name="re_password" placeholder="비밀번호 변경 확인" id="rePw">
-					<span id="rePwChk"></span>
-				</div>
-				<div class="input_div">
-					<p>이메일<span>⁎</span></p>
-					<input type="email" name="m_email" value="${mdto.m_email }" id="Email">
-					<span id="emailchk"></span>
-				</div>
-				<div class="input_div">
-					<p>이름<span>⁎</span></p>
-					<input type="text" name="m_name" value="${mdto.m_name }" id="Name">
-					<span id="namechk"></span>
-				</div>
-				<div class="input_div">
-					<p>연락처<span>⁎</span></p>
-					<input type="text" name="m_phone" value="${mdto.m_phone }" id="Phone">
-					<span id="phonechk"></span>
-				</div>
-				<div class="zipcode_div">
-					<p>주소<span>⁎</span></p>
-					<input type="text" name="m_zipcode" value="${mdto.m_zipcode }" id="zipCode" readonly="readonly">
-					<input type="button" value="우편번호 찾기" class="zipbtn" onclick="postcode();">
-					<br>
-					<input type="text" name="m_roadaddr" value="${mdto.m_roadaddr }" id="roadAddress" readonly="readonly">
-					<input type="text" name="m_detailaddr" value="${mdto.m_detailaddr }" id="detailAddress">
-					<span id="addresschk"></span>
-				</div>
-				<div class="update_btn">
-					<input type="submit" value="수정" id="sbm_btn">
-					<input type="button" value="취소" onclick="location.href='myPage'">
-				</div>
-			</form>
+			 <div class="my_info">
+				 <form action="myInfoUpdate" method="post" name="miu" id="miufrm">
+				 	<div class="input_div">
+						<p>아이디</p>
+						<input type="text" name="m_id" value="${mdto.m_id }" id="Id" readonly="readonly">
+						<span id="idchk"></span>
+					</div>
+					<div class="input_div">
+						<p>비밀번호<span>⁎</span></p>
+						<input type="password" name="m_password" placeholder="기본 비밀번호 입력" id="Pw">
+						<span id="pwChk"></span>
+					</div>
+					<div class="input_div">
+						<p>비밀번호 변경</p>
+						<input type="password" name="m_newpassword" placeholder="비밀번호를 변경하는 경우 입력하세요" id="newPw">
+						<span id="newPwChk"></span>
+					</div>
+					<div class="input_div">
+						<p>비밀번호 확인</p>
+						<input type="password" name="re_password" placeholder="비밀번호 변경 확인" id="rePw">
+						<span id="rePwChk"></span>
+					</div>
+					<div class="input_div">
+						<p>이메일<span>⁎</span></p>
+						<input type="email" name="m_email" value="${mdto.m_email }" id="Email">
+						<span id="emailchk"></span>
+					</div>
+					<div class="input_div">
+						<p>이름<span>⁎</span></p>
+						<input type="text" name="m_name" value="${mdto.m_name }" id="Name">
+						<span id="namechk"></span>
+					</div>
+					<div class="input_div">
+						<p>연락처<span>⁎</span></p>
+						<input type="text" name="m_phone" value="${mdto.m_phone }" id="Phone">
+						<span id="phonechk"></span>
+					</div>
+					<div class="zipcode_div">
+						<p>주소<span>⁎</span></p>
+						<input type="text" name="m_zipcode" value="${mdto.m_zipcode }" id="zipCode" readonly="readonly">
+						<input type="button" value="우편번호 찾기" class="zipbtn" onclick="postcode();">
+						<br>
+						<input type="text" name="m_roadaddr" value="${mdto.m_roadaddr }" id="roadAddress" readonly="readonly">
+						<input type="text" name="m_detailaddr" value="${mdto.m_detailaddr }" id="detailAddress">
+						<span id="addresschk"></span>
+					</div>
+					<div class="update_btn">
+						<input type="submit" value="수정" id="sbm_btn">
+						<input type="button" value="취소" onclick="location.href='myPage'">
+					</div>
+				</form>
+			</div>
 		</div>
 	</section>
 </body>

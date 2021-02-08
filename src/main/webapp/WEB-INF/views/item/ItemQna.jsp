@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<h3>상품 문의</h3>
 <p>구매하시려는 상품에 대해 궁금한 점이 있으면 문의주세요.</p>
 <c:if test="${qnacnt != 0}">
 	<table>
@@ -61,4 +62,3 @@
 <div class="rightBtnDiv">
 	<input type="button" value="상품문의" class="btnBlack" onclick="location.href='qnaWrite?code=${code}'">
 </div>
-<script type="text/javascript" src="resources/js/QnaPop.js"></script>																	 

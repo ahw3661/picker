@@ -30,6 +30,7 @@
 							  FROM picker_buy 
 							 WHERE m_id = #{m_id} 
 							   AND b_chk = 0
+							   AND b_date BETWEEN TO_DATE(#{start_date}, 'yy/MM/dd') AND TO_DATE(#{end_date}, 'yy/MM/dd')+1
 							 ORDER BY b_date DESC, b_code DESC
 			               ) a
 			         WHERE rownum <= #{endRow}
@@ -48,6 +49,7 @@
 							  FROM picker_buy 
 							 WHERE m_id = #{m_id} 
 							   AND b_chk = 1
+							   AND b_date BETWEEN TO_DATE(#{start_date}, 'yy/MM/dd') AND TO_DATE(#{end_date}, 'yy/MM/dd')+1
 							 ORDER BY b_date DESC, b_code DESC
 			               ) a
 			         WHERE rownum <= #{endRow}

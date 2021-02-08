@@ -17,8 +17,8 @@ public interface AdminService {
 
 	public List<MemberDTO> memberList(String s_type, String m_keyword, int m_type, int startRow, int endRow);
 	public MemberDTO oneList(String m_id);
-	public ArrayList<ItemDTO> itemList(int startRow, int endRow);
-	public int itemListCount();
+	public List<ItemDTO> itemList(String s_type, String m_keyword, String i_category, int i_chk, int startRow, int endRow);
+	public int itemListCount(String s_type, String m_keyword, String i_category, int i_chk);
 	public ItemDTO oneItemList(String i_code);
 	public int memberCount();
 	public int itemCount();
@@ -29,15 +29,15 @@ public interface AdminService {
 	public int getAllPointCount();
 	public int getOnePointCount(String m_id);
 	public int getAllMemberCount();
-	public int getAllBuyCount();
-	public List<BuyDTO> allBuyList(int startRow, int endRow);
+	public int getAllBuyCount(String start_date, String end_date);
+	public List<BuyDTO> allBuyList(String start_date, String end_date, int startRow, int endRow);
 	public ArrayList<BuyitemDTO> allBuyItem();
 	public BuyDTO getOneBuyInfo(int b_code);
 	public ArrayList<BuyitemDTO> getOneBuyItemInfo(int b_code);
 	public int getSumBuyPrice(int b_code);
 	public ArrayList<BuyitemDTO> buyItemList();
-	public int getAllBuyCancelCount();
-	public List<BuyDTO> allBuyCancel(int startRow, int endRow);
+	public int getAllBuyCancelCount(String start_date, String end_date);
+	public List<BuyDTO> allBuyCancel(String start_date, String end_date, int startRow, int endRow);
 	public BuyDTO oneBuyCancel(int b_code);
 	public void itemUpdate(ItemInsertDTO idto, HttpSession session);
 	public int getAllMemberCount(String s_type, String m_keyword, int m_type);

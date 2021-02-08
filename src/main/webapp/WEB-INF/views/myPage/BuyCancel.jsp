@@ -10,18 +10,25 @@
 <body>
 	<section>
 		<div class="buy_cancel_wrap">
+			<c:if test="${pageNum == 0 }">
+				<h3>주문취소</h3>
+			</c:if>
+			<c:if test="${pageNum > 0 }">
+				<input type="hidden" name="pageNum" value="${pageNum }" id="pagenum">
+				<h3>취소완료</h3>
+			</c:if>
 			<div class="choice_input">
 				<div class="a_div">
 					<a href="javascript:buyCancelA(0);" class="cancel_a">주문취소</a>
 					<a href="javascript:buyCancelListA(1);" class="cancel_a">주문취소완료</a>
 				</div>
-				<c:if test="${pageNum == 0 }">
-					<h3>주문취소</h3>
-				</c:if>
-				<c:if test="${pageNum > 0 }">
-					<h3>취소완료</h3>
-				</c:if>
+				<div class="date_search_div">
+					<input type="hidden" name="startDate" value="${start_date }" id="start"><input type="hidden" name="endDate" value="${end_date }" id="end">
+					<span>조회기간</span> <input type="text" name="start_date" value="${start_date }" id="from"> ~ <input type="text" name="end_date" value="${end_date }" id="to">
+					<input type="button" name="ds_btn" value="검색" id="dsBtn">
+				</div>
 			</div>
+			<div class="count_div">총 ${cnt }건<input type="hidden" name="cnt" value="${cnt }" id="count"></div>
 			<div class="buy_cancel_table_wrap">
 				<table>
 					<tr>
@@ -44,10 +51,10 @@
 						</c:if>
 					</tr>
 					<c:if test="${pageNum == 0 }">
-						<c:if test="${empty buyCancelList }">
+						<c:if test="${cnt == 0 }">
 							<tr><td colspan="6" class="buy_cancel_td">주문 취소 가능한 내역이 없습니다.</td></tr>
 						</c:if>
-						<c:if test="${not empty buyCancelList }">
+						<c:if test="${cnt > 0 }">
 							<c:forEach var="list" items="${buyCancelList }">
 								<c:forEach var="item" items="${buyitem }">
 									<c:if test="${list.b_code == item.b_code }">
@@ -78,10 +85,10 @@
 						</c:if>
 					</c:if>
 					<c:if test="${pageNum > 0 }">
-						<c:if test="${empty buyCancelContent }">
+						<c:if test="${cnt == 0 }">
 							<tr><td colspan="7" class="buy_cancel_td">주문 취소 내역이 없습니다.</td></tr>
 						</c:if>
-						<c:if test="${not empty buyCancelContent }">
+						<c:if test="${cnt > 0 }">
 							<c:forEach var="list" items="${buyCancelContent }">
 								<c:forEach var="item" items="${buyitem }">
 									<c:if test="${list.b_code == item.b_code }">
@@ -90,7 +97,7 @@
 												<fmt:parseDate var="bdate" value="${list.b_date }" pattern="yyyy-MM-dd HH:mm:ss" />
 												<fmt:formatDate var="b_date" value="${bdate }" pattern="yyyy-MM-dd" />${b_date }
 											</td>
-											<td class="code_td"><a href="javascript:buyCancelDetail('${item.b_code }', ${pgdto.pageNum });">${item.b_code }</a></td>
+											<td class="code_td"><a href="javascript:buyCancelDetail('${item.b_code }', ${pgdto.pageNum }, '${start_date }', '${end_date }');">${item.b_code }</a></td>
 											<td class="item_td">
 												<img alt="img" src="resources/image/category_img/${item.i_img }">&nbsp;
 												<a href="goDetail?i_code=${item.i_code}">${item.i_name }</a>
@@ -117,18 +124,20 @@
 			<c:if test="${pageNum > 0 }">
 				<div class="centerBlock">
 		 			<c:if test="${pgdto.startPage > 1}">
-		 				<div class="prev_div"><a href="javascript:buyCancel(${pgdto.startPage - pgdto.pageSize});"><b>《</b></a></div>
+		 				<div class="prev_div"><a href="javascript:buyCancel(${pgdto.startPage - pgdto.pageSize}, '${start_date }', '${end_date }');"><b>《</b></a></div>
 		 			</c:if>
 					<c:forEach var="page" begin="${pgdto.startPage}" end="${pgdto.endPage}">
-						<c:if test="${page != pgdto.pageNum}">
-							<div class="page_div"><a href="javascript:buyCancel(${page})">${page}</a></div>
-						</c:if>
-						<c:if test="${page == pgdto.pageNum}">
-							<div class="curr_div"><a href="javascript:buyCancel(${page})">${page}</a></div>
+						<c:if test="${page >= 1}">
+							<c:if test="${page != pgdto.pageNum}">
+								<div class="page_div"><a href="javascript:buyCancel(${page}, '${start_date }', '${end_date }')">${page}</a></div>
+							</c:if>
+							<c:if test="${page == pgdto.pageNum}">
+								<div class="curr_div"><a href="javascript:buyCancel(${page}, '${start_date }', '${end_date }')">${page}</a></div>
+							</c:if>
 						</c:if>
 					</c:forEach>
 		 			<c:if test="${pgdto.endPage < pgdto.pageCount}">
-		 				<div class="next_div"><a href="javascript:buyCancel(${pgdto.startPage + pgdto.pageSize });"><b>》</b></a></div>
+		 				<div class="next_div"><a href="javascript:buyCancel(${pgdto.startPage + pgdto.pageSize }, '${start_date }', '${end_date }');"><b>》</b></a></div>
 		 			</c:if>
 				</div>
 			</c:if>
@@ -153,6 +162,64 @@
 		});
 	}
 	
+	$(function() {
+		var option = {
+			// datepicker 애니메이션 타입
+			// option 종류
+			showAnim : "fadeIn",
+			// 년 월이 셀렉트 박스로 표현 되어서 선택할 수 있다.
+			changeMonth: true,
+			changeYear: true,
+			// 데이터 포멧
+			dateFormat: "yy-mm-dd",
+			// 달력에서 좌우 선택시 이동할 개월 수
+			stepMonths: 1,
+			// 년도 선택 셀렉트박스를 현재 년도에서 이전, 이후로 얼마의 범위를 표시할것인가.
+			yearRange: "c-5:c+10",
+			// 선택 가능한 날짜(수 형식) - 현재 기준 -20일
+			//minDate: -20,
+			// 선택 가능한 최대 날짜(문자 형식) - 현재 기준 +1월 +20일
+			maxDate: "+12Y +12M +20D",
+		};
+		
+		var optionFrom = option;
+		$("#from").datepicker(optionFrom);
+		// 시작일이 선택이 되면 종료일은 시작일 보다 앞을 선택할 수 없다.
+		var from = $("#from").datepicker(optionFrom).on("change", function() {
+			to.datepicker("option", "minDate", getDate(this));
+		});
+		
+		var optionTo = option;
+		$("#to").datepicker(optionTo);
+		// 종료일이 선택이 되면 시작일은 시작일 보다 앞을 선택할 수 없다.
+		var to = $("#to").datepicker(optionTo).on("change", function() {
+			from.datepicker("option", "maxDate", getDate(this));
+		});
+		
+		function getDate(element) {
+			return moment(element.value).toDate();
+		}
+	});
+	
+	$("#dsBtn").click(function() {
+		$.ajax({
+			url : "buyCancel",
+			type : "post",
+			data : { "pageNum" : $("#pagenum").val(), "start_date" : $("#from").val(), "end_date" : $("#to").val() },
+			datatype : "html",
+			success : function(data) {
+				$(".menu_info").children().remove();
+				$(".menu_info").html(data);
+				$("#from").val($("#start").val());
+				$("#to").val($("#end").val());
+				$(".date_search_div").show();
+			},
+			error : function(data, error) {
+				alert("code : "+data.status+"\n"+"message : "+data.responseText+"\n"+"error : "+error);
+			}
+		});
+	});
+	
 	// 주문취소 완료 목록
 	function buyCancelListA(pn) {
 		$.ajax({
@@ -163,6 +230,9 @@
 			success : function(data) {
 				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
+				$("#from").val($("#start").val());
+				$("#to").val($("#end").val());
+				$(".date_search_div").show();
 			},
 			error : function(data, error) {
 				alert("code : "+data.status+"\n"+"message : "+data.responseText+"\n"+"error : "+error);
@@ -196,11 +266,11 @@
 	});
 	
 	// 주문조회상세
-	function buyCancelDetail(cd, pn) {
+	function buyCancelDetail(cd, pn, sd, ed) {
 		$.ajax({
 			url : "buyCancelDetail",
 			type : "post",
-			data : { "b_code" : cd, "pageNum" : pn },
+			data : { "b_code" : cd, "pageNum" : pn, "start_date" : sd, "end_date" : ed },
 			datatype : "html",
 			success : function(data) {
 				$('.menu_info').children().remove();
@@ -213,11 +283,11 @@
 	}
 	
 	// 페이징
-	function buyCancel(pn) {
+	function buyCancel(pn, sd, ed) {
 		$.ajax({
 			url : "buyCancel",
 			type : "post",
-			data : { "pageNum" : pn },
+			data : { "pageNum" : pn, "start_date" : sd, "end_date" : ed },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();

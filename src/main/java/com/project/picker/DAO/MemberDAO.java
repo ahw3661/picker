@@ -10,7 +10,7 @@ public interface MemberDAO {
 
 	public void updateMember(MemberDTO mdto);
 	public List<PointDTO> pointList(String m_id, int startRow, int endRow);
-	public List<BuyDTO> buyList(String m_id, int startRow, int endRow);
-	public List<BuyDTO> buyCancelContent(String m_id, int startRow, int endRow);
+	public List<BuyDTO> buyList(String m_id, String start_date, String end_date, int startRow, int endRow);
+	public List<BuyDTO> buyCancelContent(String m_id, String start_date, String end_date, int startRow, int endRow);
 	
 }

@@ -11,11 +11,13 @@
 			<h3>회원탈퇴</h3>
 			<!-- <form action="withdraw" method="post" name="wi" onsubmit="return wiSubmit();"> -->
 			<form action="withdraw" method="post" name="wi" id="wifrm">
-				<div>
-					<p>가입된 회원정보가 모두 삭제됩니다. 작성하신 게시물은 삭제되지 않습니다.</p>
-					<p>탈퇴 후 같은 계정으로 재가입 시에 기존에 가지고 있던 적립금은 복원되지 않습니다.</p>
-					<p>비밀번호를 입력하면 회원탈퇴가 완료됩니다.</p>
-					<p>회원 탈퇴를 진행하시겠습니까?</p>
+				<div class="withdraw_div">
+					<div class="p_div">
+						<p>탈퇴 시 작성하신 게시물은 삭제되지 않습니다.</p>
+						<p>탈퇴 후 재가입 시에 기존에 가지고 있던 적립금은 복원되지 않습니다.</p>
+						<p>비밀번호를 입력하면 회원탈퇴가 완료됩니다.</p>
+						<p>회원 탈퇴를 진행하시겠습니까?</p>
+					</div>
 					<div class="withdraw_input">
 						<input type="password" name="m_password" id="Pw">
 						<span id="pw_chk"></span>

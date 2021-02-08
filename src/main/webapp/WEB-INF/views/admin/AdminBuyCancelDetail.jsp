@@ -13,6 +13,14 @@
 			<h3>주문상세</h3>
 			<h4>주문정보</h4>
 			<div class="buy_cancel_list_detail">
+				<div class="buy_id">
+					<div class="buy_cancel_title"><b>주문자</b></div>
+					<div class="buy_cancel_detail">
+						${bdto.b_order_name }
+						<c:if test="${bdto.m_id == 'none'}">(비회원)</c:if>
+						<c:if test="${bdto.m_id != 'none' }">(${bdto.m_id })</c:if>
+					</div>
+				</div>
 				<div class="buy_date">
 					<div class="buy_cancel_title"><b>주문일자</b></div>
 					<div class="buy_cancel_detail">
@@ -90,8 +98,9 @@
 					</div>
 					<div class="buy_cancel_right">
 						<div class="buy_cancel_detail">
-						<c:if test="${cancelId == 'nonmember'}">비회원</c:if>
-						<c:if test="${cancelId != 'nonmember'}">${cancelId }</c:if>
+							${bdto.b_order_name }
+							<c:if test="${cancelId == 'none'}">(비회원)</c:if>
+							<c:if test="${cancelId != 'none'}">(${cancelId })</c:if>
 						</div>
 						<div class="buy_cancel_detail">
 							<fmt:formatDate var="cancelDate" value="${cancelDate }" pattern="yyyy-MM-dd"/>${cancelDate }
@@ -100,7 +109,7 @@
 				</div>
 			</div>
 			<div class="list_btn">
-				<input type="button" value="목록" onclick="javascript:allBuyCancel(${pageNum});">
+				<input type="button" value="목록" onclick="javascript:allBuyCancel(${pageNum}, '${start_date }', '${end_date }');">
 			</div>
 		</div>
 	</section>
@@ -142,11 +151,11 @@
 	});
 	
 	//주문목록
-	function allBuyCancel(pn) {
+	function allBuyCancel(pn, sd, ed) {
 		$.ajax({
 			url : "allBuyCancel",
 			type : "post",
-			data : { "pageNum" : pn },
+			data : { "pageNum" : pn, "start_date" : sd, "end_date" : ed },
 			datatype : "html",
 			success : function(data) {
 				$(".menu_info").children().remove();

@@ -4,6 +4,7 @@
 <!DOCTYPE html>
 <html lang="ko">
 <link rel="stylesheet" href="resources/css/ItemDetail.css">
+<link rel="stylesheet" href="resources/css/QnaPop.css">
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
@@ -11,14 +12,14 @@
 <body>
 <section>
 	<div class="wrap itemDetail_wrap">
-		 <div id="head_name">
+		<div id="head_name">
 			<a href="#" class="menuBtn">Home</a>&nbsp;&nbsp;》&nbsp;&nbsp;
 		    <a href="goList?i_category=${idto.i_category }" class="menuBtn">${idto.i_category }</a>&nbsp;&nbsp;》&nbsp;&nbsp;
 			<strong>${idto.i_name }</strong>
 			<br><br> 
 			<hr>
-		 </div>
-	  	 <div class="info_div">
+		</div>
+	  	<div class="info_div">
 			<div class="img_div">
 				<img alt="img" src="resources/image/category_img/${idto.i_img }">
 			</div>&nbsp;
@@ -85,7 +86,9 @@
 </section>
 </body>
 <script type="text/javascript" src="resources/js/ItemDetail.js"></script>
+<script type="text/javascript" src="resources/js/QnaPop.js"></script>
 <script type="text/javascript">
+	getEvalList(1);
 	getQnaList(1);
 </script>
 </html>

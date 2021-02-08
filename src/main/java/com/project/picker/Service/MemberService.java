@@ -12,7 +12,7 @@ import com.project.picker.DTO.PointDTO;
 
 public interface MemberService {
 
-	public ArrayList<MemberDTO> memberList();
+	//public ArrayList<MemberDTO> memberList();
 	public MemberDTO loginCheck(LoginDTO ldto);
 	public MemberDTO viewMember(String m_id);
 	public void updateMemberType(String m_id);
@@ -22,11 +22,11 @@ public interface MemberService {
 	public int onePoint(String m_id);
 	public String findId(MemberDTO mdto);
 	public String findPw(String m_id);
-	public List<BuyDTO> buyList(String m_id, int startRow, int endRow);
+	public List<BuyDTO> buyList(String m_id, String start_date, String end_date, int startRow, int endRow);
 	public ArrayList<BuyitemDTO> buyItem();
 	public BuyDTO oneBuyInfo(String m_id, int b_code);
 	public ArrayList<BuyitemDTO> oneBuyItemInfo(int b_code);
-	public int getBuyCount(String m_id);
+	public int getBuyCount(String m_id, String start_date, String end_date);
 	public int getPointCount(String m_id);
 	public void loginRemember(String sessionId, Date sessionLimit, String m_id);
 	public MemberDTO getSessionUser(String sessionId);
@@ -34,14 +34,15 @@ public interface MemberService {
 	public BuyDTO noneOneBuyInfo(int b_code, String b_order_phone);
 	public ArrayList<BuyitemDTO> noneOneBuyItemInfo(int b_code);
 	public int sumBuyPrice(int b_code);
+	public int buyCancelListCount(String m_id);
 	public ArrayList<BuyDTO> buyCancelList(String m_id);
 	public Integer usePoint(int b_code);
 	public void buyState(int b_code);
 	public void buyCancelPoint(String m_id, int b_code);
 	public int sumPoint(String m_id);
 	public void updatePoint(String m_id, int m_point);
-	public int getBuyCancelCount(String m_id);
-	public List<BuyDTO> buyCancelContent(String m_id, int startRow, int endRow);
+	public int getBuyCancelCount(String m_id, String start_date, String end_date);
+	public List<BuyDTO> buyCancelContent(String m_id, String start_date, String end_date, int startRow, int endRow);
 	public BuyDTO oneBuyCancelInfo(String m_id, int b_code);
 	public ArrayList<BuyitemDTO> oneBuyCancelItemInfo(int b_code);
 	public Integer preUsePoint(int b_code);

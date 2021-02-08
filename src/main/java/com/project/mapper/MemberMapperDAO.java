@@ -17,11 +17,6 @@ import com.project.picker.DTO.MemberDTO;
 
 @Repository
 public interface MemberMapperDAO {
-
-	// 회원 목록
-	@Select("SELECT * FROM picker_member")
-	public ArrayList<MemberDTO> memberList();
-	
 	// 회원정보 - 내 정보
 	@Select("SELECT * FROM picker_member WHERE m_id = #{m_id}")
 	public MemberDTO viewMember(@Param("m_id") String m_id);
@@ -35,7 +30,7 @@ public interface MemberMapperDAO {
 	public void loginRemember(@Param("sessionId") String sessionId, @Param("sessionLimit") Date sessionLimit, @Param("m_id") String m_id);
 	
 	// 로그인 상태 유지 - 이전 로그인 여부. 유효시간이 남아 있고 해당 sessionId를 가지는 사용자 정보
-	@Select("SELECT * FROM picker_member WHERE session_key = #{sessionId} and session_limit > sysdate")
+	@Select("SELECT m_id, m_name, m_type FROM picker_member WHERE session_key = #{sessionId} and session_limit > sysdate")
 	public MemberDTO getSessionUser(@Param("sessionId") String sessionId);
 	
 	// 비밀번호 일치 여부 체크
@@ -83,8 +78,8 @@ public interface MemberMapperDAO {
 	public String findIdPassword(@Param("m_id") String m_id);
 	
 	// 회원별 구매 목록 카운트
-	@Select("SELECT COUNT(*) FROM picker_buy WHERE m_id = #{m_id}")
-	public int getBuyCount(@Param("m_id") String m_id);
+	@Select("SELECT COUNT(*) FROM picker_buy WHERE m_id = #{m_id} AND b_chk = 0 AND b_date BETWEEN TO_DATE(#{start_date}, 'yy/MM/dd') AND TO_DATE(#{end_date}, 'yy/MM/dd')+1")
+	public int getBuyCount(@Param("m_id") String m_id, @Param("start_date") String start_date, @Param("end_date") String end_date);
 	
 	// 회원별 포인트 카운트
 	@Select("SELECT COUNT(*) FROM picker_point WHERE m_id = #{m_id}")
@@ -95,11 +90,11 @@ public interface MemberMapperDAO {
 	public ArrayList<BuyitemDTO> buyItem();
 
 	// 구매상세1
-	@Select("SELECT * FROM picker_buy WHERE m_id = #{m_id} AND b_code = #{b_code} AND b_chk = 0")
+	@Select("SELECT b_code, b_take_name, b_take_phone, b_take_zipcode, b_take_roadaddr, b_take_detailaddr, b_price, b_date FROM picker_buy WHERE m_id = #{m_id} AND b_code = #{b_code} AND b_chk = 0")
 	public BuyDTO oneBuyInfo(@Param("m_id") String m_id, @Param("b_code") int b_code);
 
 	// 구매상세2
-	@Select("SELECT * FROM picker_buyitem WHERE b_code = #{b_code}")
+	@Select("SELECT i_name, bi_cnt, i_price FROM picker_buyitem WHERE b_code = #{b_code}")
 	public ArrayList<BuyitemDTO> oneBuyItemInfo(@Param("b_code") int b_code);
 	
 	// 상품구매 금액 합계
@@ -107,20 +102,24 @@ public interface MemberMapperDAO {
 	public int sumBuyPrice(@Param("b_code") int b_code);
 
 	// 비회원 구매내역 체크
-	@Select("SELECT * FROM picker_buy WHERE b_code = #{b_code} AND b_order_phone = #{b_order_phone} AND b_chk = 0")
+	@Select("SELECT b_code, b_order_phone FROM picker_buy WHERE b_code = #{b_code} AND b_order_phone = #{b_order_phone} AND b_chk = 0")
 	public BuyDTO buyCheck(BuyDTO bdto);
 	
 	// 비회원 구매상세1
-	@Select("SELECT * FROM picker_buy WHERE b_code = #{b_code} AND b_order_phone = #{b_order_phone} AND b_chk = 0")
+	@Select("SELECT b_code, b_take_name, b_take_phone, b_take_zipcode, b_take_roadaddr, b_take_detailaddr, b_price, b_date FROM picker_buy WHERE b_code = #{b_code} AND b_order_phone = #{b_order_phone} AND b_chk = 0")
 	public BuyDTO noneOneBuyInfo(@Param("b_code") int b_code, @Param("b_order_phone") String b_order_phone);
 
 	// 비회원 구매상세2
-	@Select("SELECT * FROM picker_buyitem WHERE b_code = #{b_code}")
+	@Select("SELECT i_img, i_name, bi_cnt, i_price FROM picker_buyitem WHERE b_code = #{b_code}")
 	public ArrayList<BuyitemDTO> noneOneBuyItemInfo(@Param("b_code") int b_code);
 
 	// 회원별 주문취소 가능 구매 목록
-	@Select("SELECT * FROM picker_buy WHERE m_id = #{m_id} AND b_date >= to_char(sysdate - 1, 'yy/MM/dd') AND b_chk = 0 ORDER BY b_date DESC, b_code DESC")
+	@Select("SELECT b_code, m_id, b_date, b_price FROM picker_buy WHERE m_id = #{m_id} AND b_date >= TO_CHAR(sysdate - 1, 'yy/MM/dd') AND b_chk = 0 ORDER BY b_date DESC, b_code DESC")
 	public ArrayList<BuyDTO> buyCancelList(@Param("m_id") String m_id);
+	
+	// 회원별 주문취소 가능 구매 목록 카운트
+	@Select("SELECT COUNT(*) FROM picker_buy WHERE m_id = #{m_id} AND b_date >= TO_CHAR(sysdate - 1, 'yy/MM/dd') AND b_chk = 0")
+	public int buyCancelListCount(@Param("m_id") String m_id);
 
 	// 구매시 사용한 포인트
 	@Select("SELECT p_point FROM picker_point WHERE b_code = #{b_code} AND p_point < 0")
@@ -137,21 +136,17 @@ public interface MemberMapperDAO {
 	// 구매취소 - 총 포인트 변경 
 	@Insert("UPDATE picker_member SET m_point = #{m_point} WHERE m_id = #{m_id}")
 	public void updatePoint(@Param("m_id") String m_id, @Param("m_point") int m_point);
-	
-	// 회원별 주문취소완료 목록
-	@Select("SELECT * FROM picker_buy WHERE m_id = #{m_id} AND b_chk = 1 ORDER BY b_date DESC, b_code DESC")
-	public ArrayList<BuyDTO> buyCancelContent(@Param("m_id") String m_id);
 
 	// 회원별 주문취소완료 카운트
-	@Select("SELECT COUNT(*) FROM picker_buy WHERE m_id = #{m_id} AND b_chk = 1 ORDER BY b_date DESC, b_code DESC")
-	public int getBuyCancelCount(String m_id);
+	@Select("SELECT COUNT(*) FROM picker_buy WHERE m_id = #{m_id} AND b_chk = 1 AND b_date BETWEEN TO_DATE(#{start_date}, 'yy/MM/dd') AND TO_DATE(#{end_date}, 'yy/MM/dd')+1")
+	public int getBuyCancelCount(@Param("m_id") String m_id, @Param("start_date") String start_date, @Param("end_date") String end_date);
 	
 	// 구매취소완료 상세1
-	@Select("SELECT * FROM picker_buy WHERE m_id = #{m_id} AND b_code = #{b_code} AND b_chk = 1")
+	@Select("SELECT b_code, b_take_name, b_take_phone, b_take_zipcode, b_take_roadaddr, b_take_detailaddr, b_price, b_date FROM picker_buy WHERE m_id = #{m_id} AND b_code = #{b_code} AND b_chk = 1")
 	public BuyDTO oneBuyCancelInfo(@Param("m_id") String m_id, @Param("b_code") int b_code);
 
 	// 구매취소완료 상세2
-	@Select("SELECT * FROM picker_buyitem WHERE b_code = #{b_code}")
+	@Select("SELECT i_name, bi_cnt, i_price FROM picker_buyitem WHERE b_code = #{b_code}")
 	public ArrayList<BuyitemDTO> oneBuyCancelItemInfo(@Param("b_code") int b_code);
 	
 	// 구매취소 전 사용한 포인트
@@ -159,8 +154,6 @@ public interface MemberMapperDAO {
 	public Integer preUsePoint(@Param("b_code") int b_code); // int는 null을 형변환할 수 없음. Integer로 받아야 함.
 	
 	// 구매취소일자
-	/*@Select("SELECT DISTINCT(p_date) FROM picker_point WHERE b_code = #{b_code} AND p_history LIKE '%취소%'")
-	public Date getCancelDate(@Param("b_code") int b_code);*/
 	@Select("SELECT DISTINCT(u_date) FROM picker_buy WHERE b_code = #{b_code} AND b_chk = 1")
 	public Date getCancelDate(@Param("b_code") int b_code);
 		

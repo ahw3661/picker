@@ -10,7 +10,7 @@
 <body>
 	<section>
 		<div class="point_list_wrap">
-			<h3>포인트 내역</h3>
+			<h3>포인트목록</h3>
 			<div class="point_list_table_wrap">
 				<table>
 					<tr>
