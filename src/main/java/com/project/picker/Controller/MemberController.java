@@ -14,8 +14,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -37,8 +35,6 @@ import com.project.picker.Service.MemberService;
 @Controller
 public class MemberController {
 
-	private static final Logger logger = LoggerFactory.getLogger(MemberController.class);
-	
 	@Inject
 	MemberService mservice;
 	
@@ -49,8 +45,7 @@ public class MemberController {
 	@RequestMapping(value="loginPage", method= {RequestMethod.GET, RequestMethod.POST})
 	public String loginPage(HttpSession session, Model model, HttpServletRequest request) {
     	String referrer = request.getHeader("referer");
-    	logger.info("referrer : "+referrer);
-    	logger.info("url : "+session.getAttribute("url"));
+    	
     	if(referrer == null) {
     		model.addAttribute("msg", "잘못된 접근입니다.");
     	}else {
@@ -82,14 +77,14 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<>();
 		
 		if(mdto != null) {
-			logger.info(">>> 입력 정보 일치 사용자 존재 로그인 진행");
+			// 입력 정보 일치 사용자 존재 로그인 진행
+			// 로그인 성공
 			session.setAttribute("login", mdto);
 			session.setAttribute("u_id", mdto.getM_id());
 			session.setAttribute("u_name", mdto.getM_name());
 			session.setAttribute("u_type", mdto.getM_type());
 			int count = Cservice.totalCartCount(mdto.getM_id());
 			session.setAttribute("cnt", count);
-			//session.setMaxInactiveInterval(10*1);
 			
 			if(log == true) { // 로그인 상태 유지에 체크를 한 경우 쿠키 생성
 				String sessionId = (String)session.getAttribute("u_id");
@@ -101,7 +96,6 @@ public class MemberController {
 				
 				Date sessionLimit = new Date(System.currentTimeMillis() + (1000 * limitTime)); // currentTimeMillis()가 1/1000초 단위. 1000 곱하는 계산 필요
 				mservice.loginRemember(sessionId, sessionLimit, mdto.getM_id()); // 현재 세션 id와 유효시간 DB 저장
-				logger.info(">>> 로그인 유지 쿠키 생성");
 			}
 			
 			if(session.getAttribute("sessionList") != null) {	
@@ -112,20 +106,15 @@ public class MemberController {
 						Cservice.changeId(mdto.getM_id(),list.get(i).getC_num());
 					}else{
 						Cservice.updateCnt(list.get(i).getC_cnt(),list.get(i).getI_code(), mdto.getM_id());
-						System.out.println(mdto.getM_id());
-						System.out.println(list.get(i).getC_cnt());
-						System.out.println(list.get(i).getI_code());
-						System.out.println(list.get(i).getC_num());
 						Cservice.delOriginList(list.get(i).getC_num());
 					}
 				}
 				session.setAttribute("sessionList", null);
 			}
-			logger.info(">>> 로그인 성공");
 		}else {
-			logger.info(">>> 입력 정보 일치 사용자 비존재");
-			map.put("msg", "fail");
-			logger.info(">>> 로그인 실패");
+			// 입력 정보 일치 사용자 비존재
+			// 로그인 실패
+			map.put("msg", "fail"); // 로그인 실패 시 메시지 전달
 		}
 		return map;
 	}
@@ -141,10 +130,10 @@ public class MemberController {
 	@RequestMapping(value="findId", method= {RequestMethod.GET, RequestMethod.POST})
 	public String findId(MemberDTO mdto, Model model) {
 		if(mservice.findId(mdto) == null) {
-			logger.info(">>> 존재하지 않는 아이디");
+			// 존재하지 않는 아이디
 			model.addAttribute("msg", "일치하는 정보가 없습니다.<br>입력하신 정보를 확인 후 다시 시도해주세요.");
 		}else {
-			logger.info(">>> 존재하는 아이디");
+			// 존재하는 아이디
 			model.addAttribute("m_id", mservice.findId(mdto));
 		}
 		return "login/FindId";
@@ -154,10 +143,10 @@ public class MemberController {
 	@RequestMapping(value="findPw", method= {RequestMethod.GET, RequestMethod.POST})
 	public String findPw(@RequestParam String m_id, Model model) {
 		if(mservice.findPw(m_id) == null) {
-			logger.info(">>> 존재하지 않는 비밀번호");
+			// 존재하지 않는 비밀번호
 			model.addAttribute("msg", "일치하는 정보가 없습니다.<br>입력하신 정보를 확인 후 다시 시도해주세요.");
 		}else {
-			logger.info(">>> 존재하는 비밀번호");
+			// 존재하는 비밀번호
 			model.addAttribute("m_password", mservice.findPw(m_id));
 		}
 		return "login/FindPw";
@@ -169,6 +158,7 @@ public class MemberController {
 		Cookie loginCookie = WebUtils.getCookie(request, "loginCookie"); // 생성했던 쿠키
 		
 		if(loginCookie != null) { // 쿠키가 존재하는 경우 쿠키 제거
+			// 로그아웃 시 쿠키 제거
 			String sId = (String)session.getAttribute("u_id");
 			String sessionId = "none"; // DB 세션 id 초기화에 사용 
 			MemberDTO mdto = new MemberDTO();
@@ -179,14 +169,12 @@ public class MemberController {
 			
 			Date date = new Date(System.currentTimeMillis()); // 현재시간
 			mservice.loginRemember(sessionId, date, mdto.getM_id()); // 유효시간을 현재시간으로 변경
-			logger.info(">>> 로그아웃 쿠키 제거");
 		}
 		// 세션 초기화
 		session.setAttribute("u_id", null);
 		session.setAttribute("u_name", null);
 		session.setAttribute("u_type", null);
 		session.setAttribute("cnt", null);
-		logger.info(">>> 세션 초기화");
 		
 		model.addAttribute("section", "Section.jsp");
 		return "Index";
@@ -200,12 +188,12 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<>();
 		
 		if(bdto1 != null) {
-			logger.info(">>> 입력 정보 일치 구매내역 존재");
+			// 입력 정보 일치 구매내역 존재
 			session.setAttribute("u_code", bdto1.getB_code());
 			session.setAttribute("u_phone", bdto1.getB_order_phone());
 		}else {
-			logger.info(">>> 입력 정보 일치 구매내역 비존재");
-			map.put("msg", "fail");
+			// 입력 정보 일치 구매내역 비존재
+			map.put("msg", "fail"); // 구매내역 비존재 시 메시지 전달
 		}
 		return map;
 	}
@@ -277,11 +265,10 @@ public class MemberController {
 		String m_id = (String)session.getAttribute("u_id");
 		
 		if((int)session.getAttribute("u_type") == 0) { // 관리자가 로그인 후 일반회원 페이지에 접근하려는 경우
-			logger.info("관리자 마이페이지 접근 불가");
+			// 관리자는 마이페이지 접근 불가
 			return "redirect:adminPage";
 		}else {
 			int point = mservice.onePoint(m_id);
-			logger.info(">>> 회원 포인트 : "+point);
 			model.addAttribute("point", point);
 			model.addAttribute("section", "myPage/MyPage.jsp");
 			return "Index";
@@ -294,7 +281,7 @@ public class MemberController {
 	public String buyInfo(@RequestParam(required=false) String start_date, @RequestParam(required=false) String end_date, 
 			@RequestParam(defaultValue = "1") int pageNum, Model model, HttpSession session) {
 		if(start_date == null && end_date == null) {
-			logger.info("주문조회 메뉴 클릭");
+			// 주문조회 메뉴 클릭
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate now = LocalDate.now();
 			LocalDate preMonth = now.minusMonths(3);
@@ -346,25 +333,25 @@ public class MemberController {
 		ArrayList<BuyitemDTO> buyitem = mservice.buyItem();
 		
 		if(pageNum == 0) {
+			// 구매 취소 가능 목록
 			int cnt = mservice.buyCancelListCount(m_id);
 			ArrayList<BuyDTO> buyCancelList = mservice.buyCancelList(m_id);
 			model.addAttribute("buyCancelList", buyCancelList);
 			model.addAttribute("pageNum", pageNum);
 			model.addAttribute("cnt", cnt);
-			logger.info(">>> 구매 취소 가능 목록");
 		}else {
 			if(start_date == null && end_date == null) {
-				logger.info("주문취소 메뉴 주문취소 버튼 클릭");
+				// 주문취소 메뉴의 주문취소 버튼 클릭
 				DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 				LocalDate now = LocalDate.now();
-				LocalDate preMonth = now.minusMonths(3);
+				LocalDate preMonth = now.minusMonths(3); // 기본 날짜 3개월 범위 표기
 				start_date = dtf.format(preMonth);
 				end_date = dtf.format(now);
-				logger.info("기본 날짜 3개월 범위 표기");
 			}
 			int cnt = mservice.getBuyCancelCount(m_id, start_date, end_date);
 			
 			if(cnt > 0) {
+				// 구매 취소 완료 목록 존재
 				PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5);
 				model.addAttribute("pgdto", pgdto);
 				List<BuyDTO> buyCancelContent = mservice.buyCancelContent(m_id, start_date, end_date, pgdto.getStartRow(), pgdto.getEndRow());
@@ -373,14 +360,13 @@ public class MemberController {
 				model.addAttribute("start_date", start_date);
 				model.addAttribute("end_date", end_date);
 				model.addAttribute("cnt", cnt);
-				logger.info(">>> 구매 취소 완료 목록 존재");
 			}else {
+				// 구매 취소 완료 목록 비존재
 				model.addAttribute("pageNum", pageNum);
 				model.addAttribute("start_date", start_date);
 				model.addAttribute("end_date", end_date);
 				model.addAttribute("cnt", cnt);
 			}
-			logger.info(">>> 구매 취소 완료 목록");
 		}
 		model.addAttribute("buyitem", buyitem);
 		return "myPage/BuyCancel";
@@ -398,13 +384,13 @@ public class MemberController {
 		Date cancelDate = new Date();
 		
 		if(pageNum == 0) {
-			logger.info("주문취소 가능");
+			// 주문취소 가능
 			bdto = mservice.oneBuyInfo(m_id, b_code);
 			bidto = mservice.oneBuyItemInfo(b_code);
 			total = mservice.sumBuyPrice(b_code);
 			point = mservice.usePoint(b_code);
 		}else {
-			logger.info("주문취소 완료 건");
+			// 주문취소 완료 건
 			bdto = mservice.oneBuyCancelInfo(m_id, b_code);
 			bidto = mservice.oneBuyCancelItemInfo(b_code);
 			total = mservice.sumBuyPrice(b_code);
@@ -428,19 +414,18 @@ public class MemberController {
 	public Map<String, Object> buyCancelRun(@RequestParam int b_code, Model model, HttpSession session) {
 		Map<String, Object> map = new HashMap<>();
 		String m_id = (String)session.getAttribute("u_id");
-		logger.info(">>> 구매 취소 진행");
 		
 		if(m_id != null) {
-			logger.info("회원 구매 취소 진행");
+			// 회원 구매 취소 진행
 			mservice.buyState(b_code);
 			mservice.buyCancelPoint(m_id, b_code);
 			int m_point = mservice.sumPoint(m_id);
 			mservice.updatePoint(m_id, m_point);
 		}else {
-			logger.info("비회원 구매 취소 진행");
+			// 비회원 구매 취소 진행
 			mservice.buyState(b_code);
 		}
-		map.put("msg", "success");
+		map.put("msg", "success"); // 구매취소 성공 시 메시지 전달
 		return map;
 	}
 	
@@ -459,10 +444,10 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<>();
 		
 		if(mservice.pwCheck(mdto) == 0) {
-			logger.info(">>> 비밀번호 불일치");
-			map.put("msg", "fail");
+			// 비밀번호 불일치
+			map.put("msg", "fail"); // 비밀번호 불일치 시 메시지 전달
 		}else {
-			logger.info(">>> 비밀번호 일치 정보수정 진행");
+			// 비밀번호 일치 정보수정 진행
 			mservice.updateMember(mdto);
 		}
 		return map;
@@ -498,10 +483,10 @@ public class MemberController {
 		Map<String, Object> map = new HashMap<>();
 		
 		if(mservice.pwCheck(mdto) == 0) {
-			logger.info(">>> 비밀번호 불일치");
-			map.put("msg", "fail");
+			// 비밀번호 불일치
+			map.put("msg", "fail"); // 비밀번호 불일치 시 메시지 전달
 		}else {
-			logger.info(">>> 비밀번호 일치 탈퇴 진행");
+			// 비밀번호 일치 탈퇴 진행
 			mservice.updateMemberType(m_id);
 			session.setAttribute("u_id", null);
 			session.setAttribute("u_name", null);

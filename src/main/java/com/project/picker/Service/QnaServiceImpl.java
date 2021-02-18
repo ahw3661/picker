@@ -4,8 +4,6 @@ import java.util.ArrayList;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.project.mapper.QnaMapperDAO;
@@ -16,8 +14,6 @@ import com.project.picker.DTO.ReplyDTO;
 
 @Service
 public class QnaServiceImpl implements QnaService {
-	
-	private static final Logger logger = LoggerFactory.getLogger(QnaServiceImpl.class);
 	
 	@Inject
 	QnaMapperDAO dao;
@@ -114,7 +110,7 @@ public class QnaServiceImpl implements QnaService {
 			dto.setR_dep(dep + 1);
 			int seq = dao.setSequenceWithRef(dto.getQ_num(), dep, refDto.getR_seq());
 			if(seq == 0) seq = dao.setSequenceWithoutRef(dto.getQ_num());
-			else logger.info("SeqUpdate : " + dao.updateSequence(dto.getQ_num(), seq));
+			else dao.updateSequence(dto.getQ_num(), seq);
 			dto.setR_seq(seq);
 		}
 		return dao.insertReply(dto) == 1;

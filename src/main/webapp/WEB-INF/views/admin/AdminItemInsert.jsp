@@ -108,7 +108,6 @@
 				},
 				error:function(request,status,error){	   
 					alert("등록 실패");
-					/* alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error); */
 				}
 			});
 		}

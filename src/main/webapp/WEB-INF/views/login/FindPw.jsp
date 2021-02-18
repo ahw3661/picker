@@ -20,7 +20,6 @@
 							<c:set var="first" value="${fn:substring(password, 0, 3) }" />
 							<c:set var="last" value="${fn:substring(password, 4, totalLength) }" />
 							${first}<c:forEach begin="1" end="${totalLength-1 }">*</c:forEach>
-							<%-- ${m_password } --%>
 						</div>
 						<div class="login_btn"><input type="button" value="로그인" onclick="location.href='loginPage'"></div>
 					</c:if>

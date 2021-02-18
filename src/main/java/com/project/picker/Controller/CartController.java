@@ -42,13 +42,11 @@ public class CartController {
 		ArrayList<CartDTO> cartlist = new ArrayList<>();
 		if(session.getAttribute("u_id") != null) {		
 			m_id =  (String)session.getAttribute("u_id");
-			System.out.println("sessionid3 : "+ session.getAttribute("u_id"));
-			
 			cartlist = Cservice.allCartList(m_id); // 회원아이디별 전체 카트리스트 출력
 			count = Cservice.totalCartCount(m_id); // 회원아이디별 장바구니 전체 카운트수 출력
 		}else {
 			m_id = "";
-			System.out.println("sessionid4 : "+ session.getAttribute("u_id"));
+			
 			if(session.getAttribute("sessionList") != null) {
 				cartlist = (ArrayList<CartDTO>)session.getAttribute("sessionList");
 				count = cartlist.size();
@@ -139,11 +137,6 @@ public class CartController {
 		cdto.setM_id(request.getParameter("m_id"));
 		cdto.setI_code(request.getParameter("i_code"));
 		cdto.setC_num(Integer.parseInt(request.getParameter("c_num")));
-		
-		System.out.println("수량 : "+ cdto.getC_cnt());
-		System.out.println("코드 : "+cdto.getI_code());
-		System.out.println("아이디 : "+cdto.getM_id());
-		System.out.println("넘버 : "+cdto.getC_num());
 		
 		if(session.getAttribute("u_id")!= null) {
 			Cservice.plmaupdateCnt(cdto);

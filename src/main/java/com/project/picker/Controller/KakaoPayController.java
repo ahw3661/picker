@@ -32,9 +32,6 @@ public class KakaoPayController {
 	@RequestMapping(value="kakaoPay", method={RequestMethod.GET, RequestMethod.POST})
 	public Map<String, Object> kakaoPay(HttpServletRequest request, HttpSession session, BuyDTO bdto) {
 		Map<String, Object> map = new HashMap<String, Object>();
-		System.out.println("kakaoPay post............................................");
-        //return "redirect:" + kakaopay.kakaoPayReady(request, bdto);
-        
         map.put("pc_url",kakaopay.kakaoPayReady(request, session, bdto));
         
         return map;
@@ -42,23 +39,16 @@ public class KakaoPayController {
 	
 	@RequestMapping(value="buy/kakaoPaySuccess", method={RequestMethod.GET, RequestMethod.POST})
 	public void kakaoPaySuccess(@RequestParam("pg_token") String pg_token, Model model, HttpServletRequest request, HttpSession session, BuyDTO bdto) {
-		System.out.println("kakaoPaySuccess get............................................");
-		System.out.println("kakaoPaySuccess pg_token : " + pg_token);
 		model.addAttribute("info", kakaopay.kakaoPayInfo(request, session, bdto, pg_token));
     }
 	
 	@RequestMapping(value="buy/kakaoPayCancel", method={RequestMethod.GET, RequestMethod.POST})
 	public String kakaoPayCancel(@RequestParam("pg_token") String pg_token, Model model) {
-		System.out.println("kakaoPaySuccess get............................................");
-		System.out.println("kakaoPaySuccess pg_token : " + pg_token);
 		return "kakaoPayCancel";
     }
 	
 	@RequestMapping(value="buy/kakaoPaySuccessFail", method={RequestMethod.GET, RequestMethod.POST})
 	public String kakaoPaySuccessFail(@RequestParam("pg_token") String pg_token, Model model) {
-		System.out.println("kakaoPaySuccess get............................................");
-		System.out.println("kakaoPaySuccess pg_token : " + pg_token);
-		
 		return "kakaoPaySuccessFail";
     }
 	

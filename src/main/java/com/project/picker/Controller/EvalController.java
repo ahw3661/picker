@@ -7,8 +7,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,8 +21,6 @@ import com.project.picker.Service.EvalService;
 @Controller
 public class EvalController {
 
-	private static final Logger logger = LoggerFactory.getLogger(ItemController.class);
-	
 	@Inject
 	EvalService service;
 	
@@ -55,7 +51,6 @@ public class EvalController {
 				rtn = "eval/EvalWrite";
 			}
 		}
-		logger.info("page : " + rtn);
 		return rtn;
 	}
 	
@@ -111,7 +106,6 @@ public class EvalController {
 	@ResponseBody
 	@RequestMapping("endSessionEval")
 	public void endSessionEval(HttpSession session) {
-		logger.info("구매평 세션 종료");
 		if(session.getAttribute("pcsCode") != null) session.setAttribute("pcsCode", null);
 		if(session.getAttribute("pcsEvalCode") != null) session.setAttribute("pcsEvalCode", null);
 	}

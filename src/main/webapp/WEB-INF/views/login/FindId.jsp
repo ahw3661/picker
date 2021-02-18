@@ -20,7 +20,6 @@
 							<c:set var="first" value="${fn:substring(id, 0, 2) }" />
 							<c:set var="last" value="${fn:substring(id, 3, totalLength) }" />
 							${first}<c:forEach begin="1" end="${totalLength-1 }">*</c:forEach>
-							<%-- ${m_id } --%>
 						</div>
 						<div class="login_btn"><input type="button" value="로그인" onclick="location.href='loginPage'"></div>
 					</c:if>

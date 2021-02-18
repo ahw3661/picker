@@ -145,7 +145,6 @@
 				$(".menu_info").html(data);
 			},
 			error:function(request,status,error){	   
-				//alert("수정할 내용이 없습니다.");
 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 			}
 		});

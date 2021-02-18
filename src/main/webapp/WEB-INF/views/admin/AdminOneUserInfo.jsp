@@ -74,6 +74,7 @@
 	</section>
 </body>
 <script type="text/javascript">
+	// 목록보기
 	function goMemberList(pn) {
 		$.ajax({
 			url : "goMemberList",
@@ -84,7 +85,7 @@
 				xmlHttpRequest.setRequestHeader("ajax", "true");
 			},
 			success : function(data) {
-				$(".menu_info").children().remove(); // 자식 노드 삭제
+				$(".menu_info").children().remove();
 				$(".menu_info").html(data);
 			},
 			error : function(data) {

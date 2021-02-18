@@ -33,7 +33,7 @@ public interface ItemMapperDAO {
 	public ItemDTO itemView(@Param("i_code") String i_code);
 	
 	// 카테고리 불러오는 함수
-		@Select("SELECT DISTINCT(i_category) FROM picker_item where i_category=#{i_category }")
-		public ItemDTO cateName(@Param("i_category") String i_category);
+	@Select("SELECT DISTINCT(i_category) FROM picker_item where i_category=#{i_category }")
+	public ItemDTO cateName(@Param("i_category") String i_category);
 
 }

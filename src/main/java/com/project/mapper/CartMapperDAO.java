@@ -14,9 +14,6 @@ import com.project.picker.DTO.CartDTO;
 @Repository
 public interface CartMapperDAO {
 
-/*	@Select("SELECT * FROM picker_cart WHERE m_id is null ORDER BY c_num")
-	public ArrayList<CartDTO> nullCartList(); // 회원 아이디가 null인 장바구니 전체 출력
-*/	
 	@Select("SELECT * FROM picker_cart WHERE m_id = #{m_id} ORDER BY c_num")
 	public ArrayList<CartDTO> allCartList(@Param("m_id") String m_id); // 회원 아이디별 장바구니 전체 출력
 	

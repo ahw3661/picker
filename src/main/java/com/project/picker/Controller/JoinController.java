@@ -5,8 +5,6 @@ import java.util.Map;
 
 import javax.inject.Inject;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -20,8 +18,6 @@ import com.project.picker.Service.JoinService;
 @Controller
 public class JoinController {
 
-	private static final Logger logger = LoggerFactory.getLogger(JoinController.class);
-	
 	@Inject
 	JoinService jservice;
 	
@@ -35,8 +31,6 @@ public class JoinController {
 	// 회원가입 작성 화면
 	@RequestMapping(value="joinWrite", method= {RequestMethod.GET, RequestMethod.POST})
 	public String joinWrite(MemberDTO mdto, Model model) {
-		logger.info("동의여부1 : " + mdto.getM_terms());
-		logger.info("동의여부2 : " + mdto.getM_personal());
 		model.addAttribute("mdto", mdto);
 		model.addAttribute("section", "join/JoinWrite.jsp");
 		return "Index";
@@ -47,7 +41,6 @@ public class JoinController {
 	@ResponseBody
 	public int idCheck(@RequestParam String m_id) {
 		int result = jservice.idCheck(m_id);
-		logger.info(">>> 아이디 사용 가능 여부 : "+result);
 		return result;
 	}
 	
@@ -56,7 +49,6 @@ public class JoinController {
 	@ResponseBody
 	public int emailChecking(@RequestParam String m_email) {
 		int result = jservice.emailCheck(m_email);
-		logger.info(">>> 이메일 사용 가능 여부 : "+result);
 		return result;
 	}
 	
@@ -65,7 +57,6 @@ public class JoinController {
 	@ResponseBody
 	public int phoneChecking(@RequestParam String m_phone) {
 		int result = jservice.phoneCheck(m_phone);
-		logger.info(">>> 전화번호 사용 가능 여부 : "+result);
 		return result;
 	}
 	
@@ -74,7 +65,6 @@ public class JoinController {
 	@ResponseBody
 	public Map<String, Object> joinSave(MemberDTO mdto, Model model) {
 		Map<String, Object> map = new HashMap<>();
-		logger.info(">>> 회원가입 완료");
 		jservice.insertMember(mdto);
 		jservice.insertJoinPoint(mdto.getM_id(), "신규회원 쇼핑지원금", 1000);
 		map.put("msg", "success");

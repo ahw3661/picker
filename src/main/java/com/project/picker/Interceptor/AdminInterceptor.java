@@ -4,16 +4,12 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.project.picker.DTO.MemberDTO;
 
 public class AdminInterceptor extends HandlerInterceptorAdapter {
 
-	private static final Logger logger = LoggerFactory.getLogger(AdminInterceptor.class);
-	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -30,7 +26,7 @@ public class AdminInterceptor extends HandlerInterceptorAdapter {
 		}
 		
 		if(login != null && login.getM_type() == 1) { // 일반회원이 로그인 후 관리자페이지에 접근하려는 경우
-			logger.info("일반회원 관리자페이지 접근 불가");
+			// 일반회원은 관리자페이지 접근 불가
 			response.sendRedirect(request.getContextPath() + "/wrongAccess");
 			return false;
 		}

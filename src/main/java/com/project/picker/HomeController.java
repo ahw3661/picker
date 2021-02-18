@@ -46,13 +46,12 @@ public class HomeController {
 		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
 		
 		String formattedDate = dateFormat.format(date);
-		String m_id = "";
 		
-		logger.info(">>> 메인 페이지 접속");
+		// 메인 페이지 접속
+		String m_id = "";
 		Cookie loginCookie = WebUtils.getCookie(request, "loginCookie"); // 생성했던 쿠키
 		
 		if(loginCookie != null) { // 쿠키가 존재하는 경우
-			logger.info(">>> 쿠키 정보 존재");
 			String sessionId = loginCookie.getValue(); // 쿠키에 저장했던 세션 id
 			MemberDTO mdto = mservice.getSessionUser(sessionId); // 이전 로그인 여부 확인. 유효시간이 남은 사용자
 			
@@ -61,7 +60,6 @@ public class HomeController {
 				session.setAttribute("u_id", mdto.getM_id());
 				session.setAttribute("u_name", mdto.getM_name());
 				session.setAttribute("u_type", mdto.getM_type());
-				logger.info(">>> 세션 생성");
 			}
 		}
 		

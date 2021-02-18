@@ -9,8 +9,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import com.project.mapper.AdminMapperDAO;
@@ -27,8 +25,6 @@ import com.project.picker.DTO.PointDTO;
 @Service
 public class AdminServicelmpl implements AdminService {
 	
-	private static final Logger logger = LoggerFactory.getLogger(AdminServicelmpl.class);
-
 	@Inject
 	AdminMapperDAO adao;
 	
@@ -204,22 +200,21 @@ public class AdminServicelmpl implements AdminService {
 			
 			if(imgName != null && !imgName.equals("")) {
 				if(detailImgName != null && !detailImgName.equals("")) {
-					logger.info("새로운 상품 및 상품상세의 이미지 등록");
+					// 새로운 상품 및 상품상세의 이미지 등록
 					// update를 위한 이미지 값 세팅
 					idto.setI_img(imgName);
 					idto.setI_detailimg(detailImgName);
 				}else {
-					logger.info("새로운 상품 이미지 등록");
-					idto.setI_img(imgName); // 새로운 상품 이미지 등록
+					// 새로운 상품 이미지 등록
+					idto.setI_img(imgName);
 					idto.setI_detailimg(idto.getI_detailimg()); // 기존 상품상세 이미지 재등록
 				}
 			}else {
 				if(detailImgName != null && !detailImgName.equals("")) {
-					logger.info("새로운 상품상세 이미지 등록");
+					// 새로운 상품상세 이미지 등록
 					idto.setI_img(idto.getI_img()); // 기존 상품 이미지 재등록
-					idto.setI_detailimg(detailImgName);// 새로운 상품상세 이미지 등록
+					idto.setI_detailimg(detailImgName);
 				}else {
-					logger.info("기존 상품 및 상품상세 이미지 유지");
 					// 기존 상품 및 상품상세 이미지 유지
 					idto.setI_img(idto.getI_img());
 					idto.setI_detailimg(idto.getI_detailimg());
@@ -236,20 +231,17 @@ public class AdminServicelmpl implements AdminService {
 			
 			if(imgName != null && !imgName.equals("")) {
 				if(detailImgName == null || detailImgName.equals("")) {
-					logger.info("새로운 상품 이미지 등록");
 					idto.getMainFile().transferTo(new File(mainPath + imgName)); // 새로운 상품 이미지 등록
 				}
 			}
 			
 			if(detailImgName != null && !detailImgName.equals("")) {
 				if(imgName == null || imgName.equals("")) {
-					logger.info("새로운 상품상세 이미지 등록");
 					idto.getDetailFile().transferTo(new File(detailPath + detailImgName)); // 새로운 상품상세 이미지 등록
 				}
 			}
 			
 			if((imgName != null && !imgName.equals("")) && (detailImgName != null && !detailImgName.equals(""))) { // 새로운 상품 및 상품상세 이미지 등록
-				logger.info("새로운 상품 및 상품상세 이미지 등록");
 				idto.getMainFile().transferTo(new File(mainPath + imgName));
 				idto.getDetailFile().transferTo(new File(detailPath + detailImgName));
 			}

@@ -6,8 +6,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -22,15 +20,13 @@ import com.project.picker.Service.NoticeServiceImpl;
 @Controller
 public class NoticeController {
 	
-	private static final Logger logger = LoggerFactory.getLogger(NoticeController.class);
-	
 	@Inject
 	NoticeServiceImpl service;
 	
 	@RequestMapping("noticeList")
 	public String noticeList(@RequestParam(required=false, defaultValue="") String keyword, 
 		@RequestParam(required=false, defaultValue="1") int num, Model model) {
-		logger.info("리스트 출력");
+		// 리스트 출력
 		model.addAttribute("section", "board/NoticeList.jsp");
 		model.addAttribute("keyword", keyword);
 		
@@ -54,7 +50,7 @@ public class NoticeController {
 	@ResponseBody
 	@RequestMapping("noticeWriteProc")
 	public Map<String, Object> noticeWriteProc(NoticeDTO dto, HttpSession session) {
-		logger.info("공지 작성");
+		// 공지 작성
 		dto.setM_id((String)session.getAttribute("u_id"));
 		Map<String, Object> json = new HashMap<>();
 		json.put("chk", service.writeInsert(dto));
@@ -111,7 +107,6 @@ public class NoticeController {
 	@ResponseBody
 	@RequestMapping("ajaxError")
 	public Map<String, Object> noticeAdminAjaxError(){
-		logger.info("ajax interceptor : false");
 		Map<String, Object> json = new HashMap<>();
 		json.put("chk", false);
 		json.put("logError", true);

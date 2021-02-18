@@ -7,8 +7,6 @@ import java.util.Map;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -23,8 +21,6 @@ import com.project.picker.Service.QnaService;
 
 @Controller
 public class QnaController {
-	
-	private static final Logger logger = LoggerFactory.getLogger(QnaController.class);
 	
 	@Inject
 	QnaService service;
@@ -69,8 +65,7 @@ public class QnaController {
 	@ResponseBody
 	@RequestMapping("qnaWriteProc")
 	public Map<String, Object> qnaWriteProc(QnaDTO dto, HttpSession session){
-		logger.info("글쓰기 작동");
-		logger.info("title : " + dto.getQ_title());
+		// 글쓰기
 		Map<String, Object> json = new HashMap<>();
 		dto.setM_id((String)session.getAttribute("u_id"));
 		dto.setM_name((String)session.getAttribute("u_name"));
@@ -88,7 +83,7 @@ public class QnaController {
 	@ResponseBody
 	@RequestMapping("qnaModifyProc")
 	public Map<String, Object> qnaModifyProc(QnaDTO dto) {
-		logger.info("글쓰기 수정");
+		// 글쓰기 수정
 		Map<String, Object> json = new HashMap<>();
 		json.put("chk", service.modifyQna(dto));
 		return json;

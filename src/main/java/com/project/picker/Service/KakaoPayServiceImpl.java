@@ -56,7 +56,6 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 		
 		Date today = new Date();
 		DateFormat format = new SimpleDateFormat("yyMMdd");
-		System.out.println(format.format(today));
 
 		mincode = format.format(today) + "0000";
 		maxcode = format.format(today) + "9999";
@@ -80,8 +79,6 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	    int total = Integer.valueOf(tot);
 	    int price = (int)(total*0.1);
 	    String vat_amount = Integer.toString(price);
-	    
-		System.out.println("ready 이동");
 	    RestTemplate restTemplate = new RestTemplate();
 	 
 	    // 서버로 요청할 Header
@@ -122,12 +119,11 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	    params.add("fail_url", "http://localhost:8090/picker/buy/kakaoPaySuccessFail"); // 결제 실패 시 redirect url, 최대 255자
 	 
 		HttpEntity<MultiValueMap<String, Object>> body = new HttpEntity<MultiValueMap<String, Object>>(params, headers);
-		System.out.println("body : "+body);
+		
 	    try {
-	    		System.out.println("try");
+	    	
 	    	kakaoPayReadyDTO = restTemplate.postForObject(new URI(HOST + "/v1/payment/ready"), body, KakaoPayReadyDTO.class);
-	    		System.out.println("tid : " + kakaoPayReadyDTO.getTid());
-	    		quantity = 0;
+	    	quantity = 0;
 	    	//성공시           
 	        return kakaoPayReadyDTO.getNext_redirect_pc_url();
 	        
@@ -140,8 +136,6 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 
 	@Override
 	public KakaoPayApprovalDTO kakaoPayInfo(HttpServletRequest request, HttpSession session, BuyDTO bdto, String pg_token) {
-		System.out.println("KakaoPayInfoVO............................................");
-		System.out.println("-----------------------------");
 		
 		if(session.getAttribute("u_id") != null){
 			m_id = (String) session.getAttribute("u_id");
@@ -158,13 +152,6 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	    headers.add("Content-Type", MediaType.APPLICATION_FORM_URLENCODED_VALUE + ";charset=UTF-8");
 	 
 	    // 서버로 요청할 Body
-	    
-	    System.out.println(kakaoPayReadyDTO.getTid());
-	    System.out.println(getB_code);
-	    System.out.println(m_id);
-	    System.out.println(pg_token);
-	    System.out.println(tot);
-	    
 	    MultiValueMap<String, String> params = new LinkedMultiValueMap<String, String>();
 	    params.add("cid", "TC0ONETIME");
 	    params.add("tid", kakaoPayReadyDTO.getTid());
@@ -176,9 +163,8 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	    HttpEntity<MultiValueMap<String, String>> body = new HttpEntity<MultiValueMap<String, String>>(params, headers);
 	   
 		    try {
-		    	System.out.println(body);
+		    	
 				kakaoPayApprovalDTO = restTemplate.postForObject(new URI(HOST + "/v1/payment/approve"), body, KakaoPayApprovalDTO.class);
-			    System.out.println("여기 : " + kakaoPayApprovalDTO);
 			      
 			    return kakaoPayApprovalDTO;
 			        
@@ -235,7 +221,6 @@ public class KakaoPayServiceImpl implements KakaoPayService {
 	public void insertPoint(int plus_point, int minus_point) {
 		PointDTO pdto = new PointDTO();
 		
-		System.out.println("m_id :"+m_id);
 		pdto.setM_id(m_id);
 		pdto.setB_code(b_code);
 		

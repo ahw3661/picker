@@ -28,7 +28,7 @@ public class CartServiceImpl implements CartService {
 		// 장바구니에 리스트에 상품 추가
 		String m_id = "";
 		int count = 0;
-		System.out.println("장바구니 추가");
+		
 		if(session.getAttribute("u_id") != null) {		
 			m_id =  (String)session.getAttribute("u_id");
 			if(cdao.cartCount(cdto) == 0) {
@@ -65,10 +65,6 @@ public class CartServiceImpl implements CartService {
 			if(update_Non) {
 				cdao.insertCart(cdto);
 				list.add(cdto);
-			}
-			System.out.println("list: " + list.size());
-			for(CartDTO dto : list) {
-				System.out.println("num : " + dto.getC_num());
 			}
 			session.setAttribute("sessionList", list);
 			count = list.size();

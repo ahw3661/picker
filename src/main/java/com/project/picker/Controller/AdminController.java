@@ -9,8 +9,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,8 +27,6 @@ import com.project.picker.Service.MemberService;
 
 @Controller 
 public class AdminController {
-
-	private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 	
 	@Inject
 	AdminService aservice;
@@ -43,8 +39,6 @@ public class AdminController {
 	public String adminPage(Model model) {
 		int memberCount = aservice.memberCount();
 		int itemCount = aservice.itemCount();
-		logger.info(">>> 회원수 : "+memberCount);
-		logger.info(">>> 상품수 : "+itemCount);
 		model.addAttribute("memberCount", memberCount);
 		model.addAttribute("itemCount", itemCount);
 		model.addAttribute("section", "admin/AdminPage.jsp");
@@ -57,7 +51,7 @@ public class AdminController {
 			@RequestParam(defaultValue = "1") int pageNum, Model model) {
 		
 		if(start_date == null && end_date == null) {
-			logger.info("주문내역관리 메뉴 클릭");
+			// 주문내역관리 메뉴 클릭
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate now = LocalDate.now();
 			LocalDate preMonth = now.minusMonths(3);
@@ -105,7 +99,7 @@ public class AdminController {
 			@RequestParam(defaultValue = "1") int pageNum, Model model) {
 		
 		if(start_date == null && end_date == null) {
-			logger.info("주문취소관리 메뉴 클릭");
+			// 주문취소관리 메뉴 클릭
 			DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 			LocalDate now = LocalDate.now();
 			LocalDate preMonth = now.minusMonths(3);
@@ -117,13 +111,13 @@ public class AdminController {
 		int	cnt = aservice.getAllBuyCancelCount(start_date, end_date);
 		
 		if(cnt > 0) {
+			// 구매 취소 완료 목록 존재
 			PagingDTO pgdto = new PagingDTO(pageNum, cnt, 10, 5);
 			model.addAttribute("pgdto", pgdto);
 			List<BuyDTO> allBuyCancel = aservice.allBuyCancel(start_date, end_date, pgdto.getStartRow(), pgdto.getEndRow());
 			model.addAttribute("allBuyCancel", allBuyCancel);
-			logger.info(">>> 구매 취소 완료 목록 존재");
 		}
-		logger.info(">>> 구매 취소 완료 목록");
+		// 구매 취소 완료 목록
 		model.addAttribute("start_date", start_date);
 		model.addAttribute("end_date", end_date);
 		model.addAttribute("buyitem", buyitem);
@@ -136,7 +130,7 @@ public class AdminController {
 	@RequestMapping(value="oneBuyCancel", method= {RequestMethod.GET, RequestMethod.POST})
 	public String buyCancelDetail(@RequestParam int b_code, @RequestParam int pageNum, @RequestParam String start_date, 
 			@RequestParam String end_date, Model model, HttpSession session) {
-		logger.info("주문취소 완료 건");
+		// 주문취소 완료 건
 		BuyDTO bdto = aservice.oneBuyCancel(b_code);
 		ArrayList<BuyitemDTO> bidto = aservice.getOneBuyItemInfo(b_code);
 		int total = aservice.getSumBuyPrice(b_code);
@@ -210,7 +204,6 @@ public class AdminController {
 	@RequestMapping(value="goOneList", method= {RequestMethod.GET, RequestMethod.POST})
 	public String goOneList(@RequestParam String m_id, @RequestParam int pageNum, Model model, HttpSession session) {
 		MemberDTO mdto = aservice.oneList(m_id);
-		logger.info(">>> 회원유형 : "+mdto.getM_type());
 		int type = mdto.getM_type();
 		String m_type = "";
 		

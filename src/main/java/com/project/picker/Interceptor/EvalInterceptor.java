@@ -5,15 +5,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.project.mapper.EvalMapperDAO;
 
 public class EvalInterceptor extends HandlerInterceptorAdapter {
-	
-	private static final Logger logger = LoggerFactory.getLogger(EvalInterceptor.class);
 	
 	@Inject
 	EvalMapperDAO dao;
@@ -21,7 +17,6 @@ public class EvalInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 		throws Exception {
-		logger.info("EvalInterceptor ½ÇÇà");
 		HttpSession session = request.getSession();
 		String i_code = request.getParameter("i_code");
 		if(session.getAttribute("pcsCode") == null) {
@@ -46,8 +41,6 @@ public class EvalInterceptor extends HandlerInterceptorAdapter {
 				}
 			}
 		}
-		if(session.getAttribute("pcsCode") != null) logger.info("pcsCode : " + (int)session.getAttribute("pcsCode"));
-		if(session.getAttribute("pcsEvalCode") != null) logger.info("pcsEvalCode : " + (int)session.getAttribute("pcsEvalCode"));
 		return true;
 	}
 
